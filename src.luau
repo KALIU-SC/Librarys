@@ -226,19 +226,25 @@ end
 function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
     self.FolderName = Window.Folder or "AiCodeLib"
     
-    -- Se passou uma tab existente, usa ela
-    local saveTab = ExistingTab or Window:Tab({ Icon = "Settings" })
+    -- USA A TAB EXISTENTE OU CRIA UMA NOVA
+    local saveTab = ExistingTab
     
-    -- Cria a subtab Save/Load dentro da tab existente
-    local mainSubTab = saveTab:SubTab({ Name = "Save/Load" })
+    -- SE NÃO FOI PASSADA UMA TAB EXISTENTE, CRIA UMA NOVA
+    if not saveTab then
+        saveTab = Window:Tab({ Icon = "Home" }) -- USA UM ÍCONE QUE EXISTE
+    end
     
+    -- CRIA A SUBTAB DENTRO DA TAB
+    local mainSubTab = saveTab:SubTab({ Name = "Save & Load" })
+    
+    -- RESTO DO CÓDIGO...
     -- SAVE
     local saveSection = mainSubTab:Section({ Header = "Save", Side = "Left" })
     
     local saveNameInput = saveSection:Input("SaveNameInput", {
         Name = "Save",
         Placeholder = "Name...",
-        Default = os.date("%Y-%m-%d")
+        Default = ""
     })
     
     saveSection:Button("SaveButton", {
@@ -248,7 +254,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
             if name == "" then name = os.date("%Y-%m-%d_%H-%M-%S") end
             self:SaveConfig(name)
             Window:Notification({
-                Title = "Save/Load",
+                Title = "Save & Load",
                 Message = "Saved: " .. name,
                 Duration = 3,
                 Position = "Screen"
@@ -318,7 +324,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
             local selected = configsDropdown:GetValue()
             if selected == "No configs found" or selected == "Loading..." then
                 Window:Notification({
-                    Title = "Save/Load",
+                    Title = "Save & Load",
                     Message = "No configs available!",
                     Duration = 2,
                     Position = "Screen"
@@ -328,7 +334,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
             
             if self:LoadConfig(selected) then
                 Window:Notification({
-                    Title = "Save/Load",
+                    Title = "Save & Load",
                     Message = "Loaded: " .. selected,
                     Duration = 3,
                     Position = "Screen"
@@ -355,7 +361,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
                             self:DeleteConfig(selected)
                             refreshList()
                             Window:Notification({
-                                Title = "Save/Load",
+                                Title = "Save & Load",
                                 Message = "Deleted: " .. selected,
                                 Duration = 3,
                                 Position = "Screen"
@@ -373,7 +379,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
         Callback = function()
             refreshList()
             Window:Notification({
-                Title = "Save/Load",
+                Title = "Save & Load",
                 Message = "List updated!",
                 Duration = 2,
                 Position = "Screen"
@@ -396,7 +402,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
                         Callback = function()
                             self:ResetAll()
                             Window:Notification({
-                                Title = "Save/Load",
+                                Title = "Save & Load",
                                 Message = "All reset!",
                                 Duration = 2,
                                 Position = "Screen"

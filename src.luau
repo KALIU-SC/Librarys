@@ -223,31 +223,34 @@ function SaveLoadSystem:ResetAll()
     return true
 end
 
-function SaveLoadSystem:SetupWithLib(Window)
+function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
     self.FolderName = Window.Folder or "AiCodeLib"
     
-    local saveTab = Window:Tab({ Icon = "Settings" })
-    local mainSubTab = saveTab:SubTab({ Name = "Save & Load" })
+    -- Se passou uma tab existente, usa ela
+    local saveTab = ExistingTab or Window:Tab({ Icon = "Settings" })
+    
+    -- Cria a subtab Save/Load dentro da tab existente
+    local mainSubTab = saveTab:SubTab({ Name = "Save/Load" })
     
     -- SAVE
     local saveSection = mainSubTab:Section({ Header = "Save", Side = "Left" })
     
     local saveNameInput = saveSection:Input("SaveNameInput", {
-        Name = "Config Name",
-        Placeholder = "Enter name...",
-        Default = ""
+        Name = "Save",
+        Placeholder = "Name...",
+        Default = os.date("%Y-%m-%d")
     })
     
     saveSection:Button("SaveButton", {
         Name = "Save Config",
         Callback = function()
             local name = saveNameInput:GetValue()
-            if name == "" then name = "Config_" .. os.date("%Y-%m-%d_%H-%M-%S") end
+            if name == "" then name = os.date("%Y-%m-%d_%H-%M-%S") end
             self:SaveConfig(name)
             Window:Notification({
-                Title = "Save & Load",
-                Message = "Saved: " .. name .. " in " .. self:GetPath(),
-                Duration = 4,
+                Title = "Save/Load",
+                Message = "Saved: " .. name,
+                Duration = 3,
                 Position = "Screen"
             })
             if Window._refresh then Window:_refresh() end
@@ -257,65 +260,79 @@ function SaveLoadSystem:SetupWithLib(Window)
     -- LOAD
     local loadSection = mainSubTab:Section({ Header = "Load", Side = "Right" })
     
-    local configsList = {}
     local configsDropdown
-
+    
     local function refreshList()
-    local path = self:GetPath()
-    
-    -- Limpar valores antigos do dropdown
-    if configsDropdown then
-        local currentValues = configsDropdown.Settings.Values or {}
-        for i = #currentValues, 1, -1 do
-            if currentValues[i] ~= "Loading..." then
-                configsDropdown:DelValue(currentValues[i])
+        local path = self:GetPath()
+        
+        if configsDropdown then
+            local currentValues = configsDropdown.Settings.Values or {}
+            for i = #currentValues, 1, -1 do
+                if currentValues[i] ~= "Loading..." then
+                    configsDropdown:DelValue(currentValues[i])
+                end
+            end
+        end
+        
+        local configs = {}
+        if isfolder(path) then
+            for _, file in pairs(listfiles(path)) do
+                local name = file:match("([^/\\]+)%.json$")
+                if name then 
+                    table.insert(configs, name) 
+                end
+            end
+        end
+        
+        if configsDropdown then
+            if #configs == 0 then
+                configsDropdown:AddValue("No configs found")
+                configsDropdown:SetValue("No configs found")
+            else
+                for _, name in ipairs(configs) do
+                    configsDropdown:AddValue(name)
+                end
+                configsDropdown:SetValue(configs[1])
             end
         end
     end
-    
-    -- Buscar arquivos da pasta
-    local configs = {}
-    if isfolder(path) then
-        for _, file in pairs(listfiles(path)) do
-            local name = file:match("([^/\\]+)%.json$")
-            if name then 
-                table.insert(configs, name) 
-            end
-        end
-    end
-    
-    -- Adicionar valores ao dropdown usando AddValue
-    if configsDropdown then
-        if #configs == 0 then
-            configsDropdown:AddValue("No configs found")
-            configsDropdown:SetValue("No configs found")
-        else
-            for _, name in ipairs(configs) do
-                configsDropdown:AddValue(name)
-            end
-            configsDropdown:SetValue(configs[1])
-        end
-    end
-end
     
     configsDropdown = loadSection:Dropdown("ConfigsDropdown", {
         Name = "Select Config",
-        Values = configsList,
-        Default = configsList[1] or "No configs",
-        MultiSelection = false
+        Values = {"Loading..."},
+        Default = "Loading...",
+        MultiSelection = false,
+        Callback = function(value)
+            print("Selected:", value)
+        end
     })
+    
+    task.spawn(function()
+        task.wait(0.1)
+        refreshList()
+    end)
     
     loadSection:Button("LoadButton", {
         Name = "Load Selected",
         Callback = function()
             local selected = configsDropdown:GetValue()
-            if selected == "No configs" then
-                Window:Notification({ Title = "Save & Load", Message = "No configs!", Duration = 2, Position = "Screen" })
+            if selected == "No configs found" or selected == "Loading..." then
+                Window:Notification({
+                    Title = "Save/Load",
+                    Message = "No configs available!",
+                    Duration = 2,
+                    Position = "Screen"
+                })
                 return
             end
+            
             if self:LoadConfig(selected) then
-                Window:Notification({ Title = "Save & Load", Message = "Loaded: " .. selected, Duration = 3, Position = "Screen" })
-                if Window._refresh then Window:_refresh() end
+                Window:Notification({
+                    Title = "Save/Load",
+                    Message = "Loaded: " .. selected,
+                    Duration = 3,
+                    Position = "Screen"
+                })
             end
         end
     })
@@ -324,16 +341,44 @@ end
         Name = "Delete Selected",
         Callback = function()
             local selected = configsDropdown:GetValue()
-            if selected == "No configs" then return end
-            self:DeleteConfig(selected)
-            refreshList()
-            Window:Notification({ Title = "Save & Load", Message = "Deleted: " .. selected, Duration = 3, Position = "Screen" })
+            if selected == "No configs found" or selected == "Loading..." then
+                return
+            end
+            
+            Window:Dialog({
+                Title = "Delete Config",
+                Description = "Delete: " .. selected .. "?",
+                Buttons = {
+                    { 
+                        Name = "Yes", 
+                        Callback = function()
+                            self:DeleteConfig(selected)
+                            refreshList()
+                            Window:Notification({
+                                Title = "Save/Load",
+                                Message = "Deleted: " .. selected,
+                                Duration = 3,
+                                Position = "Screen"
+                            })
+                        end 
+                    },
+                    { Name = "No" }
+                }
+            })
         end
     })
     
     loadSection:Button("RefreshButton", {
         Name = "Refresh List",
-        Callback = refreshList
+        Callback = function()
+            refreshList()
+            Window:Notification({
+                Title = "Save/Load",
+                Message = "List updated!",
+                Duration = 2,
+                Position = "Screen"
+            })
+        end
     })
     
     -- SETTINGS
@@ -346,10 +391,18 @@ end
                 Title = "Reset All",
                 Description = "Reset all progress?",
                 Buttons = {
-                    { Name = "Yes", Callback = function() 
-                        self:ResetAll() 
-                        Window:Notification({ Title = "Reset", Message = "All reset!", Duration = 2, Position = "Screen" }) 
-                    end },
+                    { 
+                        Name = "Yes", 
+                        Callback = function()
+                            self:ResetAll()
+                            Window:Notification({
+                                Title = "Save/Load",
+                                Message = "All reset!",
+                                Duration = 2,
+                                Position = "Screen"
+                            })
+                        end 
+                    },
                     { Name = "No" }
                 }
             })
@@ -357,7 +410,6 @@ end
     })
     
     Window._refresh = refreshList
-    refreshList()
     
     return {
         SaveNameInput = saveNameInput,

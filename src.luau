@@ -5845,8 +5845,8 @@ end
         return Notification
     end
 
-    function StorageTabs:SaveLoad(Settings)
-    return SaveLoadSystem:SetupWithLib(StorageTabs)
+    function StorageTabs:SaveLoad(Settings, ExistingTab)
+    return SaveLoadSystem:SetupWithLib(StorageTabs, ExistingTab)
 end
     
 	return StorageTabs

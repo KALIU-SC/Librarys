@@ -52,7 +52,7 @@ local Tab = Window:Tab({
 
 ```luau
 --[[
-    Icon: Ícone da aba (ex: "Home", "Settings", "Gear")
+    Icon: Ícone da aba (ex: "Home", "Settings", "Gear", "User")
 ]]
 ```
 
@@ -101,6 +101,13 @@ Section:Button("ButtonId", {
 })
 ```
 
+```luau
+--[[
+    Name: Texto exibido no botão
+    Callback: Função executada ao clicar
+]]
+```
+
 Toggle (Interruptor)
 
 ```luau
@@ -112,6 +119,15 @@ Section:Toggle("ToggleId", {
         print("Toggle:", value)
     end
 })
+```
+
+```luau
+--[[
+    Name: Texto exibido no toggle
+    Default: Valor inicial (true/false)
+    Style: Estilo do toggle (1 = Moderno, 2 = Bola)
+    Callback: Função executada ao alternar
+]]
 ```
 
 Checkbox
@@ -126,6 +142,14 @@ Section:Checkbox("CheckboxId", {
 })
 ```
 
+```luau
+--[[
+    Name: Texto exibido no checkbox
+    Default: Valor inicial (true/false)
+    Callback: Função executada ao alternar
+]]
+```
+
 Color Picker
 
 ```luau
@@ -137,6 +161,15 @@ local colorpicker = Section:Colorpicker("ColorpickerId", {
         print("Cor selecionada:", color)
     end
 })
+```
+
+```luau
+--[[
+    Name: Texto exibido no color picker
+    Default: Cor inicial (Color3)
+    Cursor: Mostrar cursor (true/false)
+    Callback: Função executada ao selecionar cor
+]]
 ```
 
 Slider
@@ -155,6 +188,18 @@ Section:Slider("SliderId", {
 })
 ```
 
+```luau
+--[[
+    Name: Texto exibido no slider
+    Default: Valor inicial
+    Minimum: Valor mínimo
+    Maximum: Valor máximo
+    Precision: Casas decimais
+    DisplayMethod: Formato de exibição ("Percent", "Value", "Degrees", "Hundredths")
+    Callback: Função executada ao alterar valor
+]]
+```
+
 Dropdown
 
 ```luau
@@ -170,13 +215,32 @@ Section:Dropdown("DropdownId", {
 })
 ```
 
+```luau
+--[[
+    Name: Texto exibido no dropdown
+    Values: Lista de opções
+    Default: Valor padrão
+    MultiSelection: Permitir múltipla seleção (true/false)
+    Callback: Função executada ao selecionar
+]]
+```
+
 Label
 
 ```luau
 Section:Label("LabelId", {
     Text = "Rótulo Simples",
-    Bold = false
+    Bold = false,
+    Subline = false
 })
+```
+
+```luau
+--[[
+    Text: Texto exibido no label
+    Bold: Texto em negrito (true/false)
+    Subline: Texto sublinhado (true/false)
+]]
 ```
 
 Paragraph
@@ -188,28 +252,43 @@ Section:Paragraph("ParagraphId", {
     Bold = {Type = "Title", Enabled = true}
 })
 ```
+
 ```luau
-—-[[Bold Type pode ser Title, Text ou Both
+--[[
+    Title: Título do parágrafo
+    Text: Conteúdo do parágrafo
+    Bold.Type: "Title", "Text" ou "Both"
+    Bold.Enabled: true/false
 ]]
 ```
 
 Input
 
 ```luau
--- Texto
-Section:Input("InputId1", {
+Section:Input("InputId", {
     Name = "Input",
-    Placeholder = "None…",
+    Placeholder = "Digite algo...",
     Numeric = false,
     ClearOnFocus = false,
-    Default = Input,
+    Default = "Texto",
     Callback = function(value)
         print("Input:", value)
     end
 })
 ```
 
-KeyBinds
+```luau
+--[[
+    Name: Texto exibido no input
+    Placeholder: Texto de placeholder
+    Numeric: Apenas números (true/false)
+    ClearOnFocus: Limpar ao focar (true/false)
+    Default: Valor padrão
+    Callback: Função executada ao alterar
+]]
+```
+
+KeyBind
 
 ```luau
 -- Toggle com KeyBind
@@ -224,8 +303,17 @@ Section:ToggleKeyBind("ToggleKeyId", {
 ```
 
 ```luau
+--[[
+    Name: Texto exibido no toggle
+    Default: Valor inicial (true/false)
+    KeyCode: Tecla para alternar (Enum.KeyCode)
+    Callback: Função executada ao alternar
+]]
+```
+
+```luau
 -- KeyBind com Hold
-Section:KeyBind("KeyBindId2", {
+Section:KeyBind("KeyBindId", {
     Name = "Correr",
     Default = "LeftShift",
     Hold = true,
@@ -233,6 +321,15 @@ Section:KeyBind("KeyBindId2", {
         print("Segurando:", state)
     end
 })
+```
+
+```luau
+--[[
+    Name: Texto exibido no keybind
+    Default: Tecla padrão (ex: "K", "LeftShift")
+    Hold: Modo de segurar (true/false)
+    Callback: Função executada ao pressionar
+]]
 ```
 
 Diálogos e Notificações
@@ -249,13 +346,13 @@ Section:Button("DialogId", {
                 {
                     Name = "Sim",
                     Callback = function()
-                        
+                        print("Clicou em Sim")
                     end
                 },
                 {
                     Name = "Não",
                     Callback = function()
-                        
+                        print("Clicou em Não")
                     end
                 }
             }
@@ -265,13 +362,21 @@ Section:Button("DialogId", {
 ```
 
 ```luau
+--[[
+    Title: Título do diálogo
+    Description: Descrição do diálogo
+    Buttons: Lista de botões com Name e Callback
+]]
+```
+
+```luau
 -- Notificações
 Section:Button("NotificationId", {
     Name = "Notificação na Tela",
     Callback = function()
         Window:Notification({
             Title = "Notificação",
-            Message = "Esta é uma notificação na tela!",
+            Message = "Esta é uma notificação!",
             Duration = 3,
             Position = "Screen",
             ShowProgress = true
@@ -280,10 +385,27 @@ Section:Button("NotificationId", {
 })
 ```
 
+```luau
+--[[
+    Title: Título da notificação
+    Message: Mensagem da notificação
+    Duration: Duração em segundos
+    Position: "Screen" ou "Menu"
+    ShowProgress: Mostrar barra de progresso (true/false)
+]]
+```
+
 Save/Load
 
 ```luau
 local SaveManager = Window:SaveLoad({})
+```
+
+```luau
+--[[
+    Sistema de salvamento automático
+    Preserva o estado de todos os elementos
+]]
 ```
 
 ---
@@ -335,6 +457,15 @@ input:SetValue("Novo texto") -- Definir valor
 input:GetValue() -- Obter valor atual
 input:SetVisibility(true) -- Visibilidade
 input:Destroy() -- Destruir
+```
+
+Checkbox
+
+```luau
+checkbox:SetValue(true) -- Definir estado
+checkbox:GetValue() -- Obter estado atual
+checkbox:SetVisibility(true) -- Visibilidade
+checkbox:Destroy() -- Destruir
 ```
 
 ---
@@ -396,7 +527,7 @@ A biblioteca possui um sistema de salvamento automático que preserva o estado d
 local SaveManager = Window:SaveLoad({})
 ```
 
-Os elementos salvos incluem:
+Elementos salvos automaticamente:
 
 · Toggles
 · Checkboxes

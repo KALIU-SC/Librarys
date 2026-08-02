@@ -18,7 +18,7 @@ local AiCode = loadstring(game:HttpGet("https://raw.githubusercontent.com/KALIU-
 local Window = AiCode:Window({
     Title = "AiCode",
     Theme = "Darker",
-    ShowUserInfo = false,
+    Folder = “AiCode”,
     AcrylicBlur = false,
     Button = {Enabled = true},
     Size = {550, 350},
@@ -474,6 +474,11 @@ checkbox:Destroy() -- Destruir
 
 · "Darker" - Tema escuro (padrão)
 · "Light" - Tema claro
+· "Rose" - Tema rose
+· "Ocean" - Tema oceano
+· "Forest" - Tema floresta
+· "Midnight" - Tema noturno
+· "Eclipse" - Tema vermelho escuro
 
 ---
 

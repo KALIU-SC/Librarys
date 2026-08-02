@@ -144,6 +144,780 @@ local Lib = {
                     Text = Color3.fromRGB(180, 180, 180)
                 }
             }
+        },
+        Light = {
+            Background = {
+                Primary = Color3.fromRGB(240, 240, 240),
+                Secondary = Color3.fromRGB(230, 230, 230),
+                Tertiary = Color3.fromRGB(230, 230, 230),
+                Card = Color3.fromRGB(235, 235, 235)
+            },
+            Text = {
+                Primary = Color3.fromRGB(20, 20, 20),
+                Secondary = Color3.fromRGB(70, 70, 70),
+                Disabled = Color3.fromRGB(140, 140, 140)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(20, 20, 20),
+                Secondary = Color3.fromRGB(70, 70, 70),
+                Disabled = Color3.fromRGB(140, 140, 140),
+                Shadow = Color3.fromRGB(190, 190, 190)
+            },
+            Border = {
+                Primary = Color3.fromRGB(180, 180, 180),
+                Secondary = Color3.fromRGB(150, 150, 150)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(210, 210, 220),
+                Pressed = Color3.fromRGB(190, 190, 200),
+                Selected = Color3.fromRGB(215, 215, 215),
+                Tab = Color3.fromRGB(220, 220, 220)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(0, 120, 215),
+                Purple = Color3.fromRGB(103, 58, 183),
+                Green = Color3.fromRGB(76, 175, 80),
+                Red = Color3.fromRGB(244, 67, 54),
+                Orange = Color3.fromRGB(255, 152, 0),
+                Cyan = Color3.fromRGB(0, 188, 212)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20),
+                    Thumb = Color3.fromRGB(20, 20, 20)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Track = Color3.fromRGB(225, 225, 225),
+                    Thumb = Color3.fromRGB(70, 70, 70),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Thumb = Color3.fromRGB(20, 20, 20),
+                    Track = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20),
+                    Display = Color3.fromRGB(20, 20, 20),
+                    Thumb = Color3.fromRGB(70, 70, 70),
+                    Track = Color3.fromRGB(50, 50, 50),
+                    Bottom = Color3.fromRGB(205, 205, 205)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20),
+                    Thumb = Color3.fromRGB(20, 20, 20),
+                    Track = Color3.fromRGB(20, 20, 20)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20),
+                    Icon = Color3.fromRGB(70, 70, 70),
+                    Track = Color3.fromRGB(225, 225, 225),
+                    Placeholder = Color3.fromRGB(140, 140, 140)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20),
+                    Track = Color3.fromRGB(225, 225, 225),
+                    Placeholder = Color3.fromRGB(140, 140, 140)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(70, 70, 70)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(225, 225, 225),
+                    Text = Color3.fromRGB(20, 20, 20)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(200, 200, 200),
+                    Secondary = Color3.fromRGB(225, 225, 225),
+                    Tertiary = Color3.fromRGB(230, 230, 230),
+                    Buttons = Color3.fromRGB(215, 215, 215),
+                    Title = Color3.fromRGB(20, 20, 20),
+                    Text = Color3.fromRGB(70, 70, 70)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(240, 240, 240),
+                    Secondary = Color3.fromRGB(225, 225, 225),
+                    Tertiary = Color3.fromRGB(230, 230, 230),
+                    Title = Color3.fromRGB(20, 20, 20),
+                    Text = Color3.fromRGB(70, 70, 70)
+                }
+            }
+        },
+        Rose = {
+            Background = {
+                Primary = Color3.fromRGB(26, 11, 20),
+                Secondary = Color3.fromRGB(35, 15, 28),
+                Tertiary = Color3.fromRGB(35, 15, 28),
+                Card = Color3.fromRGB(30, 13, 24)
+            },
+            Text = {
+                Primary = Color3.fromRGB(255, 220, 240),
+                Secondary = Color3.fromRGB(200, 150, 180),
+                Disabled = Color3.fromRGB(140, 100, 130)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(255, 220, 240),
+                Secondary = Color3.fromRGB(200, 150, 180),
+                Disabled = Color3.fromRGB(140, 100, 130),
+                Shadow = Color3.fromRGB(26, 11, 20)
+            },
+            Border = {
+                Primary = Color3.fromRGB(50, 25, 40),
+                Secondary = Color3.fromRGB(120, 65, 100)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(55, 28, 48),
+                Pressed = Color3.fromRGB(70, 35, 60),
+                Selected = Color3.fromRGB(35, 15, 30),
+                Tab = Color3.fromRGB(38, 17, 33)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(100, 150, 255),
+                Purple = Color3.fromRGB(180, 100, 220),
+                Green = Color3.fromRGB(130, 200, 150),
+                Red = Color3.fromRGB(255, 100, 100),
+                Orange = Color3.fromRGB(255, 180, 80),
+                Cyan = Color3.fromRGB(100, 220, 240)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240),
+                    Thumb = Color3.fromRGB(220, 180, 200)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Track = Color3.fromRGB(35, 15, 30),
+                    Thumb = Color3.fromRGB(170, 100, 145),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Track = Color3.fromRGB(35, 15, 30),
+                    Thumb = Color3.fromRGB(170, 100, 145),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240),
+                    Display = Color3.fromRGB(255, 220, 240),
+                    Thumb = Color3.fromRGB(190, 130, 165),
+                    Track = Color3.fromRGB(200, 150, 180),
+                    Bottom = Color3.fromRGB(42, 18, 36)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240),
+                    Thumb = Color3.fromRGB(220, 180, 200),
+                    Track = Color3.fromRGB(220, 180, 200)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240),
+                    Icon = Color3.fromRGB(200, 150, 180),
+                    Track = Color3.fromRGB(35, 15, 30),
+                    Placeholder = Color3.fromRGB(180, 130, 160)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240),
+                    Track = Color3.fromRGB(35, 15, 30),
+                    Placeholder = Color3.fromRGB(180, 130, 160)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(200, 150, 180)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(35, 15, 30),
+                    Text = Color3.fromRGB(255, 220, 240)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(26, 11, 20),
+                    Secondary = Color3.fromRGB(35, 15, 30),
+                    Tertiary = Color3.fromRGB(35, 15, 28),
+                    Buttons = Color3.fromRGB(42, 18, 36),
+                    Title = Color3.fromRGB(255, 220, 240),
+                    Text = Color3.fromRGB(200, 150, 180)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(26, 11, 20),
+                    Secondary = Color3.fromRGB(35, 15, 30),
+                    Tertiary = Color3.fromRGB(35, 15, 28),
+                    Title = Color3.fromRGB(255, 220, 240),
+                    Text = Color3.fromRGB(200, 150, 180)
+                }
+            }
+        },
+        Ocean = {
+            Background = {
+                Primary = Color3.fromRGB(8, 20, 35),
+                Secondary = Color3.fromRGB(12, 28, 48),
+                Tertiary = Color3.fromRGB(12, 28, 48),
+                Card = Color3.fromRGB(10, 24, 42)
+            },
+            Text = {
+                Primary = Color3.fromRGB(200, 235, 255),
+                Secondary = Color3.fromRGB(140, 190, 220),
+                Disabled = Color3.fromRGB(90, 140, 170)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(200, 235, 255),
+                Secondary = Color3.fromRGB(140, 190, 220),
+                Disabled = Color3.fromRGB(90, 140, 170),
+                Shadow = Color3.fromRGB(8, 20, 35)
+            },
+            Border = {
+                Primary = Color3.fromRGB(22, 50, 75),
+                Secondary = Color3.fromRGB(60, 120, 170)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(20, 48, 72),
+                Pressed = Color3.fromRGB(28, 62, 92),
+                Selected = Color3.fromRGB(15, 35, 55),
+                Tab = Color3.fromRGB(17, 38, 58)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(50, 180, 255),
+                Purple = Color3.fromRGB(150, 100, 255),
+                Green = Color3.fromRGB(80, 220, 160),
+                Red = Color3.fromRGB(255, 100, 100),
+                Orange = Color3.fromRGB(255, 180, 80),
+                Cyan = Color3.fromRGB(80, 240, 255)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255),
+                    Thumb = Color3.fromRGB(160, 200, 230)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Track = Color3.fromRGB(15, 35, 55),
+                    Thumb = Color3.fromRGB(80, 150, 195),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Track = Color3.fromRGB(15, 35, 55),
+                    Thumb = Color3.fromRGB(80, 150, 195),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255),
+                    Display = Color3.fromRGB(200, 235, 255),
+                    Thumb = Color3.fromRGB(110, 170, 210),
+                    Track = Color3.fromRGB(70, 170, 220),
+                    Bottom = Color3.fromRGB(18, 42, 65)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255),
+                    Thumb = Color3.fromRGB(160, 200, 230),
+                    Track = Color3.fromRGB(160, 200, 230)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255),
+                    Icon = Color3.fromRGB(140, 190, 220),
+                    Track = Color3.fromRGB(15, 35, 55),
+                    Placeholder = Color3.fromRGB(120, 170, 200)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255),
+                    Track = Color3.fromRGB(15, 35, 55),
+                    Placeholder = Color3.fromRGB(120, 170, 200)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(140, 190, 220)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(15, 35, 55),
+                    Text = Color3.fromRGB(200, 235, 255)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(8, 20, 35),
+                    Secondary = Color3.fromRGB(15, 35, 55),
+                    Tertiary = Color3.fromRGB(12, 28, 48),
+                    Buttons = Color3.fromRGB(18, 42, 65),
+                    Title = Color3.fromRGB(200, 235, 255),
+                    Text = Color3.fromRGB(140, 190, 220)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(8, 20, 35),
+                    Secondary = Color3.fromRGB(15, 35, 55),
+                    Tertiary = Color3.fromRGB(12, 28, 48),
+                    Title = Color3.fromRGB(200, 235, 255),
+                    Text = Color3.fromRGB(140, 190, 220)
+                }
+            }
+        },
+        Forest = {
+            Background = {
+                Primary = Color3.fromRGB(12, 25, 15),
+                Secondary = Color3.fromRGB(18, 35, 22),
+                Tertiary = Color3.fromRGB(18, 35, 22),
+                Card = Color3.fromRGB(15, 30, 18)
+            },
+            Text = {
+                Primary = Color3.fromRGB(200, 255, 210),
+                Secondary = Color3.fromRGB(140, 200, 155),
+                Disabled = Color3.fromRGB(90, 150, 110)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(200, 255, 210),
+                Secondary = Color3.fromRGB(140, 200, 155),
+                Disabled = Color3.fromRGB(90, 150, 110),
+                Shadow = Color3.fromRGB(12, 25, 15)
+            },
+            Border = {
+                Primary = Color3.fromRGB(30, 55, 38),
+                Secondary = Color3.fromRGB(75, 150, 100)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(28, 55, 36),
+                Pressed = Color3.fromRGB(36, 70, 45),
+                Selected = Color3.fromRGB(18, 38, 22),
+                Tab = Color3.fromRGB(20, 42, 26)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(100, 200, 255),
+                Purple = Color3.fromRGB(180, 130, 255),
+                Green = Color3.fromRGB(80, 255, 120),
+                Red = Color3.fromRGB(255, 100, 100),
+                Orange = Color3.fromRGB(255, 200, 80),
+                Cyan = Color3.fromRGB(100, 255, 240)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210),
+                    Thumb = Color3.fromRGB(160, 230, 170)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Track = Color3.fromRGB(18, 38, 22),
+                    Thumb = Color3.fromRGB(100, 190, 125),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Track = Color3.fromRGB(18, 38, 22),
+                    Thumb = Color3.fromRGB(100, 190, 125),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210),
+                    Display = Color3.fromRGB(200, 255, 210),
+                    Thumb = Color3.fromRGB(130, 200, 150),
+                    Track = Color3.fromRGB(70, 210, 105),
+                    Bottom = Color3.fromRGB(22, 46, 28)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210),
+                    Thumb = Color3.fromRGB(160, 230, 170),
+                    Track = Color3.fromRGB(160, 230, 170)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210),
+                    Icon = Color3.fromRGB(140, 200, 155),
+                    Track = Color3.fromRGB(18, 38, 22),
+                    Placeholder = Color3.fromRGB(120, 180, 140)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210),
+                    Track = Color3.fromRGB(18, 38, 22),
+                    Placeholder = Color3.fromRGB(120, 180, 140)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(140, 200, 155)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(18, 38, 22),
+                    Text = Color3.fromRGB(200, 255, 210)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(12, 25, 15),
+                    Secondary = Color3.fromRGB(18, 38, 22),
+                    Tertiary = Color3.fromRGB(18, 35, 22),
+                    Buttons = Color3.fromRGB(22, 46, 28),
+                    Title = Color3.fromRGB(200, 255, 210),
+                    Text = Color3.fromRGB(140, 200, 155)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(12, 25, 15),
+                    Secondary = Color3.fromRGB(18, 38, 22),
+                    Tertiary = Color3.fromRGB(18, 35, 22),
+                    Title = Color3.fromRGB(200, 255, 210),
+                    Text = Color3.fromRGB(140, 200, 155)
+                }
+            }
+        },
+        Midnight = {
+            Background = {
+                Primary = Color3.fromRGB(8, 5, 20),
+                Secondary = Color3.fromRGB(14, 10, 30),
+                Tertiary = Color3.fromRGB(14, 10, 30),
+                Card = Color3.fromRGB(11, 8, 25)
+            },
+            Text = {
+                Primary = Color3.fromRGB(220, 210, 255),
+                Secondary = Color3.fromRGB(160, 145, 200),
+                Disabled = Color3.fromRGB(110, 95, 150)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(220, 210, 255),
+                Secondary = Color3.fromRGB(160, 145, 200),
+                Disabled = Color3.fromRGB(110, 95, 150),
+                Shadow = Color3.fromRGB(8, 5, 20)
+            },
+            Border = {
+                Primary = Color3.fromRGB(35, 25, 60),
+                Secondary = Color3.fromRGB(100, 70, 160)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(35, 22, 60),
+                Pressed = Color3.fromRGB(45, 30, 75),
+                Selected = Color3.fromRGB(18, 12, 35),
+                Tab = Color3.fromRGB(20, 14, 40)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(120, 140, 255),
+                Purple = Color3.fromRGB(200, 130, 255),
+                Green = Color3.fromRGB(130, 220, 180),
+                Red = Color3.fromRGB(255, 120, 120),
+                Orange = Color3.fromRGB(255, 200, 100),
+                Cyan = Color3.fromRGB(120, 240, 255)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255),
+                    Thumb = Color3.fromRGB(180, 170, 230)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Track = Color3.fromRGB(18, 12, 35),
+                    Thumb = Color3.fromRGB(130, 105, 190),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Track = Color3.fromRGB(18, 12, 35),
+                    Thumb = Color3.fromRGB(130, 105, 190),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255),
+                    Display = Color3.fromRGB(220, 210, 255),
+                    Thumb = Color3.fromRGB(155, 135, 210),
+                    Track = Color3.fromRGB(130, 105, 190),
+                    Bottom = Color3.fromRGB(22, 16, 45)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255),
+                    Thumb = Color3.fromRGB(180, 170, 230),
+                    Track = Color3.fromRGB(180, 170, 230)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255),
+                    Icon = Color3.fromRGB(160, 145, 200),
+                    Track = Color3.fromRGB(18, 12, 35),
+                    Placeholder = Color3.fromRGB(140, 125, 180)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255),
+                    Track = Color3.fromRGB(18, 12, 35),
+                    Placeholder = Color3.fromRGB(140, 125, 180)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(160, 145, 200)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(18, 12, 35),
+                    Text = Color3.fromRGB(220, 210, 255)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(8, 5, 20),
+                    Secondary = Color3.fromRGB(18, 12, 35),
+                    Tertiary = Color3.fromRGB(14, 10, 30),
+                    Buttons = Color3.fromRGB(22, 16, 45),
+                    Title = Color3.fromRGB(220, 210, 255),
+                    Text = Color3.fromRGB(160, 145, 200)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(8, 5, 20),
+                    Secondary = Color3.fromRGB(18, 12, 35),
+                    Tertiary = Color3.fromRGB(14, 10, 30),
+                    Title = Color3.fromRGB(220, 210, 255),
+                    Text = Color3.fromRGB(160, 145, 200)
+                }
+            }
+        },
+        Eclipse = {
+            Background = {
+                Primary = Color3.fromRGB(12, 6, 6),
+                Secondary = Color3.fromRGB(18, 8, 8),
+                Tertiary = Color3.fromRGB(18, 8, 8),
+                Card = Color3.fromRGB(15, 7, 7)
+            },
+            Text = {
+                Primary = Color3.fromRGB(220, 190, 190),
+                Secondary = Color3.fromRGB(170, 120, 120),
+                Disabled = Color3.fromRGB(120, 70, 70)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(220, 190, 190),
+                Secondary = Color3.fromRGB(170, 120, 120),
+                Disabled = Color3.fromRGB(120, 70, 70),
+                Shadow = Color3.fromRGB(12, 6, 6)
+            },
+            Border = {
+                Primary = Color3.fromRGB(40, 18, 18),
+                Secondary = Color3.fromRGB(80, 35, 35)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(45, 18, 18),
+                Pressed = Color3.fromRGB(60, 22, 22),
+                Selected = Color3.fromRGB(28, 10, 10),
+                Tab = Color3.fromRGB(32, 12, 12)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(100, 140, 230),
+                Purple = Color3.fromRGB(180, 130, 230),
+                Green = Color3.fromRGB(120, 210, 160),
+                Red = Color3.fromRGB(230, 110, 110),
+                Orange = Color3.fromRGB(230, 180, 80),
+                Cyan = Color3.fromRGB(110, 225, 230)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190),
+                    Thumb = Color3.fromRGB(200, 170, 170)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Track = Color3.fromRGB(28, 10, 10),
+                    Thumb = Color3.fromRGB(150, 70, 70),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Track = Color3.fromRGB(28, 10, 10),
+                    Thumb = Color3.fromRGB(150, 70, 70),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190),
+                    Display = Color3.fromRGB(220, 190, 190),
+                    Thumb = Color3.fromRGB(170, 100, 100),
+                    Track = Color3.fromRGB(150, 70, 70),
+                    Bottom = Color3.fromRGB(35, 14, 14)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190),
+                    Thumb = Color3.fromRGB(200, 170, 170),
+                    Track = Color3.fromRGB(200, 170, 170)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190),
+                    Icon = Color3.fromRGB(170, 120, 120),
+                    Track = Color3.fromRGB(28, 10, 10),
+                    Placeholder = Color3.fromRGB(150, 90, 90)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190),
+                    Track = Color3.fromRGB(28, 10, 10),
+                    Placeholder = Color3.fromRGB(150, 90, 90)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(170, 120, 120)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(28, 10, 10),
+                    Text = Color3.fromRGB(220, 190, 190)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(12, 6, 6),
+                    Secondary = Color3.fromRGB(28, 10, 10),
+                    Tertiary = Color3.fromRGB(18, 8, 8),
+                    Buttons = Color3.fromRGB(35, 14, 14),
+                    Title = Color3.fromRGB(220, 190, 190),
+                    Text = Color3.fromRGB(170, 120, 120)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(12, 6, 6),
+                    Secondary = Color3.fromRGB(28, 10, 10),
+                    Tertiary = Color3.fromRGB(18, 8, 8),
+                    Title = Color3.fromRGB(220, 190, 190),
+                    Text = Color3.fromRGB(170, 120, 120)
+                }
+            }
         }
     },
     GetService = function(service)
@@ -1113,6 +1887,9 @@ function Lib:Window(Settings)
     Settings.KeyBind = Settings.KeyBind or Enum.KeyCode.K
 
     Lib.Folder = Settings.Folder
+
+    if not Lib.Windows then Lib.Windows = {} end
+    table.insert(Lib.Windows, StorageTabs)
 
     local StorageTabs = {CurrentTab = nil, FirstTab = true}
     local ScreenGui = Lib:GetGui()
@@ -7640,7 +8417,7 @@ end
 function Lib:Demo()
     local Window = Lib:Window({
         Title = "AiCode Demo",
-        Theme = "Darker",
+        Theme = "Rose",
         Folder = "AiCodeDemo",
         ShowUserInfo = false,
         AcrylicBlur = false,
@@ -8015,5 +8792,7 @@ function Lib:Demo()
 
     return Window
 end
+
+Lib:Demo()
 
 return Lib

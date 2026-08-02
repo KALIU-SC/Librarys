@@ -1,4 +1,3 @@
-```markdown
 # 🚀 AiCode Library
 
 Uma biblioteca de UI moderna e intuitiva para Roblox, projetada para facilitar a criação de interfaces elegantes.
@@ -105,21 +104,10 @@ Section:Button("ButtonId", {
 Toggle (Interruptor)
 
 ```luau
--- Estilo 1 (Moderno)
 Section:Toggle("ToggleId", {
     Name = "Toggle Moderno",
     Default = false,
     Style = 1,
-    Callback = function(value)
-        print("Toggle:", value)
-    end
-})
-
--- Estilo 2 (Bola)
-Section:Toggle("ToggleId2", {
-    Name = "Toggle Bola",
-    Default = false,
-    Style = 2,
     Callback = function(value)
         print("Toggle:", value)
     end
@@ -180,34 +168,14 @@ Section:Dropdown("DropdownId", {
         print("Selecionado:", value)
     end
 })
-
--- Múltipla Seleção
-Section:Dropdown("DropdownId2", {
-    Name = "Selecione Várias",
-    Values = {"Maçã", "Banana", "Laranja", "Uva"},
-    Default = {"Maçã", "Laranja"},
-    MultiSelection = true,
-    Callback = function(value)
-        print("Selecionados:", value)
-    end
-})
 ```
 
 Label
 
 ```luau
 Section:Label("LabelId", {
-    Text = "Rótulo Simples"
-})
-
-Section:Label("LabelId2", {
-    Text = "Rótulo Negrito",
-    Bold = true
-})
-
-Section:Label("LabelId3", {
-    Text = "Rótulo Sublinhado",
-    Subline = true
+    Text = "Rótulo Simples",
+    Bold = false
 })
 ```
 
@@ -220,44 +188,28 @@ Section:Paragraph("ParagraphId", {
     Bold = {Type = "Title", Enabled = true}
 })
 ```
+```luau
+—-[[Bold Type pode ser Title, Text ou Both
+]]
+```
 
 Input
 
 ```luau
 -- Texto
-Section:Input("InputId", {
-    Name = "Usuário",
-    Placeholder = "Digite seu usuário...",
-    Default = "Player",
+Section:Input("InputId1", {
+    Name = "Input",
+    Placeholder = "None…",
+    Numeric = false,
+    ClearOnFocus = false,
+    Default = Input,
     Callback = function(value)
-        print("Texto:", value)
-    end
-})
-
--- Numérico
-Section:Input("InputId2", {
-    Name = "Idade",
-    Placeholder = "Digite sua idade...",
-    Numeric = true,
-    Default = 18,
-    Callback = function(value)
-        print("Número:", value)
-    end
-})
-
--- Limpar ao focar
-Section:Input("InputId3", {
-    Name = "Limpar ao Focar",
-    Placeholder = "Clique para limpar...",
-    Default = "Limpe-me",
-    ClearOnFocus = true,
-    Callback = function(value)
-        print("Valor:", value)
+        print("Input:", value)
     end
 })
 ```
 
-KeyBind
+KeyBinds
 
 ```luau
 -- Toggle com KeyBind
@@ -269,17 +221,9 @@ Section:ToggleKeyBind("ToggleKeyId", {
         print("Estado:", value)
     end
 })
+```
 
--- KeyBind Simples
-Section:KeyBind("KeyBindId", {
-    Name = "Abrir Menu",
-    Default = "K",
-    Hold = false,
-    Callback = function(key)
-        print("Tecla:", key)
-    end
-})
-
+```luau
 -- KeyBind com Hold
 Section:KeyBind("KeyBindId2", {
     Name = "Correr",
@@ -305,30 +249,22 @@ Section:Button("DialogId", {
                 {
                     Name = "Sim",
                     Callback = function()
-                        Window:Notification({
-                            Title = "Confirmado",
-                            Message = "Você clicou em Sim!",
-                            Duration = 2,
-                            Position = "Screen"
-                        })
+                        
                     end
                 },
                 {
                     Name = "Não",
                     Callback = function()
-                        Window:Notification({
-                            Title = "Cancelado",
-                            Message = "Operação cancelada!",
-                            Duration = 2,
-                            Position = "Screen"
-                        })
+                        
                     end
                 }
             }
         })
     end
 })
+```
 
+```luau
 -- Notificações
 Section:Button("NotificationId", {
     Name = "Notificação na Tela",
@@ -448,8 +384,6 @@ Section:Slider("Slider", {
         print(value)
     end
 })
-
-return Window
 ```
 
 ---

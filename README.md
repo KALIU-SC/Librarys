@@ -18,10 +18,14 @@ local AiCode = loadstring(game:HttpGet("https://raw.githubusercontent.com/KALIU-
 local Window = AiCode:Window({
     Title = "AiCode",
     Theme = "Darker",
-    Folder = “AiCode”,
-    AcrylicBlur = false,
-    Button = {Enabled = true},
+    Folder = "AiCode",
     Size = {550, 350},
+    AcrylicBlur = false,
+    Button = {
+        Enabled = true,
+        Size = {45, 45},
+        Position = {30, 30}
+    },
     KeyBind = Enum.KeyCode.K
 })
 ```
@@ -29,11 +33,14 @@ local Window = AiCode:Window({
 ```luau
 --[[
     Title: Título da janela
-    Theme: "Darker" ou "Light"
-    ShowUserInfo: Mostrar informações do usuário (true/false)
+    Theme: "Darker", "Light", "Rose", "Ocean", "Forest", "Midnight", "Eclipse"
+    Folder: Pasta para salvar configurações
+    Size: Tamanho da janela {Largura, Altura}
     AcrylicBlur: Efeito de blur (true/false)
     Button: Configurações do botão de fechar
-    Size: Tamanho da janela {Largura, Altura}
+        Enabled: true/false
+        Size: {Largura, Altura}
+        Position: {X, Y}
     KeyBind: Tecla para abrir/fechar (Enum.KeyCode)
 ]]
 ```
@@ -52,7 +59,7 @@ local Tab = Window:Tab({
 
 ```luau
 --[[
-    Icon: Ícone da aba (ex: "Home", "Settings", "Gear", "User")
+    Icon: Ícone da aba ("Home", "Settings", "Gear", "User")
 ]]
 ```
 
@@ -66,7 +73,7 @@ local SubTab = Tab:SubTab({
 
 ```luau
 --[[
-    Name: Nome da sub-aba que aparecerá no menu
+    Name: Nome da sub-aba
 ]]
 ```
 
@@ -82,7 +89,7 @@ local Section = SubTab:Section({
 ```luau
 --[[
     Header: Título da seção
-    Side: Lado da tela - "Left" ou "Right"
+    Side: "Left" ou "Right"
 ]]
 ```
 
@@ -103,12 +110,12 @@ Section:Button("ButtonId", {
 
 ```luau
 --[[
-    Name: Texto exibido no botão
+    Name: Texto do botão
     Callback: Função executada ao clicar
 ]]
 ```
 
-Toggle (Interruptor)
+Toggle
 
 ```luau
 Section:Toggle("ToggleId", {
@@ -123,9 +130,9 @@ Section:Toggle("ToggleId", {
 
 ```luau
 --[[
-    Name: Texto exibido no toggle
-    Default: Valor inicial (true/false)
-    Style: Estilo do toggle (1 = Moderno, 2 = Bola)
+    Name: Texto do toggle
+    Default: true/false
+    Style: 1 (Moderno) ou 2 (Bola)
     Callback: Função executada ao alternar
 ]]
 ```
@@ -144,8 +151,8 @@ Section:Checkbox("CheckboxId", {
 
 ```luau
 --[[
-    Name: Texto exibido no checkbox
-    Default: Valor inicial (true/false)
+    Name: Texto do checkbox
+    Default: true/false
     Callback: Função executada ao alternar
 ]]
 ```
@@ -165,7 +172,7 @@ local colorpicker = Section:Colorpicker("ColorpickerId", {
 
 ```luau
 --[[
-    Name: Texto exibido no color picker
+    Name: Texto do color picker
     Default: Cor inicial (Color3)
     Cursor: Mostrar cursor (true/false)
     Callback: Função executada ao selecionar cor
@@ -190,13 +197,13 @@ Section:Slider("SliderId", {
 
 ```luau
 --[[
-    Name: Texto exibido no slider
+    Name: Texto do slider
     Default: Valor inicial
     Minimum: Valor mínimo
     Maximum: Valor máximo
-    Precision: Casas decimais
-    DisplayMethod: Formato de exibição ("Percent", "Value", "Degrees", "Hundredths")
-    Callback: Função executada ao alterar valor
+    Precision: Casas decimais (0, 1, 2, 3)
+    DisplayMethod: "Percent", "Value", "Degrees", "Hundredths"
+    Callback: Função executada ao alterar
 ]]
 ```
 
@@ -217,10 +224,10 @@ Section:Dropdown("DropdownId", {
 
 ```luau
 --[[
-    Name: Texto exibido no dropdown
+    Name: Texto do dropdown
     Values: Lista de opções
     Default: Valor padrão
-    MultiSelection: Permitir múltipla seleção (true/false)
+    MultiSelection: true/false
     Callback: Função executada ao selecionar
 ]]
 ```
@@ -237,9 +244,9 @@ Section:Label("LabelId", {
 
 ```luau
 --[[
-    Text: Texto exibido no label
-    Bold: Texto em negrito (true/false)
-    Subline: Texto sublinhado (true/false)
+    Text: Texto do label
+    Bold: true/false
+    Subline: true/false
 ]]
 ```
 
@@ -257,7 +264,7 @@ Section:Paragraph("ParagraphId", {
 --[[
     Title: Título do parágrafo
     Text: Conteúdo do parágrafo
-    Bold.Type: "Title", "Text" ou "Both"
+    Bold.Type: "Title", "Text", "Both"
     Bold.Enabled: true/false
 ]]
 ```
@@ -266,11 +273,11 @@ Input
 
 ```luau
 Section:Input("InputId", {
-    Name = "Input",
-    Placeholder = "Digite algo...",
+    Name = "Usuário",
+    Placeholder = "Digite seu usuário...",
     Numeric = false,
     ClearOnFocus = false,
-    Default = "Texto",
+    Default = "Player",
     Callback = function(value)
         print("Input:", value)
     end
@@ -279,10 +286,10 @@ Section:Input("InputId", {
 
 ```luau
 --[[
-    Name: Texto exibido no input
+    Name: Texto do input
     Placeholder: Texto de placeholder
-    Numeric: Apenas números (true/false)
-    ClearOnFocus: Limpar ao focar (true/false)
+    Numeric: true/false
+    ClearOnFocus: true/false
     Default: Valor padrão
     Callback: Função executada ao alterar
 ]]
@@ -304,8 +311,8 @@ Section:ToggleKeyBind("ToggleKeyId", {
 
 ```luau
 --[[
-    Name: Texto exibido no toggle
-    Default: Valor inicial (true/false)
+    Name: Texto do toggle
+    Default: true/false
     KeyCode: Tecla para alternar (Enum.KeyCode)
     Callback: Função executada ao alternar
 ]]
@@ -325,63 +332,49 @@ Section:KeyBind("KeyBindId", {
 
 ```luau
 --[[
-    Name: Texto exibido no keybind
-    Default: Tecla padrão (ex: "K", "LeftShift")
-    Hold: Modo de segurar (true/false)
+    Name: Texto do keybind
+    Default: Tecla padrão
+    Hold: true/false
     Callback: Função executada ao pressionar
 ]]
 ```
 
-Diálogos e Notificações
+---
+
+💬 Diálogos e Notificações
+
+Dialog
 
 ```luau
--- Diálogo
-Section:Button("DialogId", {
-    Name = "Mostrar Diálogo",
-    Callback = function()
-        Window:Dialog({
-            Title = "Confirmação",
-            Description = "Tem certeza que deseja continuar?",
-            Buttons = {
-                {
-                    Name = "Sim",
-                    Callback = function()
-                        print("Clicou em Sim")
-                    end
-                },
-                {
-                    Name = "Não",
-                    Callback = function()
-                        print("Clicou em Não")
-                    end
-                }
-            }
-        })
-    end
+Window:Dialog({
+    Title = "Confirmação",
+    Description = "Tem certeza que deseja continuar?",
+    Buttons = {
+        {
+            Name = "Sim",
+            Callback = function()
+                print("Clicou em Sim")
+            end
+        },
+        {
+            Name = "Não",
+            Callback = function()
+                print("Clicou em Não")
+            end
+        }
+    }
 })
 ```
 
-```luau
---[[
-    Title: Título do diálogo
-    Description: Descrição do diálogo
-    Buttons: Lista de botões com Name e Callback
-]]
-```
+Notification
 
 ```luau
--- Notificações
-Section:Button("NotificationId", {
-    Name = "Notificação na Tela",
-    Callback = function()
-        Window:Notification({
-            Title = "Notificação",
-            Message = "Esta é uma notificação!",
-            Duration = 3,
-            Position = "Screen",
-            ShowProgress = true
-        })
-    end
+Window:Notification({
+    Title = "Notificação",
+    Message = "Esta é uma notificação!",
+    Duration = 3,
+    Position = "Screen",
+    ShowProgress = true
 })
 ```
 
@@ -391,81 +384,16 @@ Section:Button("NotificationId", {
     Message: Mensagem da notificação
     Duration: Duração em segundos
     Position: "Screen" ou "Menu"
-    ShowProgress: Mostrar barra de progresso (true/false)
-]]
-```
-
-Save/Load
-
-```luau
-local SaveManager = Window:SaveLoad({})
-```
-
-```luau
---[[
-    Sistema de salvamento automático
-    Preserva o estado de todos os elementos
+    ShowProgress: true/false
 ]]
 ```
 
 ---
 
-🎨 Métodos dos Elementos
-
-Color Picker
+💾 Save/Load
 
 ```luau
-colorpicker:SetColor(Color3.fromRGB(0, 255, 0)) -- Definir cor
-colorpicker:GetColor() -- Obter cor atual
-colorpicker:GetHSV() -- Obter HSV
-colorpicker:SetHSV(0.5, 1, 1) -- Definir HSV
-colorpicker:SetVisibility(true) -- Visibilidade
-colorpicker:Destroy() -- Destruir
-```
-
-Slider
-
-```luau
-slider:SetValue(75) -- Definir valor
-slider:GetValue() -- Obter valor atual
-slider:SetVisibility(true) -- Visibilidade
-slider:Destroy() -- Destruir
-```
-
-Dropdown
-
-```luau
-dropdown:SetValue("Opção 2") -- Definir valor
-dropdown:GetValue() -- Obter valor atual
-dropdown:SetVisibility(true) -- Visibilidade
-dropdown:Destroy() -- Destruir
-```
-
-Toggle
-
-```luau
-toggle:SetValue(true) -- Definir estado
-toggle:GetValue() -- Obter estado atual
-toggle:SetVisibility(true) -- Visibilidade
-toggle:Destroy() -- Destruir
-```
-
-Input
-
-```luau
-input:SetValue("Novo texto") -- Definir valor
-input:GetValue() -- Obter valor atual
-input:SetVisibility(true) -- Visibilidade
-input:Destroy() -- Destruir
-```
-
-Checkbox
-
-```luau
-checkbox:SetValue(true) -- Definir estado
-checkbox:GetValue() -- Obter estado atual
-checkbox:SetVisibility(true) -- Visibilidade
-checkbox:Destroy() -- Destruir
+local SaveManager = Window:SaveLoad({})
 ```
 
 ---
@@ -474,11 +402,11 @@ checkbox:Destroy() -- Destruir
 
 · "Darker" - Tema escuro (padrão)
 · "Light" - Tema claro
-· "Rose" - Tema rose
+· "Rose" - Tema rosa
 · "Ocean" - Tema oceano
 · "Forest" - Tema floresta
-· "Midnight" - Tema noturno
-· "Eclipse" - Tema vermelho escuro
+· "Midnight" - Tema meia-noite
+· "Eclipse" - Tema eclipse
 
 ---
 
@@ -520,38 +448,15 @@ Section:Slider("Slider", {
         print(value)
     end
 })
+
+return Window
 ```
-
----
-
-⚙️ Sistema de Salvamento Automático
-
-A biblioteca possui um sistema de salvamento automático que preserva o estado dos elementos entre sessões.
-
-```luau
-local SaveManager = Window:SaveLoad({})
-```
-
-Elementos salvos automaticamente:
-
-· Toggles
-· Checkboxes
-· Sliders
-· Inputs
-· Color Pickers
-· Dropdowns
 
 ---
 
 📄 Licença
 
 MIT License - Use como quiser!
-
----
-
-🤝 Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
 
 ---
 

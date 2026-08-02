@@ -6,15 +6,157 @@ local SaveLoadSystem = {
         Dropdowns = {},
         Keybinds = {},
         Colorpickers = {},
-        Checkboxes = {}
+        Checkboxes = {},
+        ToggleKeyBinds = {}
     },
     FolderName = nil
 }
 
-local HOMEsystem = {}
+local Lib = {
+    Features = {},
+    Folder = "",
+    Themes = {
+        Darker = {
+            Background = {
+                Primary = Color3.fromRGB(10, 10, 10),
+                Secondary = Color3.fromRGB(15, 15, 15),
+                Tertiary = Color3.fromRGB(15, 15, 15),
+                Card = Color3.fromRGB(15, 15, 15)
+            },
+            Text = {
+                Primary = Color3.fromRGB(240, 240, 240),
+                Secondary = Color3.fromRGB(180, 180, 180),
+                Disabled = Color3.fromRGB(120, 120, 120)
+            },
+            Font = {
+                Title = Enum.Font.Code,
+                Text = Enum.Font.Code,
+                interFont = "rbxassetid://12187365364"
+            },
+            Image = {
+                Primary = Color3.fromRGB(240, 240, 240),
+                Secondary = Color3.fromRGB(180, 180, 180),
+                Disabled = Color3.fromRGB(120, 120, 120),
+                Shadow = Color3.fromRGB(15, 15, 15)
+            },
+            Border = {
+                Primary = Color3.fromRGB(35, 35, 35),
+                Secondary = Color3.fromRGB(140, 140, 140)
+            },
+            Interactive = {
+                Hover = Color3.fromRGB(45, 45, 55),
+                Pressed = Color3.fromRGB(55, 55, 65),
+                Selected = Color3.fromRGB(18, 18, 18),
+                Tab = Color3.fromRGB(22, 22, 22)
+            },
+            Highlight = {
+                White = Color3.fromRGB(255, 255, 255),
+                Blue = Color3.fromRGB(0, 120, 215),
+                Purple = Color3.fromRGB(103, 58, 183),
+                Green = Color3.fromRGB(76, 175, 80),
+                Red = Color3.fromRGB(244, 67, 54),
+                Orange = Color3.fromRGB(255, 152, 0),
+                Cyan = Color3.fromRGB(0, 188, 212)
+            },
+            Apple = {
+                Red = Color3.fromRGB(255, 79, 79),
+                Yellow = Color3.fromRGB(227, 232, 95),
+                Green = Color3.fromRGB(96, 181, 65)
+            },
+            Elements = {
+                Button = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240),
+                    Thumb = Color3.fromRGB(240, 240, 240)
+                },
+                Toggle = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Track = Color3.fromRGB(18, 18, 18),
+                    Thumb = Color3.fromRGB(140, 140, 140),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                Checkbox = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Track = Color3.fromRGB(18, 18, 18),
+                    Thumb = Color3.fromRGB(140, 140, 140),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                Slider = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240),
+                    Display = Color3.fromRGB(240, 240, 240),
+                    Thumb = Color3.fromRGB(180, 180, 180),
+                    Track = Color3.fromRGB(200, 200, 200),
+                    Bottom = Color3.fromRGB(25, 25, 25)
+                },
+                Dropdown = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240),
+                    Thumb = Color3.fromRGB(240, 240, 240),
+                    Track = Color3.fromRGB(240, 240, 240)
+                },
+                Colorpicker = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                Input = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240),
+                    Icon = Color3.fromRGB(180, 180, 180),
+                    Track = Color3.fromRGB(18, 18, 18),
+                    Placeholder = Color3.fromRGB(200, 200, 200)
+                },
+                KeyBind = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240),
+                    Track = Color3.fromRGB(18, 18, 18),
+                    Placeholder = Color3.fromRGB(200, 200, 200)
+                },
+                Paragraph = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                Label = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                SubLabel = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(180, 180, 180)
+                },
+                Header = {
+                    Primary = Color3.fromRGB(18, 18, 18),
+                    Text = Color3.fromRGB(240, 240, 240)
+                },
+                Dialog = {
+                    Primary = Color3.fromRGB(10, 10, 10),
+                    Secondary = Color3.fromRGB(18, 18, 18),
+                    Tertiary = Color3.fromRGB(15, 15, 15),
+                    Buttons = Color3.fromRGB(25, 25, 25),
+                    Title = Color3.fromRGB(240, 240, 240),
+                    Text = Color3.fromRGB(180, 180, 180)
+                },
+                Notification = {
+                    Primary = Color3.fromRGB(10, 10, 10),
+                    Secondary = Color3.fromRGB(18, 18, 18),
+                    Tertiary = Color3.fromRGB(15, 15, 15),
+                    Title = Color3.fromRGB(240, 240, 240),
+                    Text = Color3.fromRGB(180, 180, 180)
+                }
+            }
+        }
+    },
+    GetService = function(service)
+        return cloneref and cloneref(game:GetService(service)) or game:GetService(service)
+    end
+}
 
 function SaveLoadSystem:RegisterToggle(id, obj)
     self.elementRegistry.Toggles[id] = obj
+end
+
+function SaveLoadSystem:RegisterTKey(id, obj)
+    self.elementRegistry.ToggleKeyBinds[id] = obj
 end
 
 function SaveLoadSystem:RegisterSlider(id, obj)
@@ -42,8 +184,7 @@ function SaveLoadSystem:RegisterCheckbox(id, obj)
 end
 
 function SaveLoadSystem:GetPath()
-    -- Salva direto na pasta Lib.Folder (sem /Config)
-    return (self.FolderName or "AiCodeLib") .. "/"
+    return (Lib.Folder or self.FolderName or "AiCodeLib") .. "/"
 end
 
 function SaveLoadSystem:CollectData()
@@ -54,12 +195,21 @@ function SaveLoadSystem:CollectData()
         Dropdowns = {},
         Keybinds = {},
         Colorpickers = {},
-        Checkboxes = {}
+        Checkboxes = {},
+        ToggleKeyBinds = {}
     }
 
     for id, obj in pairs(self.elementRegistry.Toggles) do
         if obj and obj.GetValue then
             data.Toggles[id] = obj:GetValue()
+        end
+    end
+    for id, obj in pairs(self.elementRegistry.ToggleKeyBinds) do
+        if obj and obj.GetValue then
+            data.ToggleKeyBinds[id] = {
+                value = obj:GetValue(),
+                keyCode = obj:GetKeyCode() and obj:GetKeyCode().Name or nil
+            }
         end
     end
     for id, obj in pairs(self.elementRegistry.Sliders) do
@@ -106,6 +256,19 @@ function SaveLoadSystem:LoadData(data)
         local obj = self.elementRegistry.Toggles[id]
         if obj and obj.SetValue then
             obj:SetValue(state)
+        end
+    end
+    for id, data in pairs(data.ToggleKeyBinds or {}) do
+        local obj = self.elementRegistry.ToggleKeyBinds[id]
+        if obj and obj.SetValue then
+            if type(data) == "table" then
+                obj:SetValue(data.value)
+                if data.keyCode and obj.SetKeyCode then
+                    obj:SetKeyCode(Enum.KeyCode[data.keyCode])
+                end
+            else
+                obj:SetValue(data)
+            end
         end
     end
     for id, value in pairs(data.Sliders or {}) do
@@ -222,6 +385,11 @@ function SaveLoadSystem:ResetAll()
             obj:SetValue(false)
         end
     end
+    for id, obj in pairs(self.elementRegistry.ToggleKeyBinds) do
+        if obj and obj.SetValue then
+            obj:SetValue(false)
+        end
+    end
     for id, obj in pairs(self.elementRegistry.Sliders) do
         if obj and obj.SetValue then
             obj:SetValue(0)
@@ -266,7 +434,7 @@ end
 
 function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
     self.FolderName = Window.Folder or "AiCodeLib"
-
+    
     -- USA A TAB EXISTENTE OU CRIA UMA NOVA
     local saveTab = ExistingTab
 
@@ -515,145 +683,6 @@ local Icons =
     game:HttpGet("https://raw.githubusercontent.com/AKAIDOUSER/HARPY-LIBRARY/refs/heads/main/Load%20Icons.lua")
 )()
 Icons:LoadIcons("https://raw.githubusercontent.com/AKAIDOUSER/HARPY-LIBRARY/refs/heads/main/Icons.lua")
-
-local Lib = {
-    Features = {},
-    Folder = "",
-    Themes = {
-        Darker = {
-            Background = {
-                Primary = Color3.fromRGB(10, 10, 10),
-                Secondary = Color3.fromRGB(15, 15, 15),
-                Tertiary = Color3.fromRGB(15, 15, 15),
-                Card = Color3.fromRGB(15, 15, 15)
-            },
-            Text = {
-                Primary = Color3.fromRGB(240, 240, 240),
-                Secondary = Color3.fromRGB(180, 180, 180),
-                Disabled = Color3.fromRGB(120, 120, 120)
-            },
-            Font = {
-                Title = Enum.Font.Code,
-                Text = Enum.Font.Code,
-                interFont = "rbxassetid://12187365364"
-            },
-            Image = {
-                Primary = Color3.fromRGB(240, 240, 240),
-                Secondary = Color3.fromRGB(180, 180, 180),
-                Disabled = Color3.fromRGB(120, 120, 120),
-                Shadow = Color3.fromRGB(15, 15, 15)
-            },
-            Border = {
-                Primary = Color3.fromRGB(35, 35, 35),
-                Secondary = Color3.fromRGB(140, 140, 140)
-            },
-            Interactive = {
-                Hover = Color3.fromRGB(45, 45, 55),
-                Pressed = Color3.fromRGB(55, 55, 65),
-                Selected = Color3.fromRGB(18, 18, 18),
-                Tab = Color3.fromRGB(22, 22, 22)
-            },
-            Highlight = {
-                White = Color3.fromRGB(255, 255, 255),
-                Blue = Color3.fromRGB(0, 120, 215),
-                Purple = Color3.fromRGB(103, 58, 183),
-                Green = Color3.fromRGB(76, 175, 80),
-                Red = Color3.fromRGB(244, 67, 54),
-                Orange = Color3.fromRGB(255, 152, 0),
-                Cyan = Color3.fromRGB(0, 188, 212)
-            },
-            Apple = {
-                Red = Color3.fromRGB(255, 79, 79),
-                Yellow = Color3.fromRGB(227, 232, 95),
-                Green = Color3.fromRGB(96, 181, 65)
-            },
-            Elements = {
-                Button = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240),
-                    Thumb = Color3.fromRGB(240, 240, 240)
-                },
-                Toggle = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Track = Color3.fromRGB(18, 18, 18),
-                    Thumb = Color3.fromRGB(140, 140, 140),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                Checkbox = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Track = Color3.fromRGB(18, 18, 18),
-                    Thumb = Color3.fromRGB(140, 140, 140),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                Slider = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240),
-                    Display = Color3.fromRGB(240, 240, 240),
-                    Thumb = Color3.fromRGB(180, 180, 180),
-                    Track = Color3.fromRGB(200, 200, 200),
-                    Bottom = Color3.fromRGB(25, 25, 25)
-                },
-                Dropdown = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240),
-                    Thumb = Color3.fromRGB(240, 240, 240),
-                    Track = Color3.fromRGB(240, 240, 240)
-                },
-                Colorpicker = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                Input = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240),
-                    Icon = Color3.fromRGB(180, 180, 180),
-                    Track = Color3.fromRGB(18, 18, 18),
-                    Placeholder = Color3.fromRGB(200, 200, 200)
-                },
-                KeyBind = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240),
-                    Track = Color3.fromRGB(18, 18, 18),
-                    Placeholder = Color3.fromRGB(200, 200, 200)
-                },
-                Paragraph = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                Label = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                SubLabel = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(180, 180, 180)
-                },
-                Header = {
-                    Primary = Color3.fromRGB(18, 18, 18),
-                    Text = Color3.fromRGB(240, 240, 240)
-                },
-                Dialog = {
-                    Primary = Color3.fromRGB(10, 10, 10),
-                    Secondary = Color3.fromRGB(18, 18, 18),
-                    Tertiary = Color3.fromRGB(15, 15, 15),
-                    Buttons = Color3.fromRGB(25, 25, 25),
-                    Title = Color3.fromRGB(240, 240, 240),
-                    Text = Color3.fromRGB(180, 180, 180)
-                },
-                Notification = {
-                    Primary = Color3.fromRGB(10, 10, 10),
-                    Secondary = Color3.fromRGB(18, 18, 18),
-                    Tertiary = Color3.fromRGB(15, 15, 15),
-                    Title = Color3.fromRGB(240, 240, 240),
-                    Text = Color3.fromRGB(180, 180, 180)
-                }
-            }
-        }
-    },
-    GetService = function(service)
-        return cloneref and cloneref(game:GetService(service)) or game:GetService(service)
-    end
-}
 
 local TweenService = Lib.GetService("TweenService")
 local RunService = Lib.GetService("RunService")
@@ -989,110 +1018,81 @@ function Lib:AppleBalls(Size, theme, Parent)
     return HolderBalls_F
 end
 
-function Lib:UserInfoLayout(Parent, theme, State)
+function Lib:UserInfoLayout(Parent, theme, State, Style)
     local Themes = self:GetThemeConfig(theme)
-
     local userId = LocalPlayer.UserId
     local thumbType = Enum.ThumbnailType.AvatarBust
     local thumbSize = Enum.ThumbnailSize.Size48x48
+    Style = Style or 1
 
-    -- CORREÇÃO AQUI: GetUserThumbnailAsync retorna 2 valores
     local headshotImage, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
 
-    local BgUserPerfil =
-        CreateElement(
-        "Frame",
-        {
-            Size = UDim2.new(1, -20, 1, -10),
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            BackgroundTransparency = 1,
-            BorderSizePixel = 0,
-            Active = false,
-            Draggable = false,
-            ClipsDescendants = false,
-            Parent = Parent
-        }
-    )
+    local BgUserPerfil = CreateElement("Frame", {
+        Size = UDim2.new(1, -20, 1, -10),
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Active = false,
+        Draggable = false,
+        ClipsDescendants = false,
+        Parent = Parent
+    })
 
-    CreateElement(
-        "UICorner",
-        {
-            CornerRadius = UDim.new(0, 6),
-            Parent = BgUserPerfil
-        }
-    )
+    CreateElement("UICorner", {
+        CornerRadius = UDim.new(0, 6),
+        Parent = BgUserPerfil
+    })
 
-    CreateElement(
-        "UIStroke",
-        {
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            Thickness = 1,
-            Color = Themes.Border.Primary,
-            Parent = BgUserPerfil
-        }
-    )
+    local Headshot = CreateElement("ImageLabel", {
+        Name = "Headshot",
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Image = State and headshotImage or assets.userInfoBlurred,
+        ImageTransparency = 1,
+        Size = UDim2.fromOffset(28, 28),
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        Parent = BgUserPerfil
+    })
 
-    local Headshot =
-        CreateElement(
-        "ImageLabel",
-        {
-            Name = "Headshot",
-            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-            BackgroundTransparency = 1,
-            BorderColor3 = Color3.fromRGB(0, 0, 0),
-            BorderSizePixel = 0,
-            Image = State and headshotImage or assets.userInfoBlurred,
-            ImageTransparency = 1,
-            Size = UDim2.fromOffset(28, 28),
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            Parent = BgUserPerfil
-        }
-    )
+    CreateElement("UICorner", {
+        CornerRadius = UDim.new(0.35, 0),
+        Parent = Headshot
+    })
 
-    CreateElement(
-        "UICorner",
-        {
-            CornerRadius = UDim.new(1, 0),
-            Parent = Headshot
-        }
-    )
-
-    local Stk =
-        CreateElement(
-        "UIStroke",
-        {
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            Thickness = 1,
-            Color = Themes.Border.Primary,
-            Parent = Headshot
-        }
-    )
+    local Stk = CreateElement("UIStroke", {
+        ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+        Thickness = 1,
+        Color = Themes.Border.Primary,
+        Parent = Headshot
+    })
 
     local Speed = 1
+    
+    if Style == 2 then
+        CreateElement("UIStroke", {
+            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            Thickness = 1,
+            Color = Themes.Border.Primary,
+            Parent = BgUserPerfil
+        })
+    
+        
+    end
 
-    task.spawn(
-        function()
-            TweenService:Create(
-                Headshot,
-                TweenInfo.new(Speed, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-                {
-                    ImageTransparency = 0
-                }
-            ):Play()
+    task.spawn(function()
+        TweenService:Create(Headshot, TweenInfo.new(Speed, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            ImageTransparency = 0
+        }):Play()
 
-            TweenService:Create(
-                Stk,
-                TweenInfo.new(Speed, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-                {
-                    Thickness = 1
-                }
-            ):Play()
-        end
-    )
+        TweenService:Create(Stk, TweenInfo.new(Speed, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Thickness = 1
+        }):Play()
+    end)
 
-    -- Retorne uma tabela com todos os elementos principais se precisar controlá-los depois
     return {
         BgUserPerfil = BgUserPerfil,
         Headshot = Headshot,
@@ -1244,9 +1244,9 @@ function Lib:Window(Settings)
         CreateElement(
         "Frame",
         {
-            Size = UDim2.new(1, 0, 1, -80),
+            Size = UDim2.new(1, 0, 1, -35),
             AnchorPoint = Vector2.new(1, 1),
-            Position = UDim2.new(1, 0, 1, -45),
+            Position = UDim2.new(1, 0, 1, 0),
             BackgroundTransparency = 1,
             BorderSizePixel = 0,
             ClipsDescendants = true,
@@ -1298,21 +1298,7 @@ function Lib:Window(Settings)
         }
     )
 
-    local Left_User_F =
-        CreateElement(
-        "Frame",
-        {
-            Size = UDim2.new(1, 0, 0, 45),
-            AnchorPoint = Vector2.new(1, 1),
-            Position = UDim2.new(1, 0, 1, 0),
-            BackgroundTransparency = 1,
-            BorderSizePixel = 0,
-            ClipsDescendants = true,
-            Parent = Left
-        }
-    )
-
-    -- Right Frame
+    
 
     local Right =
         CreateElement(
@@ -1439,7 +1425,7 @@ function Lib:Window(Settings)
     -- Code
 
     Lib:AutoUpdateList(UIListLayout, ScrollingFrame, "ScrollingFrame")
-    Lib:AppleBalls({7, 7}, Settings.Theme, Left_balls_F)
+    Lib:AppleBalls({8, 8}, Settings.Theme, Left_balls_F)
     --Lib:UserInfoLayout(Left_User_F, Settings.Theme, Settings.ShowUserInfo)
     Lib:AutoUpdateText(Title)
 
@@ -3019,8 +3005,7 @@ function Lib:Window(Settings)
                     local Element = Themes.Elements.Button
 
                     Button.Settings.Name = Button.Settings.Name or "Button"
-                    Button.Settings.Callback = Button.Settings.Callback or function()
-                        end
+                    Button.Settings.Callback = Button.Settings.Callback or function()end
 
                     local Element_Button =
                         CreateElement(
@@ -3142,11 +3127,8 @@ function Lib:Window(Settings)
                     Settings.Name = Settings.Name or "Toggle"
                     Settings.Default = Settings.Default or false
                     Settings.Style = Settings.Style or 1 -- 1 = Moderno, 2 = Bolinha
-                    Settings.Callback = Settings.Callback or function()
-                        end
-
-                    pcall(Settings.Callback, Settings.Default)
-
+                    Settings.Callback = Settings.Callback or function()end
+                    
                     local Toggle = {
                         Settings = Settings,
                         Class = "Toggle",
@@ -3162,8 +3144,7 @@ function Lib:Window(Settings)
                     Toggle.Settings.Name = Toggle.Settings.Name or "Toggle"
                     Toggle.Settings.Default = Toggle.Settings.Default or false
                     Toggle.Settings.Style = Toggle.Settings.Style or 1
-                    Toggle.Settings.Callback = Toggle.Settings.Callback or function()
-                        end
+                    Toggle.Settings.Callback = Toggle.Settings.Callback or function()end
 
                     pcall(Toggle.Settings.Callback, Toggle.Settings.Default)
 
@@ -3502,10 +3483,7 @@ function Lib:Window(Settings)
                     Settings = Settings or {}
                     Settings.Name = Settings.Name or "Checkbox"
                     Settings.Default = Settings.Default or false
-                    Settings.Callback = Settings.Callback or function()
-                        end
-
-                    pcall(Settings.Callback, Settings.Default)
+                    Settings.Callback = Settings.Callback or function()end
 
                     local Checkbox = {
                         Settings = Settings,
@@ -3737,470 +3715,631 @@ function Lib:Window(Settings)
                 end
 
                 function Section:Slider(Flag, Settings)
-                    Settings = Settings or {}
-                    Settings.Name = Settings.Name or "Slider"
-                    Settings.DisplayMethod = Settings.DisplayMethod or "Value"
-                    Settings.Default = Settings.Default or 50
-                    Settings.Minimum = Settings.Minimum or 0
-                    Settings.Maximum = Settings.Maximum or 100
-                    Settings.Precision = Settings.Precision or 0
-                    Settings.Callback = Settings.Callback or function()
-                        end
+    Settings = Settings or {}
+    Settings.Name = Settings.Name or "Slider"
+    Settings.DisplayMethod = Settings.DisplayMethod or "Value"
+    Settings.Default = Settings.Default or 50
+    Settings.Minimum = Settings.Minimum or 0
+    Settings.Maximum = Settings.Maximum or 100
+    Settings.Precision = Settings.Precision or 0
+    Settings.Style = Settings.Style or 1
+    Settings.Callback = Settings.Callback or function() end
 
-                    pcall(Settings.Callback, Settings.Default)
+    pcall(Settings.Callback, Settings.Default)
 
-                    local Slider = {
-                        Settings = Settings,
-                        Class = "Slider",
-                        Value = nil,
-                        Minimun = Settings.Minimum,
-                        Maximun = Settings.Maximum,
-                        _connections = {},
-                        IgnoreConfig = false,
-                        Hover = false,
-                        Active = false
-                    }
+    local Slider = {
+        Settings = Settings,
+        Class = "Slider",
+        Value = nil,
+        Minimun = Settings.Minimum,
+        Maximun = Settings.Maximum,
+        _connections = {},
+        IgnoreConfig = false,
+        Hover = false,
+        Active = false
+    }
 
-                    local Element = Themes.Elements.Slider
+    local Element = Themes.Elements.Slider
 
-                    Slider.Settings.Name = Slider.Settings.Name or "Slider"
-                    Slider.Settings.Default = Slider.Settings.Default or 50
-                    Slider.Settings.Minimum = Slider.Settings.Minimum or 0
-                    Slider.Settings.Maximum = Slider.Settings.Maximum or 100
-                    Slider.Settings.Precision = Slider.Settings.Precision or 0
-                    Slider.Settings.DisplayMethod = Slider.Settings.DisplayMethod or "Value"
-                    Slider.Settings.Callback = Slider.Settings.Callback or function()
-                        end
+    Slider.Settings.Name = Slider.Settings.Name or "Slider"
+    Slider.Settings.Default = Slider.Settings.Default or 50
+    Slider.Settings.Minimum = Slider.Settings.Minimum or 0
+    Slider.Settings.Maximum = Slider.Settings.Maximum or 100
+    Slider.Settings.Precision = Slider.Settings.Precision or 0
+    Slider.Settings.DisplayMethod = Slider.Settings.DisplayMethod or "Value"
+    Slider.Settings.Style = Slider.Settings.Style or 1
+    Slider.Settings.Callback = Slider.Settings.Callback or function() end
 
-                    Slider.Value = math.clamp(Slider.Settings.Default, Slider.Settings.Minimum, Slider.Settings.Maximum)
+    Slider.Value = math.clamp(Slider.Settings.Default, Slider.Settings.Minimum, Slider.Settings.Maximum)
 
-                    local DisplayMethods = {
-                        Hundredths = function(sliderValue, precision)
-                            return string.format("%.2f", sliderValue)
-                        end,
-                        Tenths = function(sliderValue, precision)
-                            return string.format("%.1f", sliderValue)
-                        end,
-                        Round = function(sliderValue, precision)
-                            if precision and precision > 0 then
-                                return string.format("%." .. precision .. "f", sliderValue)
-                            else
-                                return tostring(math.round(sliderValue))
-                            end
-                        end,
-                        Degrees = function(sliderValue, precision)
-                            local formattedValue =
-                                precision and precision > 0 and string.format("%." .. precision .. "f", sliderValue) or
-                                tostring(math.round(sliderValue))
-                            return formattedValue .. "°"
-                        end,
-                        Percent = function(sliderValue, minimum, maximum, precision)
-                            local percentage = ((sliderValue - minimum) / (maximum - minimum)) * 100
-                            if precision and precision > 0 then
-                                return string.format("%." .. precision .. "f", percentage) .. "%"
-                            else
-                                return tostring(math.round(percentage)) .. "%"
-                            end
-                        end,
-                        Value = function(sliderValue, precision)
-                            if precision and precision > 0 then
-                                return string.format("%." .. precision .. "f", sliderValue)
-                            else
-                                return tostring(math.round(sliderValue))
-                            end
-                        end
-                    }
+    local DisplayMethods = {
+        Hundredths = function(sliderValue, precision)
+            return string.format("%.2f", sliderValue)
+        end,
+        Tenths = function(sliderValue, precision)
+            return string.format("%.1f", sliderValue)
+        end,
+        Round = function(sliderValue, precision)
+            if precision and precision > 0 then
+                return string.format("%." .. precision .. "f", sliderValue)
+            else
+                return tostring(math.round(sliderValue))
+            end
+        end,
+        Degrees = function(sliderValue, precision)
+            local formattedValue = precision and precision > 0 and string.format("%." .. precision .. "f", sliderValue) or tostring(math.round(sliderValue))
+            return formattedValue .. "°"
+        end,
+        Percent = function(sliderValue, minimum, maximum, precision)
+            local percentage = ((sliderValue - minimum) / (maximum - minimum)) * 100
+            if precision and precision > 0 then
+                return string.format("%." .. precision .. "f", percentage) .. "%"
+            else
+                return tostring(math.round(percentage)) .. "%"
+            end
+        end,
+        Value = function(sliderValue, precision)
+            if precision and precision > 0 then
+                return string.format("%." .. precision .. "f", sliderValue)
+            else
+                return tostring(math.round(sliderValue))
+            end
+        end
+    }
 
-                    local function GetDisplayValue(value)
-                        local method = DisplayMethods[Slider.Settings.DisplayMethod] or DisplayMethods.Value
+    local function GetDisplayValue(value)
+        local method = DisplayMethods[Slider.Settings.DisplayMethod] or DisplayMethods.Value
+        if Slider.Settings.DisplayMethod == "Percent" then
+            return method(value, Slider.Settings.Minimum, Slider.Settings.Maximum, Slider.Settings.Precision)
+        else
+            return method(value, Slider.Settings.Precision)
+        end
+    end
 
-                        if Slider.Settings.DisplayMethod == "Percent" then
-                            return method(
-                                value,
-                                Slider.Settings.Minimum,
-                                Slider.Settings.Maximum,
-                                Slider.Settings.Precision
-                            )
-                        else
-                            return method(value, Slider.Settings.Precision)
-                        end
+    local function GetRawNumber(text)
+        local cleaned = text:gsub("[°%%]", "")
+        return tonumber(cleaned)
+    end
+
+    if Slider.Settings.Style == 1 then
+        -- ESTILO 1: Layout vertical (título em cima, slider embaixo)
+        local Element_Slider = CreateElement("Frame", {
+            Name = Slider.Settings.Name,
+            Size = UDim2.new(1, 0, 0, 40),
+            AnchorPoint = Vector2.new(0, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            BackgroundColor3 = Element.Primary,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            ClipsDescendants = true,
+            Parent = Section_Frame
+        })
+
+        UICorner({0, 7}, Element_Slider)
+
+        local Title = CreateElement("TextLabel", {
+            Size = UDim2.new(0, 0, 0, 13),
+            AutomaticSize = Enum.AutomaticSize.X,
+            AnchorPoint = Vector2.new(0, 0),
+            Position = UDim2.new(0, 8, 0, 8),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Visible = true,
+            ClipsDescendants = true,
+            Text = Slider.Settings.Name,
+            TextColor3 = Element.Text,
+            TextTransparency = 0.4,
+            TextScaled = true,
+            TextSize = 10,
+            Font = Themes.Font.Text,
+            TextWrapped = true,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            Parent = Element_Slider
+        })
+
+        local Line_F = CreateElement("Frame", {
+            Size = UDim2.new(1, -16, 0, 7),
+            AnchorPoint = Vector2.new(0.5, 0),
+            Position = UDim2.new(0.5, 0, 0, 25),
+            BackgroundColor3 = Element.Primary,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Element_Slider
+        })
+
+        local Bottom = CreateElement("Frame", {
+            Size = UDim2.new(1, 0, 0, 3),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            BackgroundColor3 = Element.Bottom or Color3.fromRGB(25, 25, 25),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Line_F
+        })
+
+        CreateElement("UICorner", { CornerRadius = UDim.new(1, 0), Parent = Bottom })
+
+        local Element_Track = CreateElement("Frame", {
+            Size = UDim2.new(0, 0, 1, 0),
+            AnchorPoint = Vector2.new(0, 0.5),
+            Position = UDim2.new(0, 0, 0.5, 0),
+            BackgroundColor3 = Element.Track or Color3.fromRGB(200, 200, 200),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Bottom
+        })
+
+        CreateElement("UICorner", { CornerRadius = UDim.new(1, 0), Parent = Element_Track })
+
+        local Element_Thumb = CreateElement("Frame", {
+            Size = UDim2.fromOffset(12, 12),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0, 0, 0.5, 0),
+            BackgroundColor3 = Element.Thumb or Color3.fromRGB(180, 180, 180),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Element_Track
+        })
+
+        CreateElement("UICorner", { CornerRadius = UDim.new(1, 0), Parent = Element_Thumb })
+
+        local Display_Value = CreateElement("TextBox", {
+            Size = UDim2.new(0, 0, 0, 13),
+            AutomaticSize = Enum.AutomaticSize.X,
+            AnchorPoint = Vector2.new(1, 0),
+            Position = UDim2.new(1, -8, 0, 8),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Text = GetDisplayValue(Slider.Value),
+            TextColor3 = Element.Display or Element.Text,
+            TextTransparency = 0.4,
+            TextSize = 13,
+            Font = Themes.Font.Text,
+            PlaceholderText = GetDisplayValue(Slider.Value),
+            PlaceholderColor3 = Element.Display or Element.Text,
+            ClearTextOnFocus = true,
+            TextXAlignment = Enum.TextXAlignment.Center,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            Parent = Element_Slider
+        })
+
+        local SliderButton = CreateElement("TextButton", {
+            Parent = Bottom,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Size = UDim2.new(1, 0, 4, 0),
+            Position = UDim2.new(0, 0, -1.5, 0),
+            AutoButtonColor = false,
+            Text = "",
+            TextSize = 0,
+        })
+
+        Lib:AutoUpdateText(Title)
+        Lib:HoverElements(Slider.Active, Slider.Hover, SliderButton, Title)
+
+        local function UpdateSliderVisual()
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            local value = Slider.Value
+            local ratio = (value - min) / (max - min)
+            ratio = math.clamp(ratio, 0, 1)
+            Element_Track.Size = UDim2.new(ratio, 0, 1, 0)
+            Element_Thumb.Position = UDim2.new(1, 0, 0.5, 0)
+            if not Display_Value:IsFocused() then
+                Display_Value.Text = GetDisplayValue(value)
+                Display_Value.PlaceholderText = GetDisplayValue(value)
+            end
+        end
+
+        local function SetValue(newValue, fromUserInput)
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            local precision = Slider.Settings.Precision
+            if precision and precision > 0 then
+                local multiplier = 10 ^ precision
+                newValue = math.floor(newValue * multiplier + 0.5) / multiplier
+            else
+                newValue = math.round(newValue)
+            end
+            newValue = math.clamp(newValue, min, max)
+            if Slider.Value ~= newValue then
+                Slider.Value = newValue
+                UpdateSliderVisual()
+                task.spawn(function()
+                    if fromUserInput then
+                        pcall(Slider.Settings.Callback, newValue)
                     end
+                end)
+            end
+        end
 
-                    local Element_Slider =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Name = Slider.Settings.Name,
-                            Size = UDim2.new(1, 0, 0, 30),
-                            AnchorPoint = Vector2.new(0, 0),
-                            Position = UDim2.new(0, 0, 0, 0),
-                            BackgroundColor3 = Element.Primary,
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            ClipsDescendants = true,
-                            Parent = Section_Frame
-                        }
-                    )
+        local isDragging = false
 
-                    UICorner({0, 7}, Element_Slider)
-                    UIPadding({0, 0}, {0, 5, 0, 5}, Element_Slider)
+        local function GetValueFromPosition(positionX)
+            local absolutePosition = Bottom.AbsolutePosition.X
+            local absoluteSize = Bottom.AbsoluteSize.X
+            local relativePosition = (positionX - absolutePosition) / absoluteSize
+            relativePosition = math.clamp(relativePosition, 0, 1)
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            return min + (relativePosition * (max - min))
+        end
 
-                    local Title =
-                        CreateElement(
-                        "TextLabel",
-                        {
-                            Size = UDim2.new(0, 0, 0, 13),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            AutomaticSize = Enum.AutomaticSize.X,
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            ClipsDescendants = true,
-                            Text = Slider.Settings.Name,
-                            TextColor3 = Element.Text,
-                            TextTransparency = 0.4,
-                            TextScaled = false,
-                            TextSize = 13,
-                            Font = Themes.Font.Text,
-                            TextWrapped = false,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            Parent = Element_Slider
-                        }
-                    )
+        local function StartDrag(input)
+            isDragging = true
+            Slider.Active = true
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                local value = GetValueFromPosition(input.Position.X)
+                SetValue(value, true)
+            end
+        end
 
-                    local Element_Line =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Size = UDim2.new(0, 0, 0, 2),
-                            AnchorPoint = Vector2.new(1, 0.5),
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            BackgroundColor3 = Element.Line,
-                            BackgroundTransparency = 0.4,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            Active = true,
-                            ClipsDescendants = false,
-                            Parent = Element_Slider
-                        }
-                    )
+        local function UpdateDrag(input)
+            if not isDragging then return end
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                local value = GetValueFromPosition(input.Position.X)
+                SetValue(value, true)
+            end
+        end
 
-                    UICorner({0, 5}, Element_Line)
+        local function StopDrag()
+            if isDragging then
+                isDragging = false
+                Slider.Active = false
+            end
+        end
 
-                    local Element_Track =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Size = UDim2.new(0.5, 0, 1, 0),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            BackgroundColor3 = Element.Track,
-                            BackgroundTransparency = 0,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            Active = true,
-                            ClipsDescendants = false,
-                            Parent = Element_Line
-                        }
-                    )
-
-                    UICorner({0, 5}, Element_Track)
-
-                    local Element_Thumb =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Size = UDim2.fromOffset(14, 14),
-                            AnchorPoint = Vector2.new(1, 0.5),
-                            Position = UDim2.new(1, 7, 0.5, 0),
-                            BackgroundColor3 = Element.Thumb,
-                            BackgroundTransparency = 0,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            Active = true,
-                            ClipsDescendants = false,
-                            Parent = Element_Track
-                        }
-                    )
-
-                    UICorner({1, 0}, Element_Thumb)
-
-                    local Display_Value =
-                        CreateElement(
-                        "TextLabel",
-                        {
-                            Size = UDim2.new(0, 0, 0, 13),
-                            AnchorPoint = Vector2.new(1, 0.5),
-                            AutomaticSize = Enum.AutomaticSize.X,
-                            Position = UDim2.new(1, 0, 0.5, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            ClipsDescendants = true,
-                            Text = GetDisplayValue(Slider.Value),
-                            TextColor3 = Element.Text,
-                            TextTransparency = 0.4,
-                            TextScaled = false,
-                            TextSize = 13,
-                            Font = Themes.Font.Text,
-                            TextWrapped = false,
-                            TextXAlignment = Enum.TextXAlignment.Center,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            Parent = Element_Slider
-                        }
-                    )
-
-                    local SliderButton =
-                        CreateElement(
-                        "TextButton",
-                        {
-                            Parent = Element_Line,
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Size = UDim2.new(1, 0, 2.5, 0),
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            AutoButtonColor = false,
-                            Text = "",
-                            TextSize = 0
-                        }
-                    )
-
-                    Lib:HoverElements(Slider.Active, Slider.Hover, Title, Title)
-
-                    local TextSize =
-                        game:GetService("TextService"):GetTextSize(
-                        Title.Text,
-                        Title.TextSize,
-                        Title.Font,
-                        Vector2.new(10000, math.huge)
-                    )
-
-                    local ValueSize =
-                        game:GetService("TextService"):GetTextSize(
-                        Display_Value.Text,
-                        Display_Value.TextSize,
-                        Display_Value.Font,
-                        Vector2.new(10000, math.huge)
-                    )
-
-                    Title.Size = UDim2.new(0, TextSize.X, 0, TextSize.Y)
-                    Element_Line.Size = UDim2.new(1, -TextSize.X - ValueSize.X - 20, 0, 2)
-                    Element_Line.Position = UDim2.new(1, -ValueSize.X - 13, 0.5, 0)
-
-                    Display_Value:GetPropertyChangedSignal("Text"):Connect(
-                        function()
-                            task.wait()
-                            local vl =
-                                game:GetService("TextService"):GetTextSize(
-                                Display_Value.Text,
-                                Display_Value.TextSize,
-                                Display_Value.Font,
-                                Vector2.new(10000, math.huge)
-                            )
-
-                            Element_Line.Size = UDim2.new(1, -TextSize.X - vl.X - 20, 0, 2)
-                            Element_Line.Position = UDim2.new(1, -vl.X - 13, 0.5, 0)
-                        end
-                    )
-
-                    local function UpdateSliderVisual()
-                        local min = Slider.Settings.Minimum
-                        local max = Slider.Settings.Maximum
-                        local value = Slider.Value
-                        local ratio = (value - min) / (max - min)
-                        ratio = math.clamp(ratio, 0, 1)
-                        Element_Track.Size = UDim2.new(ratio, 0, 1, 0)
-                        Element_Thumb.Position = UDim2.new(1, 0, 0.5, 0)
-                        Display_Value.Text = GetDisplayValue(value)
-                    end
-
-                    local function SetValue(newValue, fromUserInput)
-                        local min = Slider.Settings.Minimum
-                        local max = Slider.Settings.Maximum
-                        local precision = Slider.Settings.Precision
-
-                        if precision and precision > 0 then
-                            local multiplier = 10 ^ precision
-                            newValue = math.floor(newValue * multiplier + 0.5) / multiplier
-                        else
-                            newValue = math.round(newValue)
-                        end
-
-                        newValue = math.clamp(newValue, min, max)
-
-                        if Slider.Value ~= newValue then
-                            Slider.Value = newValue
-                            UpdateSliderVisual()
-                            task.spawn(
-                                function()
-                                    if fromUserInput then
-                                        pcall(Slider.Settings.Callback, newValue)
-                                    end
-                                end
-                            )
-                        end
-                    end
-
-                    local isDragging = false
-
-                    local function GetValueFromPosition(positionX)
-                        local absolutePosition = Element_Line.AbsolutePosition.X
-                        local absoluteSize = Element_Line.AbsoluteSize.X
-
-                        local relativePosition = (positionX - absolutePosition) / absoluteSize
-                        relativePosition = math.clamp(relativePosition, 0, 1)
-
-                        local min = Slider.Settings.Minimum
-                        local max = Slider.Settings.Maximum
-                        local value = min + (relativePosition * (max - min))
-
-                        return value
-                    end
-
-                    local function StartDrag(input)
-                        isDragging = true
-                        Slider.Active = true
-                        if
-                            input.UserInputType == Enum.UserInputType.MouseButton1 or
-                                input.UserInputType == Enum.UserInputType.Touch
-                         then
-                            local value = GetValueFromPosition(input.Position.X)
-                            SetValue(value, true)
-                        end
-                    end
-
-                    local function UpdateDrag(input)
-                        if not isDragging then
-                            return
-                        end
-                        if
-                            input.UserInputType == Enum.UserInputType.MouseMovement or
-                                input.UserInputType == Enum.UserInputType.Touch
-                         then
-                            local value = GetValueFromPosition(input.Position.X)
-                            SetValue(value, true)
-                        end
-                    end
-
-                    local function StopDrag()
-                        if isDragging then
-                            isDragging = false
-                            Slider.Active = false
-                        end
-                    end
-
-                    local function SetupInputEvents()
-                        Slider._connections.InputBegan =
-                            SliderButton.InputBegan:Connect(
-                            function(input)
-                                if
-                                    input.UserInputType == Enum.UserInputType.MouseButton1 or
-                                        input.UserInputType == Enum.UserInputType.Touch
-                                 then
-                                    StartDrag(input)
-                                end
-                            end
-                        )
-
-                        Slider._connections.InputChanged =
-                            SliderButton.InputChanged:Connect(
-                            function(input)
-                                if
-                                    (input.UserInputType == Enum.UserInputType.MouseMovement or
-                                        input.UserInputType == Enum.UserInputType.Touch) and
-                                        isDragging
-                                 then
-                                    UpdateDrag(input)
-                                end
-                            end
-                        )
-
-                        Slider._connections.InputEnded =
-                            SliderButton.InputEnded:Connect(
-                            function(input)
-                                if
-                                    input.UserInputType == Enum.UserInputType.MouseButton1 or
-                                        input.UserInputType == Enum.UserInputType.Touch
-                                 then
-                                    StopDrag()
-                                end
-                            end
-                        )
-
-                        Slider._connections.GlobalInputEnded =
-                            UserInputService.InputEnded:Connect(
-                            function(input)
-                                if
-                                    (input.UserInputType == Enum.UserInputType.MouseButton1 or
-                                        input.UserInputType == Enum.UserInputType.Touch) and
-                                        isDragging
-                                 then
-                                    StopDrag()
-                                end
-                            end
-                        )
-                    end
-
-                    SetupInputEvents()
-
-                    function Slider:SetValue(value)
-                        local min = Slider.Settings.Minimum
-                        local max = Slider.Settings.Maximum
-                        local precision = Slider.Settings.Precision
-
-                        if precision and precision > 0 then
-                            local multiplier = 10 ^ precision
-                            value = math.floor(value * multiplier + 0.5) / multiplier
-                        else
-                            value = math.round(value)
-                        end
-
-                        value = math.clamp(value, min, max)
-                        Slider.Value = value
-                        UpdateSliderVisual()
-                        pcall(Slider.Settings.Callback, value)
-                    end
-
-                    function Slider:GetValue()
-                        return Slider.Value
-                    end
-
-                    function Slider:GetDisplayMethod()
-                        return Slider.Settings.DisplayMethod
-                    end
-
-                    function Slider:SetName(text)
-                        Title.Text = text
-                    end
-
-                    function Slider:GetName()
-                        return Title.Text
-                    end
-
-                    function Slider:Destroy()
-                        for _, conn in pairs(Slider._connections) do
-                            if conn and conn.Disconnect then
-                                conn:Disconnect()
-                            end
-                        end
-                        Element_Slider:Destroy()
-                    end
-
-                    UpdateSliderVisual()
-
-                    if Flag then
-                        Lib.Features[Flag] = Slider
-                        if SaveLoadSystem and SaveLoadSystem.RegisterSlider then
-                            SaveLoadSystem:RegisterSlider(Flag, Slider)
-                        end
-                    end
-
-                    return Slider
+        local function SetupInputEvents()
+            Slider._connections.InputBegan = SliderButton.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    StartDrag(input)
                 end
+            end)
+            Slider._connections.InputChanged = SliderButton.InputChanged:Connect(function(input)
+                if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) and isDragging then
+                    UpdateDrag(input)
+                end
+            end)
+            Slider._connections.InputEnded = SliderButton.InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    StopDrag()
+                end
+            end)
+            Slider._connections.GlobalInputEnded = UserInputService.InputEnded:Connect(function(input)
+                if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and isDragging then
+                    StopDrag()
+                end
+            end)
+            Slider._connections.FocusLost = Display_Value.FocusLost:Connect(function()
+                local num = GetRawNumber(Display_Value.Text)
+                if num then
+                    SetValue(num, true)
+                end
+                Display_Value.Text = GetDisplayValue(Slider.Value)
+                Display_Value.PlaceholderText = GetDisplayValue(Slider.Value)
+            end)
+        end
 
+        SetupInputEvents()
+
+        function Slider:SetValue(value)
+            SetValue(value, false)
+        end
+
+        function Slider:GetValue()
+            return Slider.Value
+        end
+
+        function Slider:SetName(text)
+            Title.Text = text
+        end
+
+        function Slider:GetName()
+            return Title.Text
+        end
+
+        function Slider:Destroy()
+            for _, conn in pairs(Slider._connections) do
+                if conn and conn.Disconnect then conn:Disconnect() end
+            end
+            Element_Slider:Destroy()
+        end
+
+        UpdateSliderVisual()
+
+        if Flag then
+            Lib.Features[Flag] = Slider
+            if SaveLoadSystem and SaveLoadSystem.RegisterSlider then
+                SaveLoadSystem:RegisterSlider(Flag, Slider)
+            end
+        end
+
+        return Slider
+
+    else
+        -- ESTILO 2: Layout horizontal (título, slider e valor na mesma linha)
+        local Element_Slider = CreateElement("Frame", {
+            Name = Slider.Settings.Name,
+            Size = UDim2.new(1, 0, 0, 30),
+            AnchorPoint = Vector2.new(0, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            BackgroundColor3 = Element.Primary,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            ClipsDescendants = true,
+            Parent = Section_Frame
+        })
+
+        UICorner({0, 7}, Element_Slider)
+        --UIPadding({0, 0}, {0, 5, 0, 5}, Element_Slider)
+
+        local Title = CreateElement("TextLabel", {
+            Size = UDim2.new(0, 0, 0, 13),
+            AnchorPoint = Vector2.new(0, 0.5),
+            AutomaticSize = Enum.AutomaticSize.X,
+            Position = UDim2.new(0, 8, 0.5, 0),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Visible = true,
+            ClipsDescendants = true,
+            Text = Slider.Settings.Name,
+            TextColor3 = Element.Text,
+            TextTransparency = 0.4,
+            TextScaled = false,
+            TextSize = 13,
+            Font = Themes.Font.Text,
+            TextWrapped = false,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            Parent = Element_Slider
+        })
+
+        local Element_Line = CreateElement("Frame", {
+            Size = UDim2.new(0, 0, 0, 3),
+            AnchorPoint = Vector2.new(1, 0.5),
+            Position = UDim2.new(0, 0, 0.5, 0),
+            BackgroundColor3 = Element.Bottom or Color3.fromRGB(25, 25, 25),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Element_Slider
+        })
+
+        UICorner({1, 0}, Element_Line)
+
+        local Element_Track = CreateElement("Frame", {
+            Size = UDim2.new(0.5, 0, 1, 0),
+            AnchorPoint = Vector2.new(0, 0.5),
+            Position = UDim2.new(0, 0, 0.5, 0),
+            BackgroundColor3 = Element.Track or Color3.fromRGB(200, 200, 200),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Element_Line
+        })
+
+        UICorner({0, 5}, Element_Track)
+
+        local Element_Thumb = CreateElement("Frame", {
+            Size = UDim2.fromOffset(12, 12),
+            AnchorPoint = Vector2.new(1, 0.5),
+            Position = UDim2.new(1, 7, 0.5, 0),
+            BackgroundColor3 = Element.Thumb or Color3.fromRGB(180, 180, 180),
+            BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            Visible = true,
+            Active = true,
+            ClipsDescendants = false,
+            Parent = Element_Track
+        })
+
+        UICorner({1, 0}, Element_Thumb)
+
+        local Display_Value = CreateElement("TextBox", {
+            Size = UDim2.new(0, 50, 0, 13),
+            AnchorPoint = Vector2.new(1, 0.5),
+            Position = UDim2.new(1, 0, 0.5, 0),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Visible = true,
+            ClipsDescendants = true,
+            Text = GetDisplayValue(Slider.Value),
+            TextColor3 = Element.Display or Element.Text,
+            TextTransparency = 0.4,
+            TextSize = 13,
+            Font = Themes.Font.Text,
+            PlaceholderText = GetDisplayValue(Slider.Value),
+            PlaceholderColor3 = Element.Display or Element.Text,
+            ClearTextOnFocus = true,
+            TextXAlignment = Enum.TextXAlignment.Center,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            Parent = Element_Slider
+        })
+
+        local SliderButton = CreateElement("TextButton", {
+            Parent = Element_Line,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Size = UDim2.new(1, 0, 4, 0),
+            Position = UDim2.new(0, 0, 0.5, 0),
+            AnchorPoint = Vector2.new(0, 0.5),
+            AutoButtonColor = false,
+            Text = "",
+            TextSize = 0
+        })
+
+        Lib:HoverElements(Slider.Active, Slider.Hover, Title)
+
+        local TextSize = game:GetService("TextService"):GetTextSize(
+            Title.Text, Title.TextSize, Title.Font, Vector2.new(10000, math.huge)
+        )
+        
+        local EditSize = game:GetService("TextService"):GetTextSize(
+            Display_Value.Text, Display_Value.TextSize, Display_Value.Font, Vector2.new(10000, math.huge)
+        )
+
+        Title.Size = UDim2.new(0, TextSize.X, 0, TextSize.Y)
+        Element_Line.Size = UDim2.new(1, -TextSize.X - EditSize.X -30, 0, 3)
+        Element_Line.Position = UDim2.new(1, - EditSize.X - 15, 0.5, 0)
+
+        local function UpdateSliderVisual()
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            local value = Slider.Value
+            local ratio = (value - min) / (max - min)
+            ratio = math.clamp(ratio, 0, 1)
+            Element_Track.Size = UDim2.new(ratio, 0, 1, 0)
+            Element_Thumb.Position = UDim2.new(1, 0, 0.5, 0)
+            if not Display_Value:IsFocused() then
+                Display_Value.Text = GetDisplayValue(value)
+                Display_Value.PlaceholderText = GetDisplayValue(value)
+            end
+        end
+
+        local function SetValue(newValue, fromUserInput)
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            local precision = Slider.Settings.Precision
+            if precision and precision > 0 then
+                local multiplier = 10 ^ precision
+                newValue = math.floor(newValue * multiplier + 0.5) / multiplier
+            else
+                newValue = math.round(newValue)
+            end
+            newValue = math.clamp(newValue, min, max)
+            if Slider.Value ~= newValue then
+                Slider.Value = newValue
+                UpdateSliderVisual()
+                task.spawn(function()
+                    if fromUserInput then
+                        pcall(Slider.Settings.Callback, newValue)
+                    end
+                end)
+            end
+        end
+
+        local isDragging = false
+
+        local function GetValueFromPosition(positionX)
+            local absolutePosition = Element_Line.AbsolutePosition.X
+            local absoluteSize = Element_Line.AbsoluteSize.X
+            local relativePosition = (positionX - absolutePosition) / absoluteSize
+            relativePosition = math.clamp(relativePosition, 0, 1)
+            local min = Slider.Settings.Minimum
+            local max = Slider.Settings.Maximum
+            return min + (relativePosition * (max - min))
+        end
+
+        local function StartDrag(input)
+            isDragging = true
+            Slider.Active = true
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                local value = GetValueFromPosition(input.Position.X)
+                SetValue(value, true)
+            end
+        end
+
+        local function UpdateDrag(input)
+            if not isDragging then return end
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                local value = GetValueFromPosition(input.Position.X)
+                SetValue(value, true)
+            end
+        end
+
+        local function StopDrag()
+            if isDragging then
+                isDragging = false
+                Slider.Active = false
+            end
+        end
+
+        local function SetupInputEvents()
+            Slider._connections.InputBegan = SliderButton.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    StartDrag(input)
+                end
+            end)
+            Slider._connections.InputChanged = SliderButton.InputChanged:Connect(function(input)
+                if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) and isDragging then
+                    UpdateDrag(input)
+                end
+            end)
+            Slider._connections.InputEnded = SliderButton.InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    StopDrag()
+                end
+            end)
+            Slider._connections.GlobalInputEnded = UserInputService.InputEnded:Connect(function(input)
+                if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and isDragging then
+                    StopDrag()
+                end
+            end)
+            Slider._connections.FocusLost = Display_Value.FocusLost:Connect(function()
+                local num = GetRawNumber(Display_Value.Text)
+                if num then
+                    SetValue(num, true)
+                end
+                Display_Value.Text = GetDisplayValue(Slider.Value)
+                Display_Value.PlaceholderText = GetDisplayValue(Slider.Value)
+            end)
+        end
+
+        SetupInputEvents()
+
+        function Slider:SetValue(value)
+            SetValue(value, false)
+        end
+
+        function Slider:GetValue()
+            return Slider.Value
+        end
+
+        function Slider:SetName(text)
+            Title.Text = text
+        end
+
+        function Slider:GetName()
+            return Title.Text
+        end
+
+        function Slider:Destroy()
+            for _, conn in pairs(Slider._connections) do
+                if conn and conn.Disconnect then conn:Disconnect() end
+            end
+            Element_Slider:Destroy()
+        end
+
+        UpdateSliderVisual()
+
+        if Flag then
+            Lib.Features[Flag] = Slider
+            if SaveLoadSystem and SaveLoadSystem.RegisterSlider then
+                SaveLoadSystem:RegisterSlider(Flag, Slider)
+            end
+        end
+
+        return Slider
+    end
+end
+                
                 function Section:Dropdown(Flag, Settings)
                     local Dropdown = {
                         Settings = Settings,
@@ -4218,8 +4357,7 @@ function Lib:Window(Settings)
                     Dropdown.Settings.Default = Dropdown.Settings.Default or "Option 1"
                     Dropdown.Settings.Open = Dropdown.Settings.Open or false
                     Dropdown.Settings.MultiSelection = Dropdown.Settings.MultiSelection or false
-                    Dropdown.Settings.Callback = Dropdown.Settings.Callback or function()
-                        end
+                    Dropdown.Settings.Callback = Dropdown.Settings.Callback or function()end
 
                     Dropdown.IsOpen = Dropdown.Settings.Open
 
@@ -5027,11 +5165,8 @@ function Lib:Window(Settings)
                     Settings.Placeholder = Settings.Placeholder or ""
                     Settings.Numeric = Settings.Numeric or false
                     Settings.ClearOnFocus = Settings.ClearOnFocus or false
-                    Settings.Callback = Settings.Callback or function()
-                        end
-
-                    pcall(Settings.Callback, Settings.Default)
-
+                    Settings.Callback = Settings.Callback or function()end
+                    
                     local Input = {
                         Settings = Settings,
                         Class = "Input",
@@ -5364,16 +5499,282 @@ function Lib:Window(Settings)
                     return Input
                 end
 
+                function Section:ToggleKeyBind(Flag, Settings)
+    Settings = Settings or {}
+    Settings.Name = Settings.Name or "Toggle KeyBind"
+    Settings.Default = Settings.Default or false
+    Settings.KeyCode = Settings.KeyCode or Enum.KeyCode.C
+    Settings.Callback = Settings.Callback or function() end
+
+    local TKey = {
+        Settings = Settings,
+        Class = "TKey",
+        Value = Settings.Default,
+        IgnoreConfig = false,
+        Hover = false,
+        Active = false,
+        _connections = {}
+    }
+
+    local Element = Themes.Elements.Toggle
+
+    TKey.Settings.Name = TKey.Settings.Name or "Toggle KeyBind"
+    TKey.Settings.Default = TKey.Settings.Default or false
+    TKey.Settings.KeyCode = TKey.Settings.KeyCode or Enum.KeyCode.C
+    TKey.Settings.Callback = TKey.Settings.Callback or function() end
+
+    pcall(TKey.Settings.Callback, TKey.Settings.Default)
+
+    local Element_TKey = CreateElement("Frame",{
+        Name = TKey.Settings.Name,
+        Size = UDim2.new(1, 0, 0, 30),
+        AnchorPoint = Vector2.new(0, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundColor3 = Element.Primary,
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Section_Frame
+    })
+
+    UICorner({0, 7}, Element_TKey)
+
+    local Title = CreateElement("TextLabel",{
+        Size = UDim2.new(0, 0, 0, 13),
+        AnchorPoint = Vector2.new(0, 0.5),
+        AutomaticSize = Enum.AutomaticSize.X,
+        Position = UDim2.new(0, 0, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = true,
+        Text = TKey.Settings.Name,
+        TextColor3 = Element.Text,
+        TextTransparency = 0.4,
+        TextScaled = false,
+        TextSize = 13,
+        Font = Themes.Font.Text,
+        TextWrapped = false,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        Parent = Element_TKey
+    })
+
+    Lib:AutoUpdateText(Title)
+
+    UIPadding({0, 0}, {0, 5, 0, 0}, Element_TKey)
+
+    local Element_Track = CreateElement("Frame", {
+        Size = UDim2.new(0, 38, 0, 17),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, -5, 0.5, 0),
+        BackgroundColor3 = Element.Track,
+        BackgroundTransparency = 0.07,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Element_TKey
+    })
+
+    UICorner({0, 7}, Element_Track)
+    UIStroke(1, 0.2, Themes.Border.Primary, Element_Track)
+    UIPadding({0, 0}, {0, 3, 0, 3}, Element_Track)
+
+    local Element_Thumb = CreateElement("Frame", {
+        Size = UDim2.fromOffset(12, 12),
+        AnchorPoint = Vector2.new(0, 0.5),
+        Position = UDim2.new(0, 0, 0.5, 0),
+        BackgroundColor3 = Element.Thumb,
+        BackgroundTransparency = 0.7,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Element_Track
+    })
+
+    UICorner({0, 4}, Element_Thumb)
+    
+    local BgKeyB = CreateElement("Frame",{
+        Size = UDim2.new(0, 24, 0, 17),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, -48, 0.5, 0),
+        BackgroundColor3 = Element.Track,
+        BackgroundTransparency = 0.07,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Element_TKey
+    })
+
+    UICorner({0, 4}, BgKeyB)
+    UIStroke(1, 0.2, Themes.Border.Primary, BgKeyB)
+    UIPadding({0, 0}, {0, 3, 0, 3}, BgKeyB)
+
+    local KeyTxt = CreateElement("TextLabel",{
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        AutomaticSize = Enum.AutomaticSize.X,
+        Size = UDim2.new(0, 0, 0, 10),
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = true,
+        Text = TKey.Settings.KeyCode.Name,
+        TextColor3 = Element.Text,
+        TextTransparency = 0.4,
+        TextScaled = false,
+        TextSize = 13,
+        Font = Themes.Font.Text,
+        TextWrapped = false,
+        TextXAlignment = Enum.TextXAlignment.Center,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        Parent = BgKeyB
+    })
+
+    Lib:AutoUpdateText(KeyTxt)
+
+    local function Activate()
+        TweenService:Create(Element_Thumb, TweenInfo.new(0.2), {
+            BackgroundTransparency = 0.3,
+            AnchorPoint = Vector2.new(1, 0.5),
+            Position = UDim2.new(1, 0, 0.5, 0)
+        }):Play()
+    end
+
+    local function Desactivate()
+        TweenService:Create(Element_Thumb, TweenInfo.new(0.2), {
+            BackgroundTransparency = 0.7,
+            AnchorPoint = Vector2.new(0, 0.5),
+            Position = UDim2.new(0, 0, 0.5, 0)
+        }):Play()
+    end
+
+    local TKey_State = TKey.Value
+
+    local function Callback()
+        TKey_State = not TKey_State
+        TKey.Value = TKey_State
+        pcall(TKey.Settings.Callback, TKey_State)
+        if TKey_State then
+            Activate()
+        else
+            Desactivate()
+        end
+    end
+
+    local OnClick = CreateElement("TextButton", {
+        Parent = Element_TKey,
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 1, 0),
+        AutoButtonColor = false,
+        Text = "",
+        TextSize = 0
+    })
+
+    Lib:HoverElements(TKey.Active, TKey.Hover, OnClick, Title)
+
+    OnClick.MouseButton1Click:Connect(function()
+        Callback()
+    end)
+
+    local BgKeyB_Button = CreateElement("TextButton", {
+        Parent = BgKeyB,
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 1, 0),
+        AutoButtonColor = false,
+        Text = "",
+        TextSize = 0
+    })
+
+    local isBinding = false
+
+    BgKeyB_Button.MouseButton1Click:Connect(function()
+        isBinding = true
+        KeyTxt.Text = "..."
+        
+        local connection
+        connection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+            if isBinding and input.UserInputType == Enum.UserInputType.Keyboard then
+                TKey.Settings.KeyCode = input.KeyCode
+                KeyTxt.Text = input.KeyCode.Name
+                isBinding = false
+                connection:Disconnect()
+            end
+        end)
+    end)
+
+    local keyConnection
+    keyConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed and input.KeyCode == TKey.Settings.KeyCode and not isBinding then
+            Callback()
+        end
+    end)
+
+    table.insert(TKey._connections, keyConnection)
+
+    if TKey_State then
+        Activate()
+    else
+        Desactivate()
+    end
+
+    function TKey:SetValue(value)
+        if value ~= TKey_State then
+            TKey_State = value
+            TKey.Value = value
+            if value then
+                Activate()
+            else
+                Desactivate()
+            end
+            pcall(TKey.Settings.Callback, value)
+        end
+    end
+
+    function TKey:GetValue()
+        return TKey_State
+    end
+
+    function TKey:SetName(text)
+        Title.Text = text
+    end
+
+    function TKey:GetName()
+        return Title.Text
+    end
+
+    function TKey:SetKeyCode(keyCode)
+        TKey.Settings.KeyCode = keyCode
+        KeyTxt.Text = keyCode.Name
+    end
+
+    function TKey:GetKeyCode()
+        return TKey.Settings.KeyCode
+    end
+
+    function TKey:Destroy()
+        for _, conn in ipairs(TKey._connections) do
+            conn:Disconnect()
+        end
+        Element_TKey:Destroy()
+    end
+
+    if Flag then
+        Lib.Features[Flag] = TKey
+        if SaveLoadSystem and SaveLoadSystem.RegisterTKey then
+            SaveLoadSystem:RegisterTKey(Flag, TKey)
+        end
+    end
+
+    return TKey
+end
+
                 function Section:KeyBind(Flag, Settings)
                     Settings = Settings or {}
                     Settings.Name = Settings.Name or "KeyBind"
                     Settings.Default = Settings.Default or "None"
                     Settings.Placeholder = Settings.Placeholder or "Bind"
                     Settings.Hold = Settings.Hold or false
-                    Settings.Callback = Settings.Callback or function()
-                        end
-
-                    pcall(Settings.Callback, Settings.Default)
+                    Settings.Callback = Settings.Callback or function()end
 
                     local KeyBind = {
                         Settings = Settings,
@@ -5392,8 +5793,7 @@ function Lib:Window(Settings)
                     KeyBind.Settings.Default = KeyBind.Settings.Default or "None"
                     KeyBind.Settings.Placeholder = KeyBind.Settings.Placeholder or "Bind"
                     KeyBind.Settings.Hold = KeyBind.Settings.Hold or false
-                    KeyBind.Settings.Callback = KeyBind.Settings.Callback or function()
-                        end
+                    KeyBind.Settings.Callback = KeyBind.Settings.Callback or function()end
 
                     pcall(KeyBind.Settings.Callback, KeyBind.Settings.Default)
 
@@ -5719,8 +6119,7 @@ function Lib:Window(Settings)
                     Settings.Name = Settings.Name or "Colorpicker"
                     Settings.Default = Settings.Default or Color3.fromRGB(255, 255, 255)
                     Settings.Cursor = Settings.Cursor or false
-                    Settings.Callback = Settings.Callback or function()
-                        end
+                    Settings.Callback = Settings.Callback or function()end
 
                     local Colorpicker = {
                         Settings = Settings,
@@ -5737,8 +6136,7 @@ function Lib:Window(Settings)
                     Colorpicker.Settings.Name = Colorpicker.Settings.Name or "Colorpicker"
                     Colorpicker.Settings.Default = Colorpicker.Settings.Default or Color3.fromRGB(255, 255, 255)
                     Colorpicker.Settings.Cursor = Colorpicker.Settings.Cursor or false
-                    Colorpicker.Settings.Callback = Colorpicker.Settings.Callback or function()
-                        end
+                    Colorpicker.Settings.Callback = Colorpicker.Settings.Callback or function()end
 
                     -- Elemento principal
                     local Colorpicker_F =
@@ -7243,6 +7641,7 @@ function Lib:Demo()
     local Window = Lib:Window({
         Title = "AiCode Demo",
         Theme = "Darker",
+        Folder = "AiCodeDemo",
         ShowUserInfo = false,
         AcrylicBlur = false,
         Button = {Enabled = true},
@@ -7256,8 +7655,7 @@ function Lib:Demo()
     local AdvancedSubTab = HomeTab:SubTab({Name = "Advanced"})
     local TextSubTab = HomeTab:SubTab({Name = "Text"})
     local InputSubTab = HomeTab:SubTab({Name = "Inputs"})
-    local CustomSubTab = HomeTab:SubTab({Name = "Custom"})
-
+    
     local SaveManager = Window:SaveLoad({})
 
     local BasicsSection1 = BasicsSubTab:Section({
@@ -7310,12 +7708,39 @@ function Lib:Demo()
         Side = "Right"
     })
 
-    BasicsSection2:Colorpicker("ColorpickerDemo", {
+    local clp = BasicsSection2:Colorpicker("ColorpickerDemo", {
         Name = "Color Picker",
         Default = Color3.fromRGB(255, 100, 50),
         Cursor = true,
         Callback = function(color)
             print("Color:", color)
+        end
+    })
+
+    local rainbowRunning = false
+    local rainbowConnection = nil
+
+    BasicsSection2:Toggle("Rainbow_Colorpicker", {
+        Name = "Rainbow Colorpicker",
+        Default = false,
+        Callback = function(value)
+            if value then
+                rainbowRunning = true
+                local hue = 0
+                rainbowConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                    if rainbowRunning then
+                        hue = (hue + 0.005) % 1 -- Velocidade do rainbow
+                        local color = Color3.fromHSV(hue, 1, 1)
+                        clp:SetColor(color)
+                    end
+                end)
+            else
+                rainbowRunning = false
+                if rainbowConnection then
+                    rainbowConnection:Disconnect()
+                    rainbowConnection = nil
+                end
+            end
         end
     })
 
@@ -7385,6 +7810,19 @@ function Lib:Demo()
         end
     })
 
+    AdvancedSection2:Slider("HundredthsSlider2", {
+        Name = "Hundredths 1",
+        Default = 50.5,
+        Minimum = 0,
+        Maximum = 100,
+        Precision = 1,
+        Style = 2,
+        DisplayMethod = "Hundredths",
+        Callback = function(value)
+            print("Hundredths:", value)
+        end
+    })
+    
     AdvancedSection2:Slider("HundredthsSlider", {
         Name = "Hundredths",
         Default = 50.50,
@@ -7466,6 +7904,15 @@ function Lib:Demo()
         ClearOnFocus = true,
         Callback = function(value)
             print("Clear Input:", value)
+        end
+    })
+
+    BasicsSection1:ToggleKeyBind("ToggleKey", {
+        Name = "Toggle KeyBind",
+        Default = false,
+        KeyCode = Enum.KeyCode.C,
+        Callback = function(value)
+            print("KeyBind Toggle:", value)
         end
     })
 
@@ -7568,6 +8015,5 @@ function Lib:Demo()
 
     return Window
 end
-
 
 return Lib

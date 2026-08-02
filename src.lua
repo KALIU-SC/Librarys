@@ -8417,7 +8417,7 @@ end
 function Lib:Demo()
     local Window = Lib:Window({
         Title = "AiCode Demo",
-        Theme = "Rose",
+        Theme = "Darker",
         Folder = "AiCodeDemo",
         ShowUserInfo = false,
         AcrylicBlur = false,
@@ -8792,7 +8792,5 @@ function Lib:Demo()
 
     return Window
 end
-
-Lib:Demo()
 
 return Lib

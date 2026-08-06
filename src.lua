@@ -1270,7 +1270,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
         if configsDropdown then
             local currentValues = configsDropdown.Settings.Values or {}
             for i = #currentValues, 1, -1 do
-                if currentValues[i] ~= "Loading..." then
+                if currentValues[i] ~= "None" then
                     configsDropdown:DelValue(currentValues[i])
                 end
             end
@@ -1288,8 +1288,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
 
         if configsDropdown then
             if #configs == 0 then
-                configsDropdown:AddValue("No configs found")
-                configsDropdown:SetValue("No configs found")
+                configsDropdown:SetValue("None")
             else
                 for _, name in ipairs(configs) do
                     configsDropdown:AddValue(name)
@@ -1304,11 +1303,11 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
         "ConfigsDropdown",
         {
             Name = "Select Config",
-            Values = {"Loading..."},
-            Default = "Loading...",
+            Values = {},
+            Default = "None",
             MultiSelection = false,
             Callback = function(value)
-                print("Selected:", value)
+                
             end
         }
     )
@@ -1452,10 +1451,7 @@ function SaveLoadSystem:SetupWithLib(Window, ExistingTab)
     }
 end
 
-local Icons =
-    loadstring(
-    game:HttpGet("https://raw.githubusercontent.com/AKAIDOUSER/HARPY-LIBRARY/refs/heads/main/Load%20Icons.lua")
-)()
+local Icons = loadstring(game:HttpGet("https://raw.githubusercontent.com/AKAIDOUSER/HARPY-LIBRARY/refs/heads/main/Load%20Icons.lua"))()
 Icons:LoadIcons("https://raw.githubusercontent.com/AKAIDOUSER/HARPY-LIBRARY/refs/heads/main/Icons.lua")
 
 local TweenService = Lib.GetService("TweenService")
@@ -1469,9 +1465,7 @@ local Players = Lib.GetService("Players")
 local isStudio = RunService:IsStudio()
 local LocalPlayer = Players.LocalPlayer
 
-local assets = {
-    userInfoBlurred = "rbxassetid://18824089198"
-}
+local assets = {userInfoBlurred = "rbxassetid://18824089198"}
 
 function CreateElement(type, properties)
     local element = Instance.new(type)
@@ -2157,7 +2151,7 @@ function Lib:Window(Settings)
             Parent = Right_Tabs_Frame
         }
     )
-
+    
     CreateElement(
         "Frame",
         {
@@ -2173,6 +2167,45 @@ function Lib:Window(Settings)
     )
 
     UICorner({0, 10}, Right_Tabs_Frame)
+
+    local ConteinerCustomButtons = CreateElement("Frame",{
+        Size = UDim2.new(0, 100, 1, 0),
+        AnchorPoint = Vector2.new(1, 0),
+        Position = UDim2.new(1, 0, 0, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = false,
+        Parent = Right_Tabs_Frame
+    })
+
+    local Uilst = CreateElement("UIListLayout", {
+        FillDirection = Enum.FillDirection.Horizontal,
+        HorizontalAlignment = Enum.HorizontalAlignment.Right,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Padding = UDim.new(0, 5),
+        Parent = ConteinerCustomButtons
+    })
+
+    CreateElement(
+        "UIPadding",
+        {
+            PaddingLeft = UDim.new(0, 3),
+            PaddingRight = UDim.new(0, 8),
+            PaddingTop = UDim.new(0, 0),
+            PaddingBottom = UDim.new(0, 0),
+            Parent = ConteinerCustomButtons
+        }
+    )
+        
+    local TS = game:GetService("TextService"):GetTextSize(
+        Title.Text,
+        Title.TextSize,
+        Title.Font,
+        Vector2.new(10000, math.huge)
+    )
+    ConteinerCustomButtons.Position = UDim2.new(1, - TS.X - 16)
 
     local Right_Conteiner =
         CreateElement(
@@ -2200,7 +2233,11 @@ function Lib:Window(Settings)
     )
 
     -- Code
-
+    
+    Uilst:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        ConteinerCustomButtons.Size = UDim2.new(0, Uilst.AbsoluteContentSize.X, 1, 0)
+    end)
+    
     Lib:AutoUpdateList(UIListLayout, ScrollingFrame, "ScrollingFrame")
     Lib:AppleBalls({8, 8}, Settings.Theme, Left_balls_F)
     --Lib:UserInfoLayout(Left_User_F, Settings.Theme, Settings.ShowUserInfo)
@@ -2287,7 +2324,7 @@ function Lib:Window(Settings)
     )
 
     setupKeyBind()
-
+    
     local Main_Button
 
     if Settings.Button then
@@ -2622,11 +2659,7 @@ function Lib:Window(Settings)
 
         return Divider
     end
-
-    function StorageTabs:Home(Settings)
-
-    end
-
+    
     function StorageTabs:Tab(Settings)
         Settings.Icon = Settings.Icon or "Home"
 
@@ -2738,7 +2771,7 @@ function Lib:Window(Settings)
                 Parent = Right_Tabs_Frame
             }
         )
-
+        
         local ViewLine =
             CreateElement(
             "Frame",
@@ -2789,8 +2822,8 @@ function Lib:Window(Settings)
         )
 
         Title.Size = UDim2.new(0, TxSize.X, 0, TxSize.Y)
-        ConteinerButtons.Size = UDim2.new(1, -TxSize.X - 15, 1, 0)
-
+        ConteinerButtons.Size = UDim2.new(1, -TxSize.X - 15- 100, 1, 0)
+        
         OnClick.MouseButton1Click:Connect(
             function(input)
                 Tab:Activate()
@@ -2807,6 +2840,7 @@ function Lib:Window(Settings)
                 StorageTabs.CurrentTab = Tab
 
                 ConteinerButtons.Visible = true
+                ConteinerCustomButtons.Visible = true
                 Cont.Visible = true
                 ViewLine.Visible = true
 
@@ -2841,9 +2875,10 @@ function Lib:Window(Settings)
                 Tab.Hover = false
 
                 ConteinerButtons.Visible = false
+                ConteinerCustomButtons.Visible = false
                 Cont.Visible = false
                 ViewLine.Visible = false
-
+                
                 TweenService:Create(
                     Tab_F,
                     TweenInfo.new(0.15),
@@ -2880,11 +2915,12 @@ function Lib:Window(Settings)
 
         function Tab:SubTab(Settings)
             Settings.Name = Settings.Name or "Test"
-
+            Settings.Search = Settings.Search or false
+            
             local SubTab = {HoverTS = false, ActiveTS = false}
 
             local ButtonSubTab =
-                CreateElement(
+                CreateElement(  
                 "Frame",
                 {
                     Name = Settings.Name .. "SubTbab",
@@ -3063,7 +3099,7 @@ function Lib:Window(Settings)
 
             Title.Size = UDim2.new(0, initialTextSize.X, 0, initialTextSize.Y)
             ButtonSubTab.Size = UDim2.new(0, initialTextSize.X + 10, 0, 27)
-
+            
             OnClick.MouseButton1Click:Connect(
                 function(input)
                     SubTab:Activate()
@@ -3112,7 +3148,7 @@ function Lib:Window(Settings)
                     SubTab.HoverTS = false
 
                     Conteiner.Visible = false
-
+                    
                     TweenService:Create(
                         Title,
                         TweenInfo.new(0.15),
@@ -3246,21 +3282,13 @@ function Lib:Window(Settings)
                         task.spawn(
                             function()
                                 local contentHeight = ListLayoutSection.AbsoluteContentSize.Y
-
-                                -- Atualizar tamanho do Section_Frame
                                 Section_Frame.Size = UDim2.new(1, 0, 0, contentHeight + 16)
 
                                 if Settings.Header ~= "" then
-                                    -- Atualizar tamanho do bgTitle (seção + header)
                                     bgTitle.Size = UDim2.new(1, 0, 0, contentHeight + 34)
-
-                                    -- RECALCULAR A POSIÇÃO DO HEADER também!
-                                    -- O Header_Frame precisa ficar sempre no topo do bgTitle
                                     Header_Frame.Position = UDim2.new(0, 0, 0, 0)
-
-                                    -- Recalcular posição do Section_Frame também
-                                    Section_Frame.Position = UDim2.new(0, 0, 0, 22) -- 22 é a altura do Header_Frame
-                                    Section_Frame.AnchorPoint = Vector2.new(0, 0) -- Mudei de (1, 1) para (0, 0)
+                                    Section_Frame.Position = UDim2.new(0, 0, 0, 22)
+                                    Section_Frame.AnchorPoint = Vector2.new(0, 0)
                                 else
                                     bgTitle.Size = UDim2.new(1, 0, 0, contentHeight + 16)
                                     Section_Frame.Position = UDim2.new(0, 0, 0, 0)
@@ -3308,6 +3336,10 @@ function Lib:Window(Settings)
                     )
 
                     UICorner({1, 0}, ViewLine)
+
+                    function Divider:SetVisibility(state)
+                        ViewLine.Visible = state or false
+                    end
 
                     return Divider
                 end
@@ -3515,11 +3547,11 @@ function Lib:Window(Settings)
                         return Label.Settings.Subline
                     end
 
-                    function Label:SetVisible(visible)
+                    function Label:SetVisibility(visible)
                         Element_Label.Visible = visible
                     end
 
-                    function Label:GetVisible()
+                    function Label:GetVisibility()
                         return Element_Label.Visible
                     end
 
@@ -3742,11 +3774,11 @@ function Lib:Window(Settings)
                         return Text.TextTransparency
                     end
 
-                    function Paragraph:SetVisible(visible)
+                    function Paragraph:SetVisibility(visible)
                         Element_Paragraph.Visible = visible
                     end
 
-                    function Paragraph:GetVisible()
+                    function Paragraph:GetVisibility()
                         return Element_Paragraph.Visible
                     end
 
@@ -3891,6 +3923,14 @@ function Lib:Window(Settings)
                             Callback()
                         end
                     )
+                    
+                    function Button:SetName(state)
+                        Title.Text = state or Button.Settings.Name
+                    end
+                    
+                    function Button:SetVisibility(state)
+                        Element_Button.Visible = state or false
+                    end
 
                     if Flag then
                         Lib.Features[Flag] = Button
@@ -3970,13 +4010,7 @@ function Lib:Window(Settings)
 
                     Lib:AutoUpdateText(Title)
 
-                    -- ============================================
-                    -- STYLE 1: MODERNO
-                    -- ============================================
                     if Toggle.Settings.Style == 1 then
-                        -- ============================================
-                        -- STYLE 2: BOLINHA
-                        -- ============================================
                         UIPadding({0, 0}, {0, 5, 0, 0}, Element_Toggle)
 
                         local Element_Track =
@@ -4080,9 +4114,10 @@ function Lib:Window(Settings)
                             Desactivate()
                         end
 
-                        -- ============================================
-                        -- MÉTODOS PÚBLICOS
-                        -- ============================================
+                        function Toggle:SetVisibility(state)
+                            Element_Toggle.Visible = state or false
+                        end
+
                         function Toggle:SetValue(value)
                             if value ~= Toggle_State then
                                 Toggle_State = value
@@ -4213,9 +4248,6 @@ function Lib:Window(Settings)
                             Desactivate()
                         end
 
-                        -- ============================================
-                        -- MÉTODOS PÚBLICOS
-                        -- ============================================
                         function Toggle:SetValue(value)
                             if value ~= Toggle_State then
                                 Toggle_State = value
@@ -4227,6 +4259,10 @@ function Lib:Window(Settings)
                                 end
                                 pcall(Toggle.Settings.Callback, value)
                             end
+                        end
+                        
+                        function Toggle:SetVisibility(state)
+                            Element_Toggle.Visible = state or false
                         end
 
                         function Toggle:GetValue()
@@ -4427,10 +4463,6 @@ function Lib:Window(Settings)
                         Desactivate()
                     end
 
-                    -- ============================================
-                    -- MÉTODOS PÚBLICOS PARA SAVE/LOAD
-                    -- ============================================
-
                     function Checkbox:GetValue()
                         return Checkbox_State
                     end
@@ -4459,8 +4491,8 @@ function Lib:Window(Settings)
                         return Title.Text
                     end
 
-                    function Checkbox:SetVisible(visible)
-                        Element_Checkbox.Visible = visible
+                    function Checkbox:SetVisibility(visible)
+                        Element_Checkbox.Visible = visible or false
                     end
 
                     function Checkbox:GetVisible()
@@ -4475,10 +4507,6 @@ function Lib:Window(Settings)
                         end
                         Element_Checkbox:Destroy()
                     end
-
-                    -- ============================================
-                    -- REGISTRAR PARA SAVE/LOAD
-                    -- ============================================
 
                     if Flag then
                         Lib.Features[Flag] = Checkbox
@@ -4811,6 +4839,10 @@ function Lib:Window(Settings)
         end
 
         SetupInputEvents()
+        
+        function Slider:SetVisibility(state)
+            Element_Slider.Visible = state or false
+        end
 
         function Slider:SetValue(value)
             SetValue(value, false)
@@ -5080,6 +5112,10 @@ function Lib:Window(Settings)
         end
 
         SetupInputEvents()
+        
+        function Slider:SetVisibility(state)
+            Element_Slider.Visible = state or false
+        end
 
         function Slider:SetValue(value)
             SetValue(value, false)
@@ -5799,7 +5835,11 @@ end
                             ToggleDropdown()
                         end
                     )
-
+                    
+                    function Dropdown:SetVisibility(state)
+                        Dropdown_F.Visible = state or false
+                    end
+                        
                     function Dropdown:AddValue(value)
                         table.insert(Dropdown.Settings.Values, value)
                         if Dropdown.IsOpen then
@@ -5936,346 +5976,404 @@ end
                 end
 
                 function Section:Input(Flag, Settings)
-                    Settings = Settings or {}
-                    Settings.Name = Settings.Name or "Input"
-                    Settings.Default = Settings.Default or ""
-                    Settings.Placeholder = Settings.Placeholder or ""
-                    Settings.Numeric = Settings.Numeric or false
-                    Settings.ClearOnFocus = Settings.ClearOnFocus or false
-                    Settings.Callback = Settings.Callback or function()end
-                    
-                    local Input = {
-                        Settings = Settings,
-                        Class = "Input",
-                        Value = Settings.Default,
-                        IgnoreConfig = false,
-                        Hover = false,
-                        Active = false,
-                        _connections = {}
-                    }
+    Settings = Settings or {}
+    Settings.Name = Settings.Name or "Input"
+    Settings.Default = Settings.Default or ""
+    Settings.Placeholder = Settings.Placeholder or ""
+    Settings.Numeric = Settings.Numeric or false
+    Settings.ClearOnFocus = Settings.ClearOnFocus or false
+    Settings.Callback = Settings.Callback or function() end
+    
+    local Input = {
+        Settings = Settings,
+        Class = "Input",
+        Value = Settings.Default,
+        IgnoreConfig = false,
+        Hover = false,
+        Active = false,
+        _connections = {}
+    }
 
-                    local Element = Themes.Elements.Input
+    local Element = Themes.Elements.Input
 
-                    Input.Settings.Name = Input.Settings.Name or "Input"
-                    Input.Settings.Default = Input.Settings.Default or ""
-                    Input.Settings.Placeholder = Input.Settings.Placeholder or ""
-                    Input.Settings.ClearOnFocus = Input.Settings.ClearOnFocus or false
-                    Input.Settings.Numeric = Input.Settings.Numeric or false
-                    Input.Settings.Callback = Input.Settings.Callback or function()
-                        end
+    Input.Settings.Name = Input.Settings.Name or "Input"
+    Input.Settings.Default = Input.Settings.Default or ""
+    Input.Settings.Placeholder = Input.Settings.Placeholder or ""
+    Input.Settings.ClearOnFocus = Input.Settings.ClearOnFocus or false
+    Input.Settings.Numeric = Input.Settings.Numeric or false
+    Input.Settings.Callback = Input.Settings.Callback or function() end
 
-                    pcall(Input.Settings.Callback, Input.Settings.Default)
+    pcall(Input.Settings.Callback, Input.Settings.Default)
 
-                    local Element_Input =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Name = Input.Settings.Name,
-                            Size = UDim2.new(1, 0, 0, 30),
-                            AnchorPoint = Vector2.new(0, 0),
-                            Position = UDim2.new(0, 0, 0, 0),
-                            BackgroundColor3 = Element.Primary,
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            ClipsDescendants = true,
-                            Parent = Section_Frame
-                        }
-                    )
+    -- Dicionário de números por extenso
+    local NumberWords = {
+        -- Português
+        ["zero"] = 0, ["um"] = 1, ["dois"] = 2, ["três"] = 3, ["tres"] = 3,
+        ["quatro"] = 4, ["cinco"] = 5, ["seis"] = 6, ["sete"] = 7,
+        ["oito"] = 8, ["nove"] = 9, ["dez"] = 10,
+        ["onze"] = 11, ["doze"] = 12, ["treze"] = 13, ["catorze"] = 14, ["quatorze"] = 14,
+        ["quinze"] = 15, ["dezesseis"] = 16, ["dezessete"] = 17,
+        ["dezoito"] = 18, ["dezenove"] = 19, ["vinte"] = 20,
+        ["trinta"] = 30, ["quarenta"] = 40, ["cinquenta"] = 50,
+        ["sessenta"] = 60, ["setenta"] = 70, ["oitenta"] = 80, ["noventa"] = 90,
+        ["cem"] = 100, ["cento"] = 100, ["duzentos"] = 200, ["trezentos"] = 300,
+        ["quatrocentos"] = 400, ["quinhentos"] = 500, ["seiscentos"] = 600,
+        ["setecentos"] = 700, ["oitocentos"] = 800, ["novecentos"] = 900,
+        ["mil"] = 1000, ["milhão"] = 1000000, ["milhao"] = 1000000,
+        ["milhões"] = 1000000, ["milhoes"] = 1000000, ["bilhão"] = 1000000000,
+        ["bilhao"] = 1000000000, ["bilhões"] = 1000000000, ["bilhoes"] = 1000000000,
+        
+        -- Inglês
+        ["one"] = 1, ["two"] = 2, ["three"] = 3,
+        ["four"] = 4, ["five"] = 5, ["six"] = 6, ["seven"] = 7,
+        ["eight"] = 8, ["nine"] = 9, ["ten"] = 10,
+        ["eleven"] = 11, ["twelve"] = 12, ["thirteen"] = 13, ["fourteen"] = 14,
+        ["fifteen"] = 15, ["sixteen"] = 16, ["seventeen"] = 17,
+        ["eighteen"] = 18, ["nineteen"] = 19, ["twenty"] = 20,
+        ["thirty"] = 30, ["forty"] = 40, ["fifty"] = 50,
+        ["sixty"] = 60, ["seventy"] = 70, ["eighty"] = 80, ["ninety"] = 90,
+        ["hundred"] = 100, ["thousand"] = 1000, ["million"] = 1000000,
+        ["millions"] = 1000000, ["billion"] = 1000000000, ["billions"] = 1000000000,
+        
+        -- Espanhol
+        ["uno"] = 1, ["un"] = 1, ["dos"] = 2, ["cuatro"] = 4,
+        ["cinco"] = 5, ["seis"] = 6, ["siete"] = 7, ["ocho"] = 8,
+        ["nueve"] = 9, ["diez"] = 10, ["once"] = 11, ["doce"] = 12,
+        ["trece"] = 13, ["catorce"] = 14, ["quince"] = 15, ["dieciséis"] = 16,
+        ["dieciseis"] = 16, ["diecisiete"] = 17, ["dieciocho"] = 18,
+        ["diecinueve"] = 19, ["veinte"] = 20, ["treinta"] = 30,
+        ["cuarenta"] = 40, ["cincuenta"] = 50, ["sesenta"] = 60,
+        ["setenta"] = 70, ["ochenta"] = 80, ["noventa"] = 90,
+        ["cien"] = 100, ["ciento"] = 100, ["doscientos"] = 200,
+        ["trescientos"] = 300, ["cuatrocientos"] = 400, ["quinientos"] = 500,
+        ["seiscientos"] = 600, ["setecientos"] = 700, ["ochocientos"] = 800,
+        ["novecientos"] = 900, ["mil"] = 1000, ["millón"] = 1000000,
+        ["millon"] = 1000000, ["millones"] = 1000000
+    }
 
-                    UICorner({0, 7}, Element_Input)
-                    UIPadding({0, 0}, {0, 8, 0, 8}, Element_Input)
-
-                    local Title =
-                        CreateElement(
-                        "TextLabel",
-                        {
-                            Size = UDim2.new(0, 0, 0, 13),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            AutomaticSize = Enum.AutomaticSize.X,
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            ClipsDescendants = true,
-                            Text = Input.Settings.Name,
-                            TextColor3 = Element.Text,
-                            TextTransparency = 0.4,
-                            TextScaled = false,
-                            TextSize = 13,
-                            Font = Themes.Font.Text,
-                            TextWrapped = false,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            Parent = Element_Input
-                        }
-                    )
-
-                    local Element_Track =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Size = UDim2.new(0, 65, 0, 20),
-                            AnchorPoint = Vector2.new(1, 0.5),
-                            Position = UDim2.new(1, 0, 0.5, 0),
-                            BackgroundColor3 = Element.Track,
-                            BackgroundTransparency = 0.07,
-                            BorderSizePixel = 0,
-                            ClipsDescendants = true,
-                            Parent = Element_Input
-                        }
-                    )
-
-                    UICorner({0, 7}, Element_Track)
-                    UIStroke(1, 0.2, Themes.Border.Primary, Element_Track)
-                    UIPadding({0, 0}, {0, 4, 0, 4}, Element_Track)
-
-                    local Icon =
-                        CreateElement(
-                        "ImageLabel",
-                        {
-                            Name = "Icon",
-                            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-                            BackgroundTransparency = 1,
-                            BorderColor3 = Color3.fromRGB(0, 0, 0),
-                            BorderSizePixel = 0,
-                            ImageColor3 = Element.Icon,
-                            Image = "rbxassetid://" .. tostring(Icons:GetIcon("Keyboard")),
-                            ImageTransparency = 0.4,
-                            Size = UDim2.fromOffset(15, 15),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            Position = UDim2.new(0, 4, 0.5, 0),
-                            Parent = Element_Track
-                        }
-                    )
-
-                    local TextBox =
-                        CreateElement(
-                        "TextBox",
-                        {
-                            Size = UDim2.new(1, -24, 1, 0),
-                            Position = UDim2.new(0, 22, 0, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Text = tostring(Input.Settings.Default),
-                            PlaceholderText = Input.Settings.Placeholder,
-                            TextColor3 = Element.Text,
-                            PlaceholderColor3 = Element.Placeholder,
-                            TextTransparency = 0.4,
-                            TextSize = 12,
-                            Font = Themes.Font.Text,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            ClipsDescendants = true,
-                            ClearTextOnFocus = Input.Settings.ClearOnFocus,
-                            Parent = Element_Track
-                        }
-                    )
-
-                    local OnClick =
-                        CreateElement(
-                        "TextButton",
-                        {
-                            Parent = Element_Input,
-                            BackgroundTransparency = 1.000,
-                            BorderSizePixel = 0,
-                            Size = UDim2.new(1, -64, 1, 0),
-                            AutoButtonColor = false,
-                            Text = "",
-                            TextSize = 0.000
-                        }
-                    )
-
-                    Lib:AutoUpdateText(Title)
-
-                    local function UpdateInputBoxSize()
-                        task.wait()
-                        local textToMeasure = TextBox.Text ~= "" and TextBox.Text or TextBox.PlaceholderText
-                        local textSize =
-                            game:GetService("TextService"):GetTextSize(
-                            textToMeasure,
-                            TextBox.TextSize,
-                            TextBox.Font,
-                            Vector2.new(10000, math.huge)
-                        )
-
-                        local parentWidth = Element_Input.AbsoluteSize.X
-                        local titleSize =
-                            game:GetService("TextService"):GetTextSize(
-                            Title.Text,
-                            Title.TextSize,
-                            Title.Font,
-                            Vector2.new(10000, math.huge)
-                        )
-
-                        local maxWidth = parentWidth - titleSize.X - 30
-                        local newWidth = math.min(textSize.X + 45, math.max(maxWidth, 65))
-                        Element_Track.Size = UDim2.new(0, newWidth, 0, 20)
-                    end
-
-                    local function HandleInput(value)
-                        if Input.Settings.Numeric then
-                            local num = tonumber(value)
-                            if num then
-                                Input.Value = num
-                                TextBox.Text = tostring(num)
-                                pcall(Input.Settings.Callback, num)
-                            else
-                                Input.Value = value
-                                pcall(Input.Settings.Callback, value)
-                            end
-                        else
-                            Input.Value = value
-                            pcall(Input.Settings.Callback, value)
-                        end
-                        UpdateInputBoxSize()
-                    end
-
-                    -- Mudança: callback em tempo real (cada caractere digitado)
-                    local textConnection =
-                        TextBox:GetPropertyChangedSignal("Text"):Connect(
-                        function()
-                            HandleInput(TextBox.Text)
-                        end
-                    )
-                    table.insert(Input._connections, textConnection)
-
-                    local focusConnection =
-                        TextBox.Focused:Connect(
-                        function()
-                            Input.Active = true
-                            TweenService:Create(
-                                Element_Track,
-                                TweenInfo.new(0.15),
-                                {
-                                    BackgroundTransparency = 0.12
-                                }
-                            ):Play()
-                            TweenService:Create(
-                                Title,
-                                TweenInfo.new(0.15),
-                                {
-                                    TextTransparency = 0
-                                }
-                            ):Play()
-                        end
-                    )
-                    table.insert(Input._connections, focusConnection)
-
-                    local lostFocusConnection =
-                        TextBox.FocusLost:Connect(
-                        function(enterPressed)
-                            Input.Active = false
-                            TweenService:Create(
-                                Element_Track,
-                                TweenInfo.new(0.15),
-                                {
-                                    BackgroundTransparency = 0.07
-                                }
-                            ):Play()
-
-                            if not Input.Hover then
-                                TweenService:Create(
-                                    Title,
-                                    TweenInfo.new(0.15),
-                                    {
-                                        TextTransparency = 0.4
-                                    }
-                                ):Play()
-                            end
-
-                            if Input.Settings.Numeric then
-                                local num = tonumber(TextBox.Text)
-                                if num then
-                                    TextBox.Text = tostring(num)
-                                    Input.Value = num
-                                else
-                                    TextBox.Text = tostring(Input.Value)
-                                end
-                            end
-                        end
-                    )
-                    table.insert(Input._connections, lostFocusConnection)
-
-                    local mouseEnterConnection =
-                        OnClick.MouseEnter:Connect(
-                        function()
-                            Input.Hover = true
-                            if not Input.Active then
-                                TweenService:Create(
-                                    Title,
-                                    TweenInfo.new(0.15),
-                                    {
-                                        TextTransparency = 0
-                                    }
-                                ):Play()
-                            end
-                        end
-                    )
-                    table.insert(Input._connections, mouseEnterConnection)
-
-                    local mouseLeaveConnection =
-                        OnClick.MouseLeave:Connect(
-                        function()
-                            Input.Hover = false
-                            if not Input.Active then
-                                TweenService:Create(
-                                    Title,
-                                    TweenInfo.new(0.15),
-                                    {
-                                        TextTransparency = 0.4
-                                    }
-                                ):Play()
-                            end
-                        end
-                    )
-                    table.insert(Input._connections, mouseLeaveConnection)
-
-                    function Input:GetValue()
-                        return Input.Value
-                    end
-
-                    function Input:SetValue(value)
-                        if Input.Settings.Numeric then
-                            value = tonumber(value) or 0
-                        end
-                        Input.Value = value
-                        TextBox.Text = tostring(value)
-                        pcall(Input.Settings.Callback, value)
-                        UpdateInputBoxSize()
-                    end
-
-                    function Input:GetText()
-                        return tostring(TextBox.Text)
-                    end
-
-                    function Input:SetText(text)
-                        TextBox.Text = text
-                    end
-
-                    function Input:Clear()
-                        TextBox.Text = ""
-                        Input.Value = Input.Settings.Numeric and 0 or ""
-                    end
-
-                    function Input:Destroy()
-                        for _, conn in ipairs(Input._connections) do
-                            conn:Disconnect()
-                        end
-                        Element_Input:Destroy()
-                    end
-
-                    UpdateInputBoxSize()
-
-                    if Flag then
-                        Lib.Features[Flag] = Input
-                        if SaveLoadSystem and SaveLoadSystem.RegisterInput then
-                            SaveLoadSystem:RegisterInput(Flag, Input)
-                        end
-                    end
-
-                    return Input
+    -- Função para converter texto em número
+    local function ParseNumberWord(text)
+        text = string.lower(text:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
+        
+        local num = tonumber(text)
+        if num then
+            return num
+        end
+        
+        if NumberWords[text] then
+            return NumberWords[text]
+        end
+        
+        local words = {}
+        for word in text:gmatch("%S+") do
+            table.insert(words, word)
+        end
+        
+        local total = 0
+        local current = 0
+        
+        for i, word in ipairs(words) do
+            if word == "e" or word == "and" or word == "y" then
+                continue
+            end
+            
+            local value = NumberWords[word]
+            if not value then
+                return nil
+            end
+            
+            if value == 100 then
+                if current == 0 then
+                    current = 100
+                else
+                    current = current * 100
                 end
+            elseif value >= 1000 then
+                if current == 0 then
+                    current = 1
+                end
+                current = current * value
+                total = total + current
+                current = 0
+            else
+                current = current + value
+            end
+        end
+        
+        total = total + current
+        return total > 0 and total or nil
+    end
 
+    local Element_Input = CreateElement("Frame", {
+        Name = Input.Settings.Name,
+        Size = UDim2.new(1, 0, 0, 30),
+        AnchorPoint = Vector2.new(0, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundColor3 = Element.Primary,
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Section_Frame
+    })
+
+    UICorner({0, 7}, Element_Input)
+    UIPadding({0, 0}, {0, 5, 0, 5}, Element_Input)
+
+    local Title = CreateElement("TextLabel", {
+        Size = UDim2.new(0, 0, 0, 13),
+        AnchorPoint = Vector2.new(0, 0.5),
+        AutomaticSize = Enum.AutomaticSize.X,
+        Position = UDim2.new(0, 0, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = true,
+        Text = Input.Settings.Name,
+        TextColor3 = Element.Text,
+        TextTransparency = 0.4,
+        TextScaled = false,
+        TextSize = 13,
+        Font = Themes.Font.Text,
+        TextWrapped = false,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        Parent = Element_Input
+    })
+
+    -- Container do input (direita)
+    local InputContainer = CreateElement("Frame", {
+        Size = UDim2.new(0, 65, 0, 20),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, 0, 0.5, 0),
+        BackgroundColor3 = Element.Track,
+        BackgroundTransparency = 0.07,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Element_Input
+    })
+
+    UICorner({0, 7}, InputContainer)
+    UIStroke(1, 0.2, Themes.Border.Primary, InputContainer)
+
+    -- Ícone (esquerda dentro do container)
+    local Icon = CreateElement("ImageLabel", {
+        Name = "Icon",
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        ImageColor3 = Element.Icon,
+        Image = "rbxassetid://" .. tostring(Icons:GetIcon("Keyboard")),
+        ImageTransparency = 0.4,
+        Size = UDim2.fromOffset(14, 14),
+        AnchorPoint = Vector2.new(0, 0.5),
+        Position = UDim2.new(0, 5, 0.5, 0),
+        Parent = InputContainer
+    })
+
+    -- TextBox (direita, texto da direita para esquerda)
+    local TextBox = CreateElement("TextBox", {
+        Size = UDim2.new(1, -24, 1, 0),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, -5, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Text = tostring(Input.Settings.Default),
+        PlaceholderText = Input.Settings.Placeholder,
+        TextColor3 = Element.Text,
+        PlaceholderColor3 = Element.Placeholder,
+        TextTransparency = 0.4,
+        TextSize = 12,
+        Font = Themes.Font.Text,
+        TextXAlignment = Enum.TextXAlignment.Right,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        ClipsDescendants = true,
+        ClearTextOnFocus = Input.Settings.ClearOnFocus,
+        Parent = InputContainer
+    })
+
+    local OnClick = CreateElement("TextButton", {
+        Parent = Element_Input,
+        BackgroundTransparency = 1.000,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, -64, 1, 0),
+        AutoButtonColor = false,
+        Text = "",
+        TextSize = 0.000
+    })
+
+    Lib:AutoUpdateText(Title)
+
+    -- Função para ajustar o tamanho do container baseado no texto (igual ao KeyBind)
+    local function UpdateInputBoxSize()
+        local textToMeasure = TextBox.Text ~= "" and TextBox.Text or TextBox.PlaceholderText
+        local textSize = game:GetService("TextService"):GetTextSize(
+            textToMeasure,
+            TextBox.TextSize,
+            TextBox.Font,
+            Vector2.new(10000, math.huge)
+        )
+
+        local titleSize = game:GetService("TextService"):GetTextSize(
+            Title.Text,
+            Title.TextSize,
+            Title.Font,
+            Vector2.new(10000, math.huge)
+        )
+
+        local parentWidth = Element_Input.AbsoluteSize.X
+        local maxWidth = parentWidth - titleSize.X - 30
+        local newWidth = math.clamp(textSize.X + 35, 65, maxWidth)
+        
+        -- Tween suave para ajustar o tamanho
+        TweenService:Create(InputContainer, TweenInfo.new(0.15), {
+            Size = UDim2.new(0, newWidth, 0, 20)
+        }):Play()
+    end
+
+    -- Atualiza o tamanho quando o texto muda
+    local textChangeConnection = TextBox:GetPropertyChangedSignal("Text"):Connect(function()
+        UpdateInputBoxSize()
+    end)
+    table.insert(Input._connections, textChangeConnection)
+
+    -- Validação ao perder o foco
+    local function ValidateAndSet(value, fromUserInput)
+        if Input.Settings.Numeric then
+            local num = ParseNumberWord(value)
+            
+            if num then
+                if Input.Value ~= num then
+                    Input.Value = num
+                    TextBox.Text = tostring(num)
+                    if fromUserInput then
+                        pcall(Input.Settings.Callback, num)
+                    end
+                end
+            else
+                TextBox.Text = tostring(Input.Value)
+            end
+        else
+            if Input.Value ~= value then
+                Input.Value = value
+                if fromUserInput then
+                    pcall(Input.Settings.Callback, value)
+                end
+            end
+        end
+        UpdateInputBoxSize()
+    end
+
+    local focusConnection = TextBox.Focused:Connect(function()
+        Input.Active = true
+        TweenService:Create(InputContainer, TweenInfo.new(0.15), {
+            BackgroundTransparency = 0.12
+        }):Play()
+        TweenService:Create(Title, TweenInfo.new(0.15), {
+            TextTransparency = 0
+        }):Play()
+    end)
+    table.insert(Input._connections, focusConnection)
+
+    local lostFocusConnection = TextBox.FocusLost:Connect(function(enterPressed)
+        Input.Active = false
+        TweenService:Create(InputContainer, TweenInfo.new(0.15), {
+            BackgroundTransparency = 0.07
+        }):Play()
+
+        if not Input.Hover then
+            TweenService:Create(Title, TweenInfo.new(0.15), {
+                TextTransparency = 0.4
+            }):Play()
+        end
+
+        if Input.Settings.Numeric then
+            local num = ParseNumberWord(TextBox.Text)
+            if num then
+                Input.Value = num
+                TextBox.Text = tostring(num)
+                pcall(Input.Settings.Callback, num)
+            else
+                TextBox.Text = tostring(Input.Value)
+            end
+        else
+            Input.Value = TextBox.Text
+            pcall(Input.Settings.Callback, TextBox.Text)
+        end
+        UpdateInputBoxSize()
+    end)
+    table.insert(Input._connections, lostFocusConnection)
+
+    local mouseEnterConnection = OnClick.MouseEnter:Connect(function()
+        Input.Hover = true
+        if not Input.Active then
+            TweenService:Create(Title, TweenInfo.new(0.15), {
+                TextTransparency = 0
+            }):Play()
+        end
+    end)
+    table.insert(Input._connections, mouseEnterConnection)
+
+    local mouseLeaveConnection = OnClick.MouseLeave:Connect(function()
+        Input.Hover = false
+        if not Input.Active then
+            TweenService:Create(Title, TweenInfo.new(0.15), {
+                TextTransparency = 0.4
+            }):Play()
+        end
+    end)
+    table.insert(Input._connections, mouseLeaveConnection)
+
+    function Input:GetValue()
+        return Input.Value
+    end
+    
+    function Input:SetVisibility(state)
+        Element_Input.Visible = state or false
+    end
+
+    function Input:SetValue(value)
+        if Input.Settings.Numeric then
+            value = tonumber(value) or ParseNumberWord(tostring(value)) or 0
+        end
+        ValidateAndSet(tostring(value), false)
+    end
+
+    function Input:GetText()
+        return tostring(TextBox.Text)
+    end
+
+    function Input:SetText(text)
+        TextBox.Text = text
+        UpdateInputBoxSize()
+    end
+
+    function Input:Clear()
+        TextBox.Text = ""
+        Input.Value = Input.Settings.Numeric and 0 or ""
+        UpdateInputBoxSize()
+    end
+
+    function Input:Destroy()
+        for _, conn in ipairs(Input._connections) do
+            conn:Disconnect()
+        end
+        Element_Input:Destroy()
+    end
+
+    -- Inicializa o tamanho
+    UpdateInputBoxSize()
+
+    if Flag then
+        Lib.Features[Flag] = Input
+        if SaveLoadSystem and SaveLoadSystem.RegisterInput then
+            SaveLoadSystem:RegisterInput(Flag, Input)
+        end
+    end
+
+    return Input
+end
+                
                 function Section:ToggleKeyBind(Flag, Settings)
     Settings = Settings or {}
     Settings.Name = Settings.Name or "Toggle KeyBind"
@@ -6436,14 +6534,17 @@ end
         end
     end
 
+    -- Botão principal do elemento (toggle)
     local OnClick = CreateElement("TextButton", {
         Parent = Element_TKey,
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
-        Size = UDim2.new(1, 0, 1, 0),
+        Size = UDim2.new(1, -73, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
         AutoButtonColor = false,
         Text = "",
-        TextSize = 0
+        TextSize = 0,
+        ZIndex = 2
     })
 
     Lib:HoverElements(TKey.Active, TKey.Hover, OnClick, Title)
@@ -6452,6 +6553,53 @@ end
         Callback()
     end)
 
+    -- Variáveis para o sistema de binding
+    local isBinding = false
+    local bindConnection = nil
+
+    -- Função para começar o binding
+    local function StartBinding()
+        if isBinding then return end
+        
+        isBinding = true
+        KeyTxt.Text = "..."
+        
+        if bindConnection then
+            bindConnection:Disconnect()
+            bindConnection = nil
+        end
+        
+        bindConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+            if isBinding and input.UserInputType == Enum.UserInputType.Keyboard then
+                if input.KeyCode ~= Enum.KeyCode.Unknown and 
+                   input.KeyCode ~= Enum.KeyCode.Escape and
+                   input.KeyCode ~= Enum.KeyCode.Backspace then
+                    
+                    TKey.Settings.KeyCode = input.KeyCode
+                    KeyTxt.Text = input.KeyCode.Name
+                    
+                    isBinding = false
+                    if bindConnection then
+                        bindConnection:Disconnect()
+                        bindConnection = nil
+                    end
+                end
+            end
+        end)
+        
+        task.delay(5, function()
+            if isBinding then
+                isBinding = false
+                KeyTxt.Text = TKey.Settings.KeyCode.Name
+                if bindConnection then
+                    bindConnection:Disconnect()
+                    bindConnection = nil
+                end
+            end
+        end)
+    end
+
+    -- Botão do keybind
     local BgKeyB_Button = CreateElement("TextButton", {
         Parent = BgKeyB,
         BackgroundTransparency = 1,
@@ -6459,26 +6607,15 @@ end
         Size = UDim2.new(1, 0, 1, 0),
         AutoButtonColor = false,
         Text = "",
-        TextSize = 0
+        TextSize = 0,
+        ZIndex = 3
     })
 
-    local isBinding = false
-
     BgKeyB_Button.MouseButton1Click:Connect(function()
-        isBinding = true
-        KeyTxt.Text = "..."
-        
-        local connection
-        connection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-            if isBinding and input.UserInputType == Enum.UserInputType.Keyboard then
-                TKey.Settings.KeyCode = input.KeyCode
-                KeyTxt.Text = input.KeyCode.Name
-                isBinding = false
-                connection:Disconnect()
-            end
-        end)
+        StartBinding()
     end)
 
+    -- Conexão da tecla de atalho (otimizada, sem table.insert)
     local keyConnection
     keyConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
         if not gameProcessed and input.KeyCode == TKey.Settings.KeyCode and not isBinding then
@@ -6486,12 +6623,18 @@ end
         end
     end)
 
-    table.insert(TKey._connections, keyConnection)
+    -- Armazenar conexões manualmente (sem table.insert)
+    TKey._connections[1] = keyConnection
 
+    -- Renderiza o estado inicial imediatamente
     if TKey_State then
-        Activate()
+        Element_Thumb.BackgroundTransparency = 0.3
+        Element_Thumb.AnchorPoint = Vector2.new(1, 0.5)
+        Element_Thumb.Position = UDim2.new(1, 0, 0.5, 0)
     else
-        Desactivate()
+        Element_Thumb.BackgroundTransparency = 0.7
+        Element_Thumb.AnchorPoint = Vector2.new(0, 0.5)
+        Element_Thumb.Position = UDim2.new(0, 0, 0.5, 0)
     end
 
     function TKey:SetValue(value)
@@ -6509,6 +6652,10 @@ end
 
     function TKey:GetValue()
         return TKey_State
+    end
+    
+    function TKey:SetVisibility(state)
+        Element_TKey.Visible = state or false
     end
 
     function TKey:SetName(text)
@@ -6529,8 +6676,11 @@ end
     end
 
     function TKey:Destroy()
-        for _, conn in ipairs(TKey._connections) do
-            conn:Disconnect()
+        if TKey._connections[1] then
+            TKey._connections[1]:Disconnect()
+        end
+        if bindConnection then
+            bindConnection:Disconnect()
         end
         Element_TKey:Destroy()
     end
@@ -6544,353 +6694,339 @@ end
 
     return TKey
 end
-
+                
                 function Section:KeyBind(Flag, Settings)
-                    Settings = Settings or {}
-                    Settings.Name = Settings.Name or "KeyBind"
-                    Settings.Default = Settings.Default or "None"
-                    Settings.Placeholder = Settings.Placeholder or "Bind"
-                    Settings.Hold = Settings.Hold or false
-                    Settings.Callback = Settings.Callback or function()end
+    Settings = Settings or {}
+    Settings.Name = Settings.Name or "KeyBind"
+    Settings.Default = Settings.Default or "None"
+    Settings.Placeholder = Settings.Placeholder or "Bind"
+    Settings.Hold = Settings.Hold or false
+    Settings.Callback = Settings.Callback or function()end
 
-                    local KeyBind = {
-                        Settings = Settings,
-                        Class = "KeyBind",
-                        Value = Settings.Default,
-                        IsListening = false,
-                        IgnoreConfig = false,
-                        Hover = false,
-                        Active = false,
-                        _connections = {}
-                    }
+    local KeyBind = {
+        Settings = Settings,
+        Class = "KeyBind",
+        Value = Settings.Default,
+        IsListening = false,
+        IgnoreConfig = false,
+        Hover = false,
+        Active = false,
+        _connections = {}
+    }
 
-                    local Element = Themes.Elements.KeyBind
+    local Element = Themes.Elements.KeyBind
 
-                    KeyBind.Settings.Name = KeyBind.Settings.Name or "KeyBind"
-                    KeyBind.Settings.Default = KeyBind.Settings.Default or "None"
-                    KeyBind.Settings.Placeholder = KeyBind.Settings.Placeholder or "Bind"
-                    KeyBind.Settings.Hold = KeyBind.Settings.Hold or false
-                    KeyBind.Settings.Callback = KeyBind.Settings.Callback or function()end
+    KeyBind.Settings.Name = KeyBind.Settings.Name or "KeyBind"
+    KeyBind.Settings.Default = KeyBind.Settings.Default or "None"
+    KeyBind.Settings.Placeholder = KeyBind.Settings.Placeholder or "Bind"
+    KeyBind.Settings.Hold = KeyBind.Settings.Hold or false
+    KeyBind.Settings.Callback = KeyBind.Settings.Callback or function()end
 
-                    pcall(KeyBind.Settings.Callback, KeyBind.Settings.Default)
+    pcall(KeyBind.Settings.Callback, KeyBind.Settings.Default)
 
-                    local Element_KeyBind =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Name = KeyBind.Settings.Name,
-                            Size = UDim2.new(1, 0, 0, 30),
-                            AnchorPoint = Vector2.new(0, 0),
-                            Position = UDim2.new(0, 0, 0, 0),
-                            BackgroundColor3 = Element.Primary,
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            ClipsDescendants = true,
-                            Parent = Section_Frame
-                        }
-                    )
+    local Element_KeyBind = CreateElement("Frame", {
+        Name = KeyBind.Settings.Name,
+        Size = UDim2.new(1, 0, 0, 30),
+        AnchorPoint = Vector2.new(0, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundColor3 = Element.Primary,
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Section_Frame
+    })
 
-                    UICorner({0, 7}, Element_KeyBind)
-                    --UIStroke(1, 0.2, Themes.Border.Primary, Element_KeyBind)
-                    UIPadding({0, 0}, {0, 8, 0, 8}, Element_KeyBind)
+    UICorner({0, 7}, Element_KeyBind)
+    UIPadding({0, 0}, {0, 8, 0, 8}, Element_KeyBind)
 
-                    local Title =
-                        CreateElement(
-                        "TextLabel",
-                        {
-                            Size = UDim2.new(0, 0, 0, 13),
-                            AnchorPoint = Vector2.new(0, 0.5),
-                            AutomaticSize = Enum.AutomaticSize.X,
-                            Position = UDim2.new(0, 0, 0.5, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            ClipsDescendants = true,
-                            Text = KeyBind.Settings.Name,
-                            TextColor3 = Element.Text,
-                            TextTransparency = 0.4,
-                            TextScaled = false,
-                            TextSize = 13,
-                            Font = Themes.Font.Text,
-                            TextWrapped = false,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            Parent = Element_KeyBind
-                        }
-                    )
+    local Title = CreateElement("TextLabel", {
+        Size = UDim2.new(0, 0, 0, 13),
+        AnchorPoint = Vector2.new(0, 0.5),
+        AutomaticSize = Enum.AutomaticSize.X,
+        Position = UDim2.new(0, 0, 0.5, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = true,
+        Text = KeyBind.Settings.Name,
+        TextColor3 = Element.Text,
+        TextTransparency = 0.4,
+        TextScaled = false,
+        TextSize = 13,
+        Font = Themes.Font.Text,
+        TextWrapped = false,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        Parent = Element_KeyBind
+    })
 
-                    local Element_Track =
-                        CreateElement(
-                        "Frame",
-                        {
-                            Size = UDim2.new(0, 65, 0, 20),
-                            AnchorPoint = Vector2.new(1, 0.5),
-                            Position = UDim2.new(1, 0, 0.5, 0),
-                            BackgroundColor3 = Element.Track,
-                            BackgroundTransparency = 0.07,
-                            BorderSizePixel = 0,
-                            ClipsDescendants = true,
-                            Parent = Element_KeyBind
-                        }
-                    )
+    local Element_Track = CreateElement("Frame", {
+        Size = UDim2.new(0, 24, 0, 20),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, 0, 0.5, 0),
+        BackgroundColor3 = Element.Track,
+        BackgroundTransparency = 0.07,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Parent = Element_KeyBind
+    })
 
-                    UICorner({0, 7}, Element_Track)
-                    UIStroke(1, 0.2, Themes.Border.Primary, Element_Track)
-                    UIPadding({0, 0}, {0, 4, 0, 4}, Element_Track)
+    UICorner({0, 4}, Element_Track)
+    UIStroke(1, 0.2, Themes.Border.Primary, Element_Track)
+    UIPadding({0, 0}, {0, 4, 0, 4}, Element_Track)
 
-                    local Display =
-                        CreateElement(
-                        "TextLabel",
-                        {
-                            Size = UDim2.new(1, 0, 1, 0),
-                            BackgroundTransparency = 1,
-                            BorderSizePixel = 0,
-                            Visible = true,
-                            ClipsDescendants = true,
-                            Text = KeyBind.Settings.Default,
-                            TextColor3 = Element.Text,
-                            TextTransparency = 0.4,
-                            TextScaled = false,
-                            TextSize = 12,
-                            Font = Themes.Font.Text,
-                            TextWrapped = false,
-                            TextXAlignment = Enum.TextXAlignment.Center,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                            Parent = Element_Track
-                        }
-                    )
+    local Display = CreateElement("TextLabel", {
+        Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Visible = true,
+        ClipsDescendants = true,
+        Text = KeyBind.Settings.Default,
+        TextColor3 = Element.Text,
+        TextTransparency = 0.4,
+        TextScaled = false,
+        TextSize = 12,
+        Font = Themes.Font.Text,
+        TextWrapped = false,
+        TextXAlignment = Enum.TextXAlignment.Center,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        Parent = Element_Track
+    })
 
-                    local OnClick =
-                        CreateElement(
-                        "TextButton",
-                        {
-                            Parent = Element_Track,
-                            BackgroundTransparency = 1.000,
-                            BorderSizePixel = 0,
-                            Size = UDim2.new(1, 0, 1, 0),
-                            AutoButtonColor = false,
-                            Text = "",
-                            TextSize = 0.000
-                        }
-                    )
+    local OnClick = CreateElement("TextButton", {
+        Parent = Element_Track,
+        BackgroundTransparency = 1.000,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 1, 0),
+        AutoButtonColor = false,
+        Text = "",
+        TextSize = 0.000
+    })
 
-                    Lib:AutoUpdateText(Title)
+    Lib:AutoUpdateText(Title)
 
-                    -- Sistema do KeyBind
-                    local inputConnection
+    -- Função para ajustar o tamanho do track baseado no texto
+    local function UpdateTrackSize(text)
+        local textSize = game:GetService("TextService"):GetTextSize(
+            text,
+            Display.TextSize,
+            Display.Font,
+            Vector2.new(10000, math.huge)
+        )
+        
+        -- Tamanho mínimo para 1 letra (24px), máximo baseado no texto + padding
+        local newWidth = math.max(24, textSize.X + 16)
+        
+        -- Tween suave para ajustar o tamanho
+        TweenService:Create(Element_Track, TweenInfo.new(0.15), {
+            Size = UDim2.new(0, newWidth, 0, 20)
+        }):Play()
+    end
 
-                    local function UpdateDisplay(key)
-                        local text = key ~= "None" and key or "None"
-                        Display.Text = text
-                        TweenService:Create(
-                            Display,
-                            TweenInfo.new(0.15),
-                            {
-                                TextTransparency = 0.4
-                            }
-                        ):Play()
-                    end
+    -- Sistema do KeyBind
+    local inputConnection
 
-                    local function StartListening()
-                        KeyBind.IsListening = true
-                        KeyBind.Active = true
-                        Display.Text = "..."
-                        TweenService:Create(
-                            Element_Track,
-                            TweenInfo.new(0.15),
-                            {
-                                BackgroundTransparency = 0.12
-                            }
-                        ):Play()
-                        TweenService:Create(
-                            Display,
-                            TweenInfo.new(0.15),
-                            {
-                                TextTransparency = 0
-                            }
-                        ):Play()
-                        TweenService:Create(
-                            Title,
-                            TweenInfo.new(0.15),
-                            {
-                                TextTransparency = 0
-                            }
-                        ):Play()
-                    end
+    local function UpdateDisplay(key)
+        local text = key ~= "..." and key or "..."
+        Display.Text = text
+        UpdateTrackSize(text)
+        TweenService:Create(
+            Display,
+            TweenInfo.new(0.15),
+            {
+                TextTransparency = 0.4
+            }
+        ):Play()
+    end
 
-                    local function StopListening(key)
-                        KeyBind.IsListening = false
-                        KeyBind.Active = false
+    local function StartListening()
+        KeyBind.IsListening = true
+        KeyBind.Active = true
+        Display.Text = "..."
+        UpdateTrackSize("...")
+        TweenService:Create(
+            Element_Track,
+            TweenInfo.new(0.15),
+            {
+                BackgroundTransparency = 0.12
+            }
+        ):Play()
+        TweenService:Create(
+            Display,
+            TweenInfo.new(0.15),
+            {
+                TextTransparency = 0
+            }
+        ):Play()
+        TweenService:Create(
+            Title,
+            TweenInfo.new(0.15),
+            {
+                TextTransparency = 0
+            }
+        ):Play()
+    end
 
-                        if key then
-                            KeyBind.Value = key
-                            UpdateDisplay(key)
-                            -- Callback com a tecla selecionada
-                            pcall(KeyBind.Settings.Callback, key)
+    local function StopListening(key)
+        KeyBind.IsListening = false
+        KeyBind.Active = false
+
+        if key then
+            KeyBind.Value = key
+            UpdateDisplay(key)
+            -- Callback com a tecla selecionada
+            pcall(KeyBind.Settings.Callback, key)
+        else
+            UpdateDisplay(KeyBind.Value)
+        end
+
+        TweenService:Create(
+            Element_Track,
+            TweenInfo.new(0.15),
+            {
+                BackgroundTransparency = 0.07
+            }
+        ):Play()
+        TweenService:Create(
+            Display,
+            TweenInfo.new(0.15),
+            {
+                TextTransparency = 0.4
+            }
+        ):Play()
+
+        if not KeyBind.Hover then
+            TweenService:Create(
+                Title,
+                TweenInfo.new(0.15),
+                {
+                    TextTransparency = 0.4
+                }
+            ):Play()
+        end
+    end
+
+    local function SetupKeybindListener()
+        if inputConnection then
+            inputConnection:Disconnect()
+        end
+
+        inputConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+            if gameProcessed then
+                return
+            end
+
+            if not KeyBind.IsListening then
+                if input.KeyCode ~= Enum.KeyCode.None and KeyBind.Value ~= "None" then
+                    local keyName = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
+                    if keyName == KeyBind.Value then
+                        if KeyBind.Settings.Hold then
+                            -- Hold: retorna true quando pressiona
+                            pcall(KeyBind.Settings.Callback, true)
                         else
-                            UpdateDisplay(KeyBind.Value)
-                        end
-
-                        TweenService:Create(
-                            Element_Track,
-                            TweenInfo.new(0.15),
-                            {
-                                BackgroundTransparency = 0.07
-                            }
-                        ):Play()
-                        TweenService:Create(
-                            Display,
-                            TweenInfo.new(0.15),
-                            {
-                                TextTransparency = 0.4
-                            }
-                        ):Play()
-
-                        if not KeyBind.Hover then
-                            TweenService:Create(
-                                Title,
-                                TweenInfo.new(0.15),
-                                {
-                                    TextTransparency = 0.4
-                                }
-                            ):Play()
+                            -- Click: retorna o nome da tecla
+                            pcall(KeyBind.Settings.Callback, keyName)
                         end
                     end
-
-                    local function SetupKeybindListener()
-                        if inputConnection then
-                            inputConnection:Disconnect()
-                        end
-
-                        inputConnection =
-                            UserInputService.InputBegan:Connect(
-                            function(input, gameProcessed)
-                                if gameProcessed then
-                                    return
-                                end
-
-                                if not KeyBind.IsListening then
-                                    if input.KeyCode ~= Enum.KeyCode.None and KeyBind.Value ~= "None" then
-                                        local keyName = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
-                                        if keyName == KeyBind.Value then
-                                            if KeyBind.Settings.Hold then
-                                                -- Hold: retorna true quando pressiona
-                                                pcall(KeyBind.Settings.Callback, true)
-                                            else
-                                                -- Click: retorna o nome da tecla
-                                                pcall(KeyBind.Settings.Callback, keyName)
-                                            end
-                                        end
-                                    end
-                                    return
-                                end
-
-                                if
-                                    input.KeyCode ~= Enum.KeyCode.None and input.KeyCode ~= Enum.KeyCode.Escape and
-                                        input.KeyCode ~= Enum.KeyCode.LeftShift and
-                                        input.KeyCode ~= Enum.KeyCode.RightShift and
-                                        input.KeyCode ~= Enum.KeyCode.LeftControl and
-                                        input.KeyCode ~= Enum.KeyCode.RightControl
-                                 then
-                                    local keyName = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
-                                    StopListening(keyName)
-                                end
-                            end
-                        )
-                    end
-
-                    -- Eventos de clique
-                    OnClick.MouseButton1Click:Connect(
-                        function()
-                            if KeyBind.IsListening then
-                                StopListening()
-                            else
-                                StartListening()
-                            end
-                        end
-                    )
-
-                    -- Hover personalizado
-                    local mouseEnterConnection =
-                        Element_KeyBind.MouseEnter:Connect(
-                        function()
-                            KeyBind.Hover = true
-                            if not KeyBind.Active then
-                                TweenService:Create(
-                                    Title,
-                                    TweenInfo.new(0.15),
-                                    {
-                                        TextTransparency = 0
-                                    }
-                                ):Play()
-                            end
-                        end
-                    )
-                    table.insert(KeyBind._connections, mouseEnterConnection)
-
-                    local mouseLeaveConnection =
-                        Element_KeyBind.MouseLeave:Connect(
-                        function()
-                            KeyBind.Hover = false
-                            if not KeyBind.Active then
-                                TweenService:Create(
-                                    Title,
-                                    TweenInfo.new(0.15),
-                                    {
-                                        TextTransparency = 0.4
-                                    }
-                                ):Play()
-                            end
-                        end
-                    )
-                    table.insert(KeyBind._connections, mouseLeaveConnection)
-
-                    SetupKeybindListener()
-
-                    -- Funções públicas
-                    function KeyBind:GetKey()
-                        return KeyBind.Value
-                    end
-
-                    function KeyBind:SetKey(key)
-                        KeyBind.Value = key
-                        UpdateDisplay(key)
-                        pcall(KeyBind.Settings.Callback, key)
-                    end
-
-                    function KeyBind:Reset()
-                        KeyBind.Value = "None"
-                        UpdateDisplay("None")
-                    end
-
-                    function KeyBind:StartListening()
-                        StartListening()
-                    end
-
-                    function KeyBind:StopListening()
-                        StopListening()
-                    end
-
-                    function KeyBind:Destroy()
-                        if inputConnection then
-                            inputConnection:Disconnect()
-                        end
-                        for _, conn in ipairs(KeyBind._connections) do
-                            conn:Disconnect()
-                        end
-                        Element_KeyBind:Destroy()
-                    end
-
-                    if Flag then
-                        Lib.Features[Flag] = KeyBind
-                        if SaveLoadSystem and SaveLoadSystem.RegisterKeybind then
-                            SaveLoadSystem:RegisterKeybind(Flag, KeyBind)
-                        end
-                    end
-
-                    return KeyBind
                 end
+                return
+            end
 
+            if input.KeyCode ~= Enum.KeyCode.None and 
+               input.KeyCode ~= Enum.KeyCode.Escape and
+               input.KeyCode ~= Enum.KeyCode.LeftShift and
+               input.KeyCode ~= Enum.KeyCode.RightShift and
+               input.KeyCode ~= Enum.KeyCode.LeftControl and
+               input.KeyCode ~= Enum.KeyCode.RightControl then
+                local keyName = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
+                StopListening(keyName)
+            end
+        end)
+    end
+
+    -- Eventos de clique
+    OnClick.MouseButton1Click:Connect(function()
+        if KeyBind.IsListening then
+            StopListening()
+        else
+            StartListening()
+        end
+    end)
+
+    -- Hover personalizado
+    local mouseEnterConnection = Element_KeyBind.MouseEnter:Connect(function()
+        KeyBind.Hover = true
+        if not KeyBind.Active then
+            TweenService:Create(Title, TweenInfo.new(0.15), {
+                TextTransparency = 0
+            }):Play()
+        end
+    end)
+    table.insert(KeyBind._connections, mouseEnterConnection)
+
+    local mouseLeaveConnection = Element_KeyBind.MouseLeave:Connect(function()
+        KeyBind.Hover = false
+        if not KeyBind.Active then
+            TweenService:Create(Title, TweenInfo.new(0.15), {
+                TextTransparency = 0.4
+            }):Play()
+        end
+    end)
+    table.insert(KeyBind._connections, mouseLeaveConnection)
+
+    SetupKeybindListener()
+    
+    -- Atualiza o tamanho inicial do track
+    UpdateTrackSize(KeyBind.Settings.Default)
+    
+    function KeyBind:SetVisibility(state)
+        Element_KeyBind.Visible = state or false
+    end
+
+    -- Funções públicas
+    function KeyBind:GetKey()
+        return KeyBind.Value
+    end
+
+    function KeyBind:SetKey(key)
+        KeyBind.Value = key
+        UpdateDisplay(key)
+        pcall(KeyBind.Settings.Callback, key)
+    end
+
+    function KeyBind:Reset()
+        KeyBind.Value = "None"
+        UpdateDisplay("None")
+    end
+
+    function KeyBind:StartListening()
+        StartListening()
+    end
+
+    function KeyBind:StopListening()
+        StopListening()
+    end
+
+    function KeyBind:Destroy()
+        if inputConnection then
+            inputConnection:Disconnect()
+        end
+        for _, conn in ipairs(KeyBind._connections) do
+            conn:Disconnect()
+        end
+        Element_KeyBind:Destroy()
+    end
+
+    if Flag then
+        Lib.Features[Flag] = KeyBind
+        if SaveLoadSystem and SaveLoadSystem.RegisterKeybind then
+            SaveLoadSystem:RegisterKeybind(Flag, KeyBind)
+        end
+    end
+
+    return KeyBind
+end
+                
                 function Section:Colorpicker(Flag, Settings)
                     Settings = Settings or {}
                     Settings.Name = Settings.Name or "Colorpicker"
@@ -7528,365 +7664,336 @@ end
 
                     return Colorpicker
                 end
-
+                
                 return Section
             end
 
             return SubTab
         end
-
+        
         return Tab
     end
 
     function StorageTabs:Dialog(Settings)
-        Settings.Title = Settings.Title or "Diálogo"
-        Settings.Description = Settings.Description or "Descrição do diálogo"
-        Settings.Buttons = Settings.Buttons or {{Name = "OK", Callback = function()
-                    end}}
+    Settings.Title = Settings.Title or "Diálogo"
+    Settings.Description = Settings.Description or "Descrição do diálogo"
+    Settings.Buttons = Settings.Buttons or {{Name = "OK", Callback = function() end}}
 
-        local Element = Themes.Elements.Dialog
-        local DialogFunctions = {}
+    local Element = Themes.Elements.Dialog
+    local DialogFunctions = {}
+    local base = Window
 
-        local base = Window
+    -- Canvas principal
+    local dialogCanvas = CreateElement("CanvasGroup", {
+        Name = "DialogCanvas_" .. HttpService:GenerateGUID(false):sub(1, 8),
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.fromScale(1, 1),
+        GroupTransparency = 1,
+        ZIndex = 99999999,
+        Parent = base
+    })
 
-        local dialogCanvas =
-            CreateElement(
-            "CanvasGroup",
-            {
-                Name = "DialogCanvas_" .. HttpService:GenerateGUID(false):sub(1, 8),
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-                BackgroundTransparency = 1,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                Size = UDim2.fromScale(1, 1),
-                GroupTransparency = 1,
-                ZIndex = 99999999,
-                Parent = base
-            }
-        )
+    -- Fundo escuro
+    local dialog = CreateElement("Frame", {
+        Name = "Dialog",
+        BackgroundColor3 = Element.Primary,
+        BackgroundTransparency = 0.35,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.fromScale(1, 1),
+        Active = true,
+        ZIndex = 99999999,
+        Parent = dialogCanvas
+    })
 
-        local dialog =
-            CreateElement(
-            "Frame",
-            {
-                Name = "Dialog",
-                BackgroundColor3 = Element.Primary,
-                BackgroundTransparency = 0.35,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                Size = UDim2.fromScale(1, 1),
-                Active = true,
-                ZIndex = 99999999,
-                Parent = dialogCanvas
-            }
-        )
+    UICorner({0, 10}, dialog)
 
-        UICorner({0, 10}, dialog)
+    -- Container principal do diálogo
+    local DiagFrame = CreateElement("Frame", {
+        Name = "DiagFrame",
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Element.Secondary,
+        BackgroundTransparency = 0,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.fromOffset(280, 0),
+        ClipsDescendants = true,
+        Parent = dialog
+    })
 
-        local prompt =
-            CreateElement(
-            "Frame",
-            {
-                Name = "Prompt",
-                AnchorPoint = Vector2.new(0.5, 0.5),
-                AutomaticSize = Enum.AutomaticSize.Y,
-                BackgroundColor3 = Element.Secondary,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                Position = UDim2.fromScale(0.5, 0.5),
-                Size = UDim2.fromOffset(280, 0),
-                ZIndex = 99999999,
-                Parent = dialog
-            }
-        )
+    UICorner({0, 10}, DiagFrame)
+    UIStroke(1, 0.2, Themes.Border.Primary, DiagFrame)
 
-        local promptUIScale =
-            CreateElement(
-            "UIScale",
-            {
-                Name = "BaseUIScale",
-                Scale = 0.95,
-                Parent = prompt
-            }
-        )
+    -- Frame das bolinhas (topo superior esquerdo com margem de 5px)
+    local BallsFrame = CreateElement("Frame", {
+        Name = "BallsFrame",
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 5, 0, 8),
+        Size = UDim2.new(0, 52, 0, 12),
+        ZIndex = 10,
+        Parent = DiagFrame
+    })
 
-        UIStroke(1, 0.9, Themes.Border.Primary, prompt)
-        UICorner({0, 10}, prompt)
+    -- Bolinhas (AppleBalls)
+    Lib:AppleBalls({8, 8}, Themes, BallsFrame)
 
-        UIPadding({0, 20}, {0, 20, 0, 20}, prompt)
+    -- Container principal do conteúdo
+    local ContentFrame = CreateElement("Frame", {
+        Name = "ContentFrame",
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, -40, 1, -40), -- Margem nas laterais
+        Position = UDim2.new(0, 20, 0, 25), -- Posição centralizada
+        AnchorPoint = Vector2.new(0, 0),
+        Parent = DiagFrame
+    })
 
-        local paragraph =
-            CreateElement(
-            "Frame",
-            {
-                Name = "Paragraph",
-                AutomaticSize = Enum.AutomaticSize.Y,
-                BackgroundColor3 = Color3.fromRGB(0, 0, 0),
-                BackgroundTransparency = 1,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                Size = UDim2.new(1, 0, 0, 38),
-                Parent = prompt
-            }
-        )
+    -- Layout vertical para organizar parágrafo e botões
+    local MainLayout = CreateElement("UIListLayout", {
+        Padding = UDim.new(0, 20),
+        FillDirection = Enum.FillDirection.Vertical,
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Parent = ContentFrame
+    })
 
-        local paragraphHeader =
-            CreateElement(
-            "TextLabel",
-            {
-                Name = "ParagraphHeader",
-                RichText = true,
-                Text = Settings.Title,
-                TextColor3 = Element.Title,
-                TextSize = 18,
-                TextTransparency = 0.4,
-                TextWrapped = true,
-                AutomaticSize = Enum.AutomaticSize.Y,
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-                BackgroundTransparency = 1,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                Size = UDim2.fromScale(1, 0),
-                Font = Themes.Font.Title,
-                Parent = paragraph
-            }
-        )
+    -- Parágrafo (centro)
+    local paragraph = CreateElement("Frame", {
+        Name = "Paragraph",
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1, -- Sem fundo
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 0, 0),
+        LayoutOrder = 1,
+        Parent = ContentFrame
+    })
 
-        CreateElement(
-            "UIListLayout",
-            {
-                Padding = UDim.new(0, 15),
-                SortOrder = Enum.SortOrder.LayoutOrder,
-                Parent = paragraph
-            }
-        )
+    -- Layout do parágrafo
+    CreateElement("UIListLayout", {
+        Padding = UDim.new(0, 10),
+        FillDirection = Enum.FillDirection.Vertical,
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Parent = paragraph
+    })
 
-        local paragraphBody =
-            CreateElement(
-            "TextLabel",
-            {
-                Name = "ParagraphBody",
-                RichText = true,
-                Text = Settings.Description,
-                TextColor3 = Element.Text,
-                TextSize = 14,
-                TextTransparency = 0.5,
-                TextWrapped = true,
-                AutomaticSize = Enum.AutomaticSize.Y,
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-                BackgroundTransparency = 1,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                LayoutOrder = 1,
-                Size = UDim2.fromScale(1, 0),
-                Font = Themes.Font.Text,
-                Parent = paragraph
-            }
-        )
+    -- Título
+    local paragraphHeader = CreateElement("TextLabel", {
+        Name = "ParagraphHeader",
+        RichText = true,
+        Text = Settings.Title,
+        TextColor3 = Element.Title,
+        TextSize = 18,
+        TextTransparency = 0.3,
+        TextWrapped = true,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.fromScale(1, 0),
+        TextXAlignment = Enum.TextXAlignment.Center, -- Centralizado
+        Font = Themes.Font.Title,
+        LayoutOrder = 1,
+        Parent = paragraph
+    })
 
-        local interactions =
-            CreateElement(
-            "Frame",
-            {
-                Name = "Interactions",
-                AutomaticSize = Enum.AutomaticSize.Y,
-                BackgroundColor3 = Color3.fromRGB(0, 0, 0),
-                BackgroundTransparency = 1,
-                BorderColor3 = Color3.fromRGB(0, 0, 0),
-                BorderSizePixel = 0,
-                LayoutOrder = 1,
-                Size = UDim2.fromScale(1, 0),
-                Parent = prompt
-            }
-        )
+    -- Descrição
+    local paragraphBody = CreateElement("TextLabel", {
+        Name = "ParagraphBody",
+        RichText = true,
+        Text = Settings.Description,
+        TextColor3 = Element.Text,
+        TextSize = 14,
+        TextTransparency = 0.5,
+        TextWrapped = true,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.fromScale(1, 0),
+        TextXAlignment = Enum.TextXAlignment.Center, -- Centralizado
+        Font = Themes.Font.Text,
+        LayoutOrder = 2,
+        Parent = paragraph
+    })
 
-        CreateElement(
-            "UIListLayout",
-            {
-                Padding = UDim.new(0, 10),
-                SortOrder = Enum.SortOrder.LayoutOrder,
-                Parent = interactions
-            }
-        )
+    -- Interações (botões) - Centralizado no bottom
+    local interactions = CreateElement("Frame", {
+        Name = "Interactions",
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 0, 0),
+        LayoutOrder = 2,
+        Parent = ContentFrame
+    })
 
-        UIPadding({0, 20}, {0, 0, 0, 0}, interactions)
+    -- Layout dos botões
+    CreateElement("UIListLayout", {
+        Padding = UDim.new(0, 10),
+        FillDirection = Enum.FillDirection.Vertical,
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        SortOrder = Enum.SortOrder.LayoutOrder,
+        Parent = interactions
+    })
 
-        CreateElement(
-            "UIListLayout",
-            {
-                SortOrder = Enum.SortOrder.LayoutOrder,
-                Parent = prompt
-            }
-        )
+    -- Animações
+    local canvasIn = TweenService:Create(dialogCanvas, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {GroupTransparency = 0})
+    local canvasOut = TweenService:Create(dialogCanvas, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {GroupTransparency = 1})
 
-        local canvasIn =
-            TweenService:Create(dialogCanvas, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {GroupTransparency = 0})
-        local canvasOut =
-            TweenService:Create(dialogCanvas, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {GroupTransparency = 1})
+    local dialogConnections = {}
 
-        local scaleIn = TweenService:Create(promptUIScale, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {Scale = 1})
-        local scaleOut = TweenService:Create(promptUIScale, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {Scale = 0.95})
+    local function dialogIn()
+        canvasIn:Play()
+        canvasIn.Completed:Wait()
+    end
 
-        local dialogConnections = {}
-
-        function dialogIn()
-            canvasIn:Play()
-            scaleIn:Play()
-            canvasIn.Completed:Wait()
+    local function dialogOut()
+        if not dialogCanvas.Parent then
+            return
         end
 
-        function dialogOut()
-            if not dialogCanvas.Parent then
+        for _, connection in pairs(dialogConnections) do
+            if connection then
+                connection:Disconnect()
+            end
+        end
+
+        canvasOut:Play()
+        canvasOut.Completed:Wait()
+        dialogCanvas:Destroy()
+    end
+
+    -- Fechar ao clicar fora
+    local closeOnClickOutsideConnection = UserInputService.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 and dialogCanvas.GroupTransparency == 0 then
+            local mousePos = input.Position
+            local promptPos = DiagFrame.AbsolutePosition
+            local promptSize = DiagFrame.AbsoluteSize
+
+            local clickedInsidePrompt = mousePos.X >= promptPos.X and mousePos.X <= promptPos.X + promptSize.X and
+                mousePos.Y >= promptPos.Y and mousePos.Y <= promptPos.Y + promptSize.Y
+
+            if not clickedInsidePrompt then
+                dialogOut()
+            end
+        end
+    end)
+
+    table.insert(dialogConnections, closeOnClickOutsideConnection)
+
+    -- Botões
+    for i, v in ipairs(Settings.Buttons) do
+        local buttonIndex = i
+        local buttonData = v
+
+        local button = CreateElement("TextButton", {
+            Name = "Button_" .. buttonIndex,
+            Text = buttonData.Name,
+            TextColor3 = Element.Title,
+            TextSize = 15,
+            TextTransparency = 0.4,
+            TextTruncate = Enum.TextTruncate.AtEnd,
+            AutoButtonColor = false,
+            AutomaticSize = Enum.AutomaticSize.Y,
+            BackgroundColor3 = Element.Buttons,
+            BackgroundTransparency = 0.3,
+            BorderColor3 = Color3.fromRGB(0, 0, 0),
+            BorderSizePixel = 0,
+            Size = UDim2.new(1, -40, 0, 0), -- Margem nas laterais
+            Font = Themes.Font.Text,
+            Parent = interactions
+        })
+
+        UIPadding({0, 9}, {0, 10, 0, 10}, button)
+        UICorner({0, 10}, button)
+
+        local TweenSettings = {
+            DefaultTransparency = 0,
+            DefaultTransparency2 = 0.5,
+            HoverTransparency = 0.3,
+            HoverTransparency2 = 0.6,
+            EasingStyle = Enum.EasingStyle.Sine
+        }
+
+        local function ChangeState(State)
+            if State == "Idle" then
+                TweenService:Create(button, TweenInfo.new(0.2, TweenSettings.EasingStyle), {
+                    BackgroundTransparency = TweenSettings.DefaultTransparency,
+                    TextTransparency = TweenSettings.DefaultTransparency2
+                }):Play()
+            elseif State == "Hover" then
+                TweenService:Create(button, TweenInfo.new(0.2, TweenSettings.EasingStyle), {
+                    BackgroundTransparency = TweenSettings.HoverTransparency,
+                    TextTransparency = TweenSettings.HoverTransparency2
+                }):Play()
+            end
+        end
+
+        local clickConnection = button.MouseButton1Click:Connect(function()
+            if dialogCanvas.GroupTransparency ~= 0 then
                 return
             end
 
-            for _, connection in pairs(dialogConnections) do
-                if connection then
-                    connection:Disconnect()
-                end
+            if buttonData.Callback then
+                buttonData.Callback()
             end
 
-            canvasOut:Play()
-            scaleOut:Play()
-            canvasOut.Completed:Wait()
-            dialogCanvas:Destroy()
-        end
-
-        local closeOnClickOutsideConnection =
-            UserInputService.InputBegan:Connect(
-            function(input)
-                if input.UserInputType == Enum.UserInputType.MouseButton1 and dialogCanvas.GroupTransparency == 0 then
-                    local mousePos = input.Position
-                    local promptPos = prompt.AbsolutePosition
-                    local promptSize = prompt.AbsoluteSize
-
-                    local clickedInsidePrompt =
-                        mousePos.X >= promptPos.X and mousePos.X <= promptPos.X + promptSize.X and
-                        mousePos.Y >= promptPos.Y and
-                        mousePos.Y <= promptPos.Y + promptSize.Y
-
-                    if not clickedInsidePrompt then
-                        dialogOut()
-                    end
-                end
-            end
-        )
-
-        table.insert(dialogConnections, closeOnClickOutsideConnection)
-
-        for i, v in ipairs(Settings.Buttons) do
-            local buttonIndex = i
-            local buttonData = v
-
-            local button =
-                CreateElement(
-                "TextButton",
-                {
-                    Name = "Button_" .. buttonIndex,
-                    Text = buttonData.Name,
-                    TextColor3 = Element.Title,
-                    TextSize = 15,
-                    TextTransparency = 0.5,
-                    TextTruncate = Enum.TextTruncate.AtEnd,
-                    AutoButtonColor = false,
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundColor3 = Element.Buttons,
-                    BorderColor3 = Color3.fromRGB(0, 0, 0),
-                    BorderSizePixel = 0,
-                    Size = UDim2.fromScale(1, 0),
-                    Font = Themes.Font.Text,
-                    Parent = interactions
-                }
-            )
-
-            UIPadding({0, 9}, {0, 10, 0, 10}, button)
-            UICorner({0, 10}, button)
-
-            local TweenSettings = {
-                DefaultTransparency = 0,
-                DefaultTransparency2 = 0.5,
-                HoverTransparency = 0.3,
-                HoverTransparency2 = 0.6,
-                EasingStyle = Enum.EasingStyle.Sine
-            }
-
-            function ChangeState(State)
-                if State == "Idle" then
-                    TweenService:Create(
-                        button,
-                        TweenInfo.new(0.2, TweenSettings.EasingStyle),
-                        {
-                            BackgroundTransparency = TweenSettings.DefaultTransparency,
-                            TextTransparency = TweenSettings.DefaultTransparency2
-                        }
-                    ):Play()
-                elseif State == "Hover" then
-                    TweenService:Create(
-                        button,
-                        TweenInfo.new(0.2, TweenSettings.EasingStyle),
-                        {
-                            BackgroundTransparency = TweenSettings.HoverTransparency,
-                            TextTransparency = TweenSettings.HoverTransparency2
-                        }
-                    ):Play()
-                end
-            end
-
-            local clickConnection =
-                button.MouseButton1Click:Connect(
-                function()
-                    if dialogCanvas.GroupTransparency ~= 0 then
-                        return
-                    end
-
-                    if buttonData.Callback then
-                        buttonData.Callback()
-                    end
-
-                    dialogOut()
-                end
-            )
-
-            local enterConnection =
-                button.MouseEnter:Connect(
-                function()
-                    ChangeState("Hover")
-                end
-            )
-
-            local leaveConnection =
-                button.MouseLeave:Connect(
-                function()
-                    ChangeState("Idle")
-                end
-            )
-
-            table.insert(dialogConnections, clickConnection)
-            table.insert(dialogConnections, enterConnection)
-            table.insert(dialogConnections, leaveConnection)
-        end
-
-        dialogIn()
-
-        function DialogFunctions:UpdateTitle(New)
-            paragraphHeader.Text = New
-        end
-
-        function DialogFunctions:UpdateDescription(New)
-            paragraphBody.Text = New
-        end
-
-        function DialogFunctions:Cancel()
             dialogOut()
-        end
+        end)
 
-        function DialogFunctions:Close()
-            dialogOut()
-        end
+        local enterConnection = button.MouseEnter:Connect(function()
+            ChangeState("Hover")
+        end)
 
-        return DialogFunctions
+        local leaveConnection = button.MouseLeave:Connect(function()
+            ChangeState("Idle")
+        end)
+
+        table.insert(dialogConnections, clickConnection)
+        table.insert(dialogConnections, enterConnection)
+        table.insert(dialogConnections, leaveConnection)
     end
 
+    dialogIn()
+
+    function DialogFunctions:UpdateTitle(New)
+        paragraphHeader.Text = New
+    end
+
+    function DialogFunctions:UpdateDescription(New)
+        paragraphBody.Text = New
+    end
+
+    function DialogFunctions:Cancel()
+        dialogOut()
+    end
+
+    function DialogFunctions:Close()
+        dialogOut()
+    end
+
+    return DialogFunctions
+end
+    
     function StorageTabs:Notification(Settings)
         Settings.Title = Settings.Title or "Notificação"
         Settings.Message = Settings.Message or "Mensagem da notificação"
@@ -8421,12 +8528,13 @@ function Lib:Demo()
         Folder = "AiCodeDemo",
         ShowUserInfo = false,
         AcrylicBlur = false,
+        Keyboard = true,
         Button = {Enabled = true},
         Size = {550, 350},
         KeyBind = Enum.KeyCode.K
     })
 
-    local HomeTab = Window:Tab({ Icon = "Home" })
+    local HomeTab = Window:Tab({ Icon = "Home"})
 
     local BasicsSubTab = HomeTab:SubTab({Name = "Basics"})
     local AdvancedSubTab = HomeTab:SubTab({Name = "Advanced"})
@@ -8477,6 +8585,15 @@ function Lib:Demo()
         Default = true,
         Callback = function(value)
             print("Checkbox:", value)
+        end
+    })
+
+    BasicsSection1:ToggleKeyBind("ToggleKey", {
+        Name = "Toggle KeyBind",
+        Default = false,
+        KeyCode = Enum.KeyCode.C,
+        Callback = function(value)
+            print("KeyBind Toggle:", value)
         end
     })
 
@@ -8681,15 +8798,6 @@ function Lib:Demo()
         ClearOnFocus = true,
         Callback = function(value)
             print("Clear Input:", value)
-        end
-    })
-
-    BasicsSection1:ToggleKeyBind("ToggleKey", {
-        Name = "Toggle KeyBind",
-        Default = false,
-        KeyCode = Enum.KeyCode.C,
-        Callback = function(value)
-            print("KeyBind Toggle:", value)
         end
     })
 
